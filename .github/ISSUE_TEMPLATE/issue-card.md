@@ -1,5 +1,5 @@
 ---
-name: KPT 회고
+name: Issue Card
 about: KPT 회고
 title: ''
 labels: ''
