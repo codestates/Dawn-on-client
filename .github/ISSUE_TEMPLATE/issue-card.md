@@ -1,26 +1,36 @@
 ---
 name: Issue Card
-about: KPT 회고
+about: Task 이슈 카드
 title: ''
 labels: ''
 assignees: ''
 
 ---
 
-## **Keep (유지할 항목)**
+### **ISSUE**
 
-- 
-- 
-- 
+- Group: `client`, `server`, `sr`
+- Type: `bug`, `feature`, `delete`
+- Detail:
 
-## **Problem (문제라고 생각하는 항목)**
+### **TODO**
 
-- 
-- 
-- 
+- [ ]  Job1
+- [ ]  Job2
+- [ ]  Job3
 
-## **Try (Action Items)**
+### **Estimated time**
 
-- [x]  Todo 형식으로 작성해주세요.
-- [x]  Todo 형식으로 작성해주세요.
-- [x]  Todo 형식으로 작성해주세요.
+> Pick one
+
+### **`0.5h`**
+
+### **`1h`**
+
+### **`1.5h`**
+
+### **`2h`**
+
+### **`2.5h`**
+
+### **`3h`**

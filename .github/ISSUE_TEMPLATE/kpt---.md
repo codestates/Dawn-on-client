@@ -1,5 +1,5 @@
 ---
-name: KPT 회고 이슈카드
+name: KPT 회고
 about: KPT 회고
 title: ''
 labels: ''
