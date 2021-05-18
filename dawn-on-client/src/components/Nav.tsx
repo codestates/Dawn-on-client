@@ -12,7 +12,7 @@ function Nav() {
   const [LoginModal, setLoginModal] = useState<boolean>(false);
 
   const openModal = function () {
-    setLoginModal(true);
+    setLoginModal(true); 
   };
 
   const closeModal = function () {
@@ -34,6 +34,7 @@ function Nav() {
         </div>
       ) : (
         <div>
+          <Login LoginModal={LoginModal} closeModal={closeModal} />
           <button className="landing-btn">회원가입</button>
           <button
             className="landing-btn"
@@ -43,7 +44,6 @@ function Nav() {
           >
             로그인
           </button>
-          <Login LoginModal={LoginModal} closeModal={closeModal} />;
         </div>
       )}
     </div>
