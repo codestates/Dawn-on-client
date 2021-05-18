@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import Login from '../components/Login';
+import "../App.css"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function Landing() {
@@ -45,19 +46,19 @@ function Landing() {
   return (
   <>
     {/* <Login /> */}
-    <LandingSection className="up-on-scroll">
+    <LandingSection id="section1" className="up-on-scroll">
       section01
     </LandingSection>
-    <LandingSection className="up-on-scroll">
+    <LandingSection id="section2" className="up-on-scroll">
       section02
     </LandingSection>
-    <LandingSection className="up-on-scroll">
+    <LandingSection id="section3" className="up-on-scroll">
        section03
     </LandingSection>
-    <LandingSection className="up-on-scroll">
+    <LandingSection id="section4" className="up-on-scroll">
        section04
     </LandingSection>
-    <LandingSection className="up-on-scroll">
+    <LandingSection id="section5" className="up-on-scroll">
        section05
     </LandingSection>
     <Button onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>Top</Button>

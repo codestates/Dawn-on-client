@@ -1,13 +1,43 @@
 import styled from "@emotion/styled";
 import swal from "sweetalert";
 import "../css/login.css"
+import "../App.css";
 import axios from "axios";
-import { useHistory } from "react-router";
 import React, { useState } from "react";
 
-function Login () {
-  const [user_id, setUserID] = useState("");
-  const [user_pw, setUserPW] = useState("");
+type LoginProps = {
+  LoginModal: boolean;
+  closeModal: any;
+};
+
+function Login({ LoginModal, closeModal }: LoginProps) {
+  console.log(LoginModal);
+  const [form, setForm] = useState({
+    user_id: '',
+    user_pw: ''
+  });
+  const { user_id, user_pw } = form;
+  console.log(form);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>):void => {
+    const { name, value } = e.target;
+    console.log("etarget: ", e.target)
+    setForm({
+      ...form,
+      [name]: value
+    });
+  };
+  
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   // 여기도 모르니까 any 로 하겠습니다.
+  //   e.preventDefault();
+  //   onSubmit(form);
+  //   setForm({
+  //     user_id: '',
+  //     user_pw: ''
+  //   }); // 초기화
+  // };
+
 
   const loginRequestHandler = function () {
     axios
@@ -58,39 +88,49 @@ function Login () {
   
   return(
     <>
-      <LoginContainer>
-      <CloseButton className="login-close-btn">
-          <i className="far fa-times-circle"></i>
-      </CloseButton>
-        <div id="login-title">LOG IN</div>
-        <div id="login-input-container">
-            <input
-              className="login-input-id"
-              placeholder="ID"
-              onChange={(e) => {setUserID(e.target.value)}}
-            ></input>
-            <input
-              className="login-input-pw"
-              placeholder="비밀번호"
-              type="password"
-              onChange={(e) => {setUserPW(e.target.value)}}
-            ></input>
-            <button
-              id="login-to-join"
-            >
-              아직 계정이 없으신가요?
-            </button>
-          </div>
+     {LoginModal ? (
+        <div>
+          <div id="login-modal">
+          <LoginContainer>
+          <CloseButton className="login-close-btn" onClick={() => closeModal()}>
+              <i className="far fa-times-circle"></i>
+          </CloseButton>
+            <div id="login-title">LOG IN</div>
+            <div id="login-input-container">
+                <input
+                  className="login-input-id"
+                  name="user_id"
+                  value={user_id}
+                  placeholder="ID"
+                  onChange={onChange}
+                ></input>
+                <input
+                  className="login-input-pw"
+                  name="user_pw"
+                  value={user_pw}
+                  placeholder="비밀번호"
+                  type="password"
+                  onChange={onChange}
+                ></input>
+                <button
+                  id="login-to-join"
+                >
+                  아직 계정이 없으신가요?
+                </button>
+              </div>
 
-            <button
-              id="login-btn"
-              onClick={() => {
-                loginRequestHandler();
-              }}
-            >
-              LOG IN
-            </button>
-      </LoginContainer>
+                <button
+                  id="login-btn"
+                  onClick={() => {
+                    loginRequestHandler();
+                  }}
+                >
+                  LOG IN
+                </button>
+            </LoginContainer>
+          </div>
+        </div>
+      ) : null}
     </>
   )
 }
