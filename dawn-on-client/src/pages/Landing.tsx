@@ -1,7 +1,11 @@
 import React from "react";
 
 function Landing() {
-  return <div>여기는 첫 화면으로 보여질 랜딩페이지입니다</div>;
+  return (
+    <div id="landing-page">
+      여기에다가 재혁님이 만든 스크롤 페이지 집어넣으면 딱임
+    </div>
+  );
 }
 
 export default Landing;
