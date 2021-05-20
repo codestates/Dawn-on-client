@@ -1,6 +1,7 @@
 // Login Modal, Join Modal <-> Button: 검색,플래너 작성,모아보기,개인피드, 로그아웃 (조건부 랜더링)
 import React, { useState } from "react";
 import Login from "./Login";
+import Join from "./Join";
 import "../App.css";
 
 function Nav() {
@@ -11,12 +12,20 @@ function Nav() {
   const [JoinModal, setJoinModal] = useState<boolean>(false);
   const [LoginModal, setLoginModal] = useState<boolean>(false);
 
-  const openModal = function () {
-    setLoginModal(true); 
+  const openLoginModal = function () {
+    setLoginModal(true);
   };
 
-  const closeModal = function () {
+  const closeLoginModal = function () {
     setLoginModal(false);
+  };
+
+  const openJoinModal = function () {
+    setJoinModal(true);
+  };
+
+  const closeJoinModal = function () {
+    setJoinModal(false);
   };
 
   return (
@@ -34,16 +43,37 @@ function Nav() {
         </div>
       ) : (
         <div>
-          <Login LoginModal={LoginModal} closeModal={closeModal} />
-          <button className="landing-btn">회원가입</button>
           <button
             className="landing-btn"
             onClick={() => {
-              openModal();
+              openJoinModal();
+              closeLoginModal();
+            }}
+          >
+            회원가입
+          </button>
+          {JoinModal && (
+            <Join
+              closeJoinModal={closeJoinModal}
+              openLoginModal={openLoginModal}
+            />
+          )}
+          <button
+            className="landing-btn"
+            onClick={() => {
+              openLoginModal();
+              closeJoinModal();
             }}
           >
             로그인
           </button>
+          {LoginModal && (
+            <Login
+              closeLoginModal={closeLoginModal}
+              openJoinModal={openJoinModal}
+              setisLogin={setisLogin}
+            />
+          )}
         </div>
       )}
     </div>
