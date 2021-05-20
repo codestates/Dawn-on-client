@@ -4,8 +4,7 @@ import {
   Draggable,
   Droppable,
 } from 'react-beautiful-dnd';
-import "../css/dnd.css";
-
+import "../css/plannerview.css";
 
 function PlannerForm () {
   // 날짜
