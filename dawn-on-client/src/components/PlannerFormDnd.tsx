@@ -4,7 +4,7 @@ import {
   Draggable,
   Droppable,
 } from 'react-beautiful-dnd';
-import "../css/test.css";
+import "../css/dnd.css";
 
 
 function PlannerForm () {
