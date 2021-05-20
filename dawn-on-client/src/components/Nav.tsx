@@ -1,5 +1,5 @@
 // Login Modal, Join Modal <-> Button: 검색,플래너 작성,모아보기,개인피드, 로그아웃 (조건부 랜더링)
-import React, { useState } from "react";
+import { useState } from "react";
 import Login from "./Login";
 import "../App.css";
 
@@ -21,6 +21,7 @@ function Nav() {
 
   return (
     <div id="nav-container">
+      <h1 id="nav-logo">Dawn-on</h1>
       {isLogin ? (
         <div>
           <input
@@ -33,7 +34,7 @@ function Nav() {
           <button className="main-nav">로그아웃</button>
         </div>
       ) : (
-        <div>
+        <div id="nav-btn-container">
           <Login LoginModal={LoginModal} closeModal={closeModal} />
           <button className="landing-btn">회원가입</button>
           <button
