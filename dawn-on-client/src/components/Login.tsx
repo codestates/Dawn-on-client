@@ -1,0 +1,163 @@
+import styled from "@emotion/styled";
+import swal from "sweetalert";
+import "../css/login.css";
+import "../App.css";
+import axios from "axios";
+import React, { useState } from "react";
+import { useHistory } from "react-router";
+import GoogleLogin from "react-google-login";
+import GoogleLogout from "react-google-login";
+
+const googleClientID =
+  "89393125923-mkfjgjjtfd75qt39snddv1po0lfca2l0.apps.googleusercontent.com";
+
+type LoginProps = {
+  closeLoginModal: any;
+  openJoinModal: any;
+  setisLogin: any;
+};
+
+const LoginContainer = styled.div`
+  display: grid;
+  grid-template-columns: 0.3fr 1fr 0.3fr;
+  grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 0.2fr;
+  background-color: #faee9d;
+  border-radius: 5px;
+  width: 500px;
+  height: 350px;
+  margin: -175px 0 0 -250px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+`;
+const CloseButton = styled.button`
+  outline: none;
+  border: none;
+  background-color: #faee9d;
+  justify-self: right;
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: #2b3390;
+  grid-column: 3 / 4;
+  grid-row: 1 / 2;
+`;
+
+function Login({ closeLoginModal, openJoinModal, setisLogin }: LoginProps) {
+  const history = useHistory();
+
+  const [form, setForm] = useState({
+    user_id: "",
+    user_password: "",
+  });
+  const { user_id, user_password } = form;
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+
+  // Google Login
+  const responseGoogle = (res: any) => {
+    console.log("전체 데이터", res);
+    console.log("사용자 프로필 데이터", res.profileObj);
+    // setForm({});
+  };
+
+  // Login Fail
+  const responseFail = (err: any) => {
+    console.error(err);
+  };
+
+  // Google Logout
+  const responseGooglelogout = (res: any) => {
+    console.log(res);
+  };
+
+  const loginRequestHandler = function () {
+    console.log("입력한 사용자 정보", form);
+    axios
+      .post(
+        `https://localhost:4000/signin`,
+        { user_id: user_id, user_password: user_password },
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        swal("로그인되었습니다", "", "success");
+        // Explore 페이지로 리디렉션.
+        setisLogin(true);
+        history.push("/explore");
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("ID와 Password가 일치하지 않습니다", "", "error");
+      });
+  };
+
+  return (
+    <>
+      <div>
+        <LoginContainer>
+          <CloseButton className="close-btn" onClick={() => closeLoginModal()}>
+            <i className="far fa-times-circle"></i>
+          </CloseButton>
+          <div id="login-title">LOG IN</div>
+          <div id="login-input-container">
+            <input
+              className="login-input-id"
+              name="user_id"
+              value={user_id}
+              placeholder="ID"
+              onChange={onChange}
+            />
+            <input
+              className="login-input-pw"
+              name="user_pw"
+              value={user_password}
+              placeholder="비밀번호"
+              type="password"
+              onChange={onChange}
+            />
+            <button
+              id="login-to-join"
+              onClick={() => {
+                openJoinModal();
+                closeLoginModal();
+              }}
+            >
+              아직 계정이 없으신가요?
+            </button>
+            <button
+              id="login-btn"
+              onClick={() => {
+                loginRequestHandler();
+              }}
+            >
+              LOG IN
+            </button>
+          </div>
+          <div id="login-btn-container">
+            <GoogleLogin
+              clientId={googleClientID}
+              buttonText="Google Login"
+              onSuccess={responseGoogle}
+              onFailure={responseFail}
+              // render={(props: any) => (
+              //   <button onClick={props.onClick}>구글 로그인</button>
+              // )}
+            />
+            <button id="login-kakao-btn">카카오톡 로그인</button>
+          </div>
+        </LoginContainer>
+      </div>
+    </>
+  );
+}
+
+export default Login;
