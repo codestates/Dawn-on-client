@@ -1,0 +1,49 @@
+#plannerform-container {
+  grid-column: 2 / 5;
+  grid-row: 2 / 7;
+  width: 650px;
+  height: 100%;
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.3fr 0.3fr 1fr;
+}
+
+.App {
+  width: 650px;
+  height: 300px;
+  border: 1px solid red;
+}
+
+.plnnerfrom-date {
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+  text-align: center;
+  align-self: center;
+  font-size: 2rem;
+}
+
+.plnnerfrom-dday {
+  font-size: 2rem;
+  text-align: center;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+  align-self: center;
+}
+
+.plnnerfrom-memo {
+  width: 100%;
+  align-self: center;
+  font-size: 1.5rem;
+  text-align: center;
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+}
+
+.plnnerfrom-hour {
+  font-size: 2rem;
+  text-align: center;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  align-self: center;
+}
