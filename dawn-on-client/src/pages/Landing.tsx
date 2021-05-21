@@ -15,7 +15,7 @@ const LandingSection = styled.div`
 `;
 const Button = styled.button`
   position: fixed;
-  top: 95%;
+  top: 90%;
   left: 90%;
   border-radius: 76px;
   outline: none;
