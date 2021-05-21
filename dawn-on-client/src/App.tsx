@@ -6,20 +6,20 @@ import CustomPlanner from "./pages/CustomPlanner";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <>
-      <Nav />
       <Router>
+        <Nav />
         <Switch>
-          <Route exact path="/" render={() => <Landing />} />
-          <Route path="/explore" render={() => <Explore />} />
-          <Route path="/myfeed" render={() => <MyFeed />} />
-          <Route path="/custom-planner" render={() => <CustomPlanner />} />
+          <Route exact path="/" component={Landing} />
+          <Route path="/explore" component={Explore} />
+          <Route path="/myfeed" component={MyFeed} />
+          <Route path="/custom-planner" component={CustomPlanner} />
         </Switch>
       </Router>
     </>
   );
-}
+};
 
 export default App;
