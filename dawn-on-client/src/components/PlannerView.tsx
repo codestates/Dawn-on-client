@@ -6,7 +6,7 @@ import {
 } from 'react-beautiful-dnd';
 import "../css/plannerview.css";
 
-function PlannerForm () {
+function PlannerView () {
   // 날짜
   const [test, setTest] = useState([
     {
@@ -80,4 +80,4 @@ function PlannerForm () {
   )
 }
 
-export default PlannerForm;
+export default PlannerView;
