@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap');
 html,
 body {
   margin: 0;
@@ -12,33 +13,8 @@ body {
 #root {
   display: grid;
   width: 100%;
-  grid-template-columns: 50px 1fr 1fr 1fr 1fr 1fr 50px;
-  grid-template-rows: 60px 0.5fr repeat(5, 1fr) 100px;
-}
-
-#section1 {
-  grid-column: 1 / 8;
-  grid-row: 2 / 3;
-}
-
-#section2 {
-  grid-column: 1 / 8;
-  grid-row: 3 / 4;
-}
-
-#section3 {
-  grid-column: 1 / 8;
-  grid-row: 4 / 5;
-}
-
-#section4 {
-  grid-column: 1 / 8;
-  grid-row: 5 / 6;
-}
-
-#section5 {
-  grid-column: 1 / 8;
-  grid-row: 6 / 7;
+  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
+  grid-template-rows: 60px 0.5fr repeat(4, 1fr) 100px;
 }
 
 button {
@@ -54,13 +30,14 @@ button {
 }
 
 #nav-logo {
+  font-family: 'KoHo', sans-serif;
   justify-self: left;
-  flex-basis: 80%;
+  flex-basis: 50%;
 }
 
 #nav-btn-container {
   justify-self: end;
-  flex-basis: 20%;
+  flex-basis: 50%;
   text-align: right;
   align-self: center;
 }
@@ -81,6 +58,10 @@ button {
 }
 
 .landing-btn {
+  font-size: 1.5rem;
+  background-color: #fff;
+  outline: none;
+  border: none;
   margin-left: 1rem;
 }
 
@@ -96,5 +77,11 @@ button {
   to {
     opacity: 1;
     margin: -175px 0 0 -250px;
+  }
+}
+
+@media all and (max-width:767px) {
+  #nav-container {
+    background-color: cadetblue;
   }
 }

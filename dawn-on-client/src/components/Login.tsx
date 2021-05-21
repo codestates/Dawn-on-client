@@ -4,17 +4,21 @@ import "../css/login.css";
 import "../App.css";
 import axios from "axios";
 import React, { useState } from "react";
-import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { getLoginState } from "../module/isLogin";
 import GoogleLogin from "react-google-login";
 import GoogleLogout from "react-google-login";
+import KakaoLogin from "react-kakao-login";
 
 const googleClientID =
   "89393125923-mkfjgjjtfd75qt39snddv1po0lfca2l0.apps.googleusercontent.com";
 
+const kakaoJSkeys = "91e640cbb9c3ec3d5acef0ef3f7fdc28";
+
 type LoginProps = {
   closeLoginModal: any;
   openJoinModal: any;
-  setisLogin: any;
 };
 
 const LoginContainer = styled.div`
@@ -43,7 +47,8 @@ const CloseButton = styled.button`
   grid-row: 1 / 2;
 `;
 
-function Login({ closeLoginModal, openJoinModal, setisLogin }: LoginProps) {
+function Login({ closeLoginModal, openJoinModal }: LoginProps) {
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const [form, setForm] = useState({
@@ -61,20 +66,18 @@ function Login({ closeLoginModal, openJoinModal, setisLogin }: LoginProps) {
   };
 
   // Google Login
+  // 소셜 로그인을 위한 axios 요청를 따로 사용해야함
   const responseGoogle = (res: any) => {
     console.log("전체 데이터", res);
     console.log("사용자 프로필 데이터", res.profileObj);
-    // setForm({});
+    dispatch(getLoginState(true));
+    closeLoginModal();
+    history.push("/explore");
   };
 
   // Login Fail
   const responseFail = (err: any) => {
     console.error(err);
-  };
-
-  // Google Logout
-  const responseGooglelogout = (res: any) => {
-    console.log(res);
   };
 
   const loginRequestHandler = function () {
@@ -91,7 +94,7 @@ function Login({ closeLoginModal, openJoinModal, setisLogin }: LoginProps) {
       .then((res) => {
         swal("로그인되었습니다", "", "success");
         // Explore 페이지로 리디렉션.
-        setisLogin(true);
+        dispatch(getLoginState(true));
         history.push("/explore");
       })
       .catch((err) => {
