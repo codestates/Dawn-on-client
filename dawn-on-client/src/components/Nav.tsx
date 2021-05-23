@@ -3,12 +3,14 @@ import { useState } from "react";
 import Login from "./Login";
 import Join from "./Join";
 import "../App.css";
+import axios from "axios";
+import swal from "sweetalert";
 import { RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { getLoginState } from "../module/isLogin";
 import { useHistory } from "react-router-dom";
 
-const Nav = (): JSX.Element => {
+const Nav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -37,6 +39,24 @@ const Nav = (): JSX.Element => {
     setJoinModal(false);
   };
 
+  const logoutRequestHandler = function () {
+    axios
+      .post(`https://localhost:4000/signout`, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then(() => {
+        swal("로그아웃되었습니다", "", "success");
+        // Explore 페이지로 리디렉션.
+        dispatch(getLoginState(false));
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("로그아웃 실패", "", "error");
+      });
+  };
+
   return (
     <div id="nav-container">
       <h1 id="nav-logo">Dawn-on</h1>
@@ -50,12 +70,13 @@ const Nav = (): JSX.Element => {
           <button className="main-nav" onClick={() => history.push("/explore")}>
             모아보기
           </button>
-          <button className="main-nav">개인피드</button>
+          <button className="main-nav" onClick={() => history.push("/myfeed")}>
+            개인피드
+          </button>
           <button
             className="main-nav"
             onClick={() => {
-              dispatch(getLoginState(false));
-              history.push("/");
+              logoutRequestHandler();
             }}
           >
             로그아웃
