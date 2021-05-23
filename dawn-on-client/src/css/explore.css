@@ -1,0 +1,69 @@
+#Explore-container {
+  height: calc(100vh - 60px);
+  grid-column: 1 / 8;
+  grid-row: 2 / 8;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 80px 1fr 1fr 1fr 1fr 80px;
+  grid-template-rows: 60px repeat(5, 1fr);
+  column-gap: 20px;
+}
+
+/* 완쪽: 모아보기 사이드 바 */
+#ExploreSidebar-container {
+  grid-column: 2;
+  grid-row: 1 / 8;
+  height: calc(100vh - 60px);
+  border: 1px solid red;
+  display: grid;
+  grid-template-rows: 60px repeat(5, 1fr);
+}
+
+#ExploreSide-main-title {
+  grid-row: 1 / 3;
+  border: 1px solid black;
+  font-size: 40px;
+}
+
+#ExploreSide-like-ranking {
+  grid-row: 3 / 5;
+  border: 1px solid black;
+}
+
+#ExploreSide-star-ranking {
+  grid-row: 5 / 7;
+  border: 1px solid black;
+}
+
+/* 중앙: 모아보기 게시물 리스트 */
+#ExploreList-container {
+  grid-column: 3;
+  grid-row: 1 / 8;
+  border: 1px solid blue;
+  display: grid;
+  grid-template-rows: 60px repeat(5, 1fr);
+}
+
+#ExploreList-filter {
+  grid-row: 1;
+  border: 1px solid black;
+}
+
+#ExploreList-posts {
+  grid-row: 2 / 7;
+  overflow-y: scroll;
+}
+
+.ExplorePost-container {
+  margin: 10px 10px 10px 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  height: 100px;
+}
+
+/* 오른쪽: 모아보기 게시물 클릭 시 보여지는 상세페이지  */
+#ExplorePostView-container {
+  grid-column: 4 / 6;
+  grid-row: 1 / 8;
+  border: 1px solid green;
+}
