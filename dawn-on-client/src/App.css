@@ -8,6 +8,7 @@ body {
   list-style: none;
   font-size: 10px;
   letter-spacing: 1.2px;
+  box-sizing: content-box;
 }
 
 #root {
@@ -15,6 +16,7 @@ body {
   width: 100%;
   grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
   grid-template-rows: 60px 0.5fr repeat(4, 1fr) 100px;
+  column-gap: 15px;
 }
 
 button {
@@ -22,24 +24,29 @@ button {
 }
 
 #nav-container {
-  grid-column: 2 / 7;
-  grid-row: 1 / 2;
+  position: fixed;
   display: flex;
+  z-index: 100;
+  width: 100%;
   background: none;
   align-self: flex-end;
+  transition: opacity 1s;
 }
 
 #nav-logo {
   font-family: 'KoHo', sans-serif;
   justify-self: left;
+  margin-left: 100px;
   flex-basis: 50%;
 }
 
 #nav-btn-container {
-  justify-self: end;
   flex-basis: 50%;
+  justify-self: end;
   text-align: right;
   align-self: center;
+  float: right;
+  margin-right: 100px;
 }
 
 #footer {
@@ -58,8 +65,10 @@ button {
 }
 
 .landing-btn {
+  font-family: 'KoHo', sans-serif;
   font-size: 1.5rem;
-  background-color: #fff;
+  background-color: none;
+  background: none;
   outline: none;
   border: none;
   margin-left: 1rem;
