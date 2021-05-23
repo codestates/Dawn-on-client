@@ -1,2 +1,24 @@
 import React from "react";
-// 내가 작성한 게시물들의 썸네일이 보여지는 리스트
+import MyPost from "./MyPost";
+
+//axios요청으로 게시물 목록을 불러와 map함수를 이용하여 렌더링한다
+function MyPostList() {
+  return (
+    <div id="MyPostList-container">
+      <div id="MyPostList-subtitle">목록</div>
+      <div id="MyPostList-posts">
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+        <MyPost />
+      </div>
+    </div>
+  );
+}
+
+export default MyPostList;

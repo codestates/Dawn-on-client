@@ -8,7 +8,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getLoginState } from "../module/isLogin";
 import GoogleLogin from "react-google-login";
-import GoogleLogout from "react-google-login";
 import KakaoLogin from "react-kakao-login";
 
 const googleClientID =
@@ -68,8 +67,16 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   // Google Login
   // 소셜 로그인을 위한 axios 요청를 따로 사용해야함
   const responseGoogle = (res: any) => {
-    console.log("전체 데이터", res);
-    console.log("사용자 프로필 데이터", res.profileObj);
+    console.log("구글: 전체 데이터", res);
+    console.log("구글: 사용자 프로필 데이터", res.profileObj);
+    dispatch(getLoginState(true));
+    closeLoginModal();
+    history.push("/explore");
+  };
+
+  //Kakao Login
+  const responseKaKao = (res: any) => {
+    console.log("카카오톡 로그인 성공:", res);
     dispatch(getLoginState(true));
     closeLoginModal();
     history.push("/explore");
@@ -78,6 +85,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   // Login Fail
   const responseFail = (err: any) => {
     console.error(err);
+    swal("로그인 실패", "", "warning");
   };
 
   const loginRequestHandler = function () {
@@ -121,7 +129,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
             />
             <input
               className="login-input-pw"
-              name="user_pw"
+              name="user_password"
               value={user_password}
               placeholder="비밀번호"
               type="password"
@@ -148,14 +156,20 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
           <div id="login-btn-container">
             <GoogleLogin
               clientId={googleClientID}
-              buttonText="Google Login"
+              buttonText="Google로 로그인하기"
               onSuccess={responseGoogle}
               onFailure={responseFail}
               // render={(props: any) => (
               //   <button onClick={props.onClick}>구글 로그인</button>
               // )}
             />
-            <button id="login-kakao-btn">카카오톡 로그인</button>
+            <KakaoLogin
+              token={kakaoJSkeys}
+              onSuccess={responseKaKao}
+              onFail={responseFail}
+              onLogout={console.info}
+              useLoginForm
+            />
           </div>
         </LoginContainer>
       </div>
