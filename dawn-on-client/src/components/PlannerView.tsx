@@ -23,27 +23,84 @@ function PlannerView () {
     }
   ]);
 
+  const [test2, setTest2] = useState([
+    {
+      id:'4',
+      name: 'task4'
+    },
+    {
+      id:'5',
+      name: 'task5'
+    },
+    {
+      id:'6',
+      name: 'task6'
+    }
+  ]);
   const dummyData = {
     date: "2021-05-18",
     dday: 50,
     memo:"수능만점 받을거야아아앍",
     hour:"6h30m",
-    checklist: [
-      ["국어", "2020 6월 모의고사 풀기"],["국어", "2020 6월 모의고사 풀기"],["국어", "2020 6월 모의고사 풀기"],
-      ["수학", "2020 6월 모의고사 풀기"],["수학", "2020 6월 모의고사 풀기"],["수학", "2020 6월 모의고사 풀기"],
-      ["영어", "2020 6월 모의고사 풀기"],["영어", "2020 6월 모의고사 풀기"],["영어", "2020 6월 모의고사 풀기"],
-    ],
   }
   const [characters, updateCharacters] = useState(test);
-  console.log(characters);
-  const handleOnDragEnd = function(result:any) {
-    if (!result.destination) return;
-    const items = Array.from(characters);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+  const [characters2, updateCharacters2] = useState(test2);
+  const getItemStyle = (isDragging: any, draggableStyle: any) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: 'none',
 
-    updateCharacters(items);
-    console.log(characters);
+    // change background colour if dragging
+    background: isDragging ? 'lightgreen' : 'grey',
+
+    // styles we need to apply on draggables
+    ...draggableStyle
+  });
+
+  const move = function(result:any) {
+    const { source, destination, droppableSource, droppableDestination } = result;
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+  };
+
+  // const id2List = {
+  //   droppable: 'items',
+  //   droppable2: 'selected'
+  // };
+
+  // 드래그 종료 시.
+  const handleOnDragEnd = function(result:any) {
+    const { source, destination } = result;
+    console.log('result : ', source, destination);
+    if (!destination) return;
+
+    if(source.droppableId === destination.droppableId) {
+        // 첫 번째 컬럼에서의 변경이라면,
+        if(destination.droppableId === "characters") {
+          const items = Array.from(characters);
+          const [reorderedItem] = items.splice(result.source.index, 1);
+          items.splice(result.destination.index, 0, reorderedItem);
+          updateCharacters(items);
+          console.log(1);
+        }
+        // 두 번째 컬럼에서의 변경이라면,
+        if(destination.droppableId === "characters2") {
+          const items2 = Array.from(characters2);
+          const [reorderedItem2] = items2.splice(result.source.index, 1);
+          items2.splice(result.destination.index, 0, reorderedItem2);
+          updateCharacters2(items2); 
+          console.log(2);
+        }
+      }else {
+
+      }
   }
 
   return(
@@ -56,22 +113,49 @@ function PlannerView () {
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="characters">
           {(provided) => (
-             <ul className="characters" {...provided.droppableProps} ref={provided.innerRef}>
+             <div className="characters" {...provided.droppableProps} ref={provided.innerRef}>
              {characters.map(({id, name}, index) => {
                return (
                 <Draggable key={id} draggableId={id} index={index}>
-                  {(provided) => (
-                    <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                  {(provided, snapshot) => {
+                    return(
+                    <div ref={provided.innerRef} 
+                    {...provided.draggableProps} 
+                    {...provided.dragHandleProps}
+                    style={getItemStyle(snapshot.isDragging,
+                      provided.draggableProps
+                      .style)}>
                       <p>
                         { name }
                       </p>
-                    </li>
-                  )}
+                    </div>)
+                  }}
                 </Draggable>
                );
              })}
              {provided.placeholder}
-           </ul>
+           </div>
+          )}
+      </Droppable>
+      <Droppable droppableId="characters2">
+          {(provided) => (
+             <div className="characters2" {...provided.droppableProps} ref={provided.innerRef}>
+             {characters2.map(({id, name}, index) => {
+               return (
+                <Draggable key={id} draggableId={id} index={index}>
+                  {(provided) => {
+                    return(
+                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                      <p>
+                        { name }
+                      </p>
+                    </div>)
+                  }}
+                </Draggable>
+               );
+             })}
+             {provided.placeholder}
+           </div>
           )}
       </Droppable>
       </DragDropContext>
