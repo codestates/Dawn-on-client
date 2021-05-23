@@ -70,7 +70,7 @@ const Nav = (): JSX.Element => {
               closeLoginModal();
             }}
           >
-            회원가입
+            JOIN
           </button>
           {JoinModal && (
             <Join
@@ -85,7 +85,7 @@ const Nav = (): JSX.Element => {
               closeJoinModal();
             }}
           >
-            로그인
+            LOGIN
           </button>
           {LoginModal && (
             <Login
