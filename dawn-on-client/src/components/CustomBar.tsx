@@ -1,5 +1,3 @@
-import "../css/custombar.css"
-
 function CustomBar () {
 
 
