@@ -2,12 +2,16 @@
 // PlannerForm , CustomBar
 import PlannerView from "../components/PlannerView";
 import CustomBar from "../components/CustomBar";
+import "../css/plannerview.css";
 
 function CustomPlanner() {
   return (
     <>
-      <PlannerView />
-      <CustomBar />
+      <div id="custom-planner-container">
+        <div className="side-txt">Custom Planner</div>
+        <PlannerView />
+        <CustomBar />
+      </div>
     </>
   );
 }

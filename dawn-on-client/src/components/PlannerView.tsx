@@ -1,20 +1,41 @@
 import { useState } from "react";
+import { RootState } from '../store/store';
+import { useSelector } from 'react-redux'
 import {
   DragDropContext,
+  Droppable,
+  Draggable,
 } from 'react-beautiful-dnd';
 import styled from "@emotion/styled";
 import initialState from "../module/initialState";
-import Column from "../components/Column";
+// import TimeTable from "./TimeTable";
+import AddTask from "./AddTask";
 // import TodoBar from "../components/TodoBar";
-
-const Timetable = styled.div`
-  grid-column: 1 / 4  
-`
-const Todo = styled.div`
-  grid-column: 4 / 5
-`
 const Title = styled.h3`
+  flex-basis: 80%;
+  margin: 8px;
   padding: 8px;
+`
+const ToDoContainer = styled.div`
+  font-family: 'KoHo', sans-serif;
+  margin: 8px;
+  border: 1px solid #000;
+  display: flex;
+  grid-column: 3 / 4;
+  grid-row: 1 / 4;
+  border-radius: 5px;
+  flex-direction: column;
+  overflow-y: scroll;
+`
+const Container = styled.div`
+  font-family: 'KoHo', sans-serif;
+  margin: 8px;
+  border: 1px solid #000;
+  display: flex;
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+  border-radius: 5px;
+  flex-direction: column;
 `
 const TaskList = styled.div`
   padding: 8px;
@@ -22,105 +43,98 @@ const TaskList = styled.div`
   min-height: 100px;
 `
 function PlannerView () {
-  // 날짜
- 
-  const dummyData = {
-    date: "2021-05-18",
-    dday: 50,
-    memo:"수능만점 받을거야아아앍",
-    hour:"6h30m",
-  }
+  // const dispatch = useDispatch();
 
-  const myObj: {[index: string]:any} = initialState;
-  const [state, setState] = useState(myObj);
-
-  console.log(state);
+  let addTask = useSelector((state: RootState) => state.addTaskReducer.plannerData.todos);
+  // const [todo, setTodo] = useState(addTask);
+  console.log('origin: ', addTask); 
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result
+    console.log(draggableId);
 
     // 드래그 범위 밖일 떄.
     if (!destination) {
       return
     }
+    console.log('어디서: ', source);
+    console.log('어디로: ', destination);
+    console.log('무엇을: ', draggableId);
 
-    // 같은 컬럼 내에서 순서도 변경 안됐을 시.
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return
-    }
+    const newState = Array.from(addTask);
+    const [removed] = newState.splice(source.index, 1);
+    newState.splice(destination.index, 0, removed);
 
-    // 드래그 시작 시점
-    const start = state.columns[source.droppableId]
-    // 드래그 종료 지점
-    const finish = state.columns[destination.droppableId]
-
-    // 같은 컬럼 내에서 순서 변경.
-    if (start === finish) {
-      const newTaskIds = Array.from(start.taskIds)
-      newTaskIds.splice(source.index, 1)
-      newTaskIds.splice(destination.index, 0, draggableId)
-
-      const newColumn = {
-        ...start,
-        taskIds: newTaskIds
-      }
-
-      const newState = {
-        ...state,
-        columns: {
-          ...state.columns,
-          [newColumn.id]: newColumn
-        }
-      }
-
-      setState(newState)
-      return;
-    }
-
-    // 다른 컬럼으로 이동 
-    const startTaskIds = Array.from(start.taskIds)
-    startTaskIds.splice(source.index, 1)
-    const newStart = {
-      ...start,
-      taskIds: startTaskIds
-    }
-
-    const finishTaskIds = Array.from(finish.taskIds)
-    finishTaskIds.splice(destination.index, 0, draggableId)
-    const newFinish = {
-      ...finish,
-      taskIds: finishTaskIds
-    }
-
-    const newState = {
-      ...state,
-      columns: {
-        ...state.columns,
-        [newStart.id]: newStart,
-        [newFinish.id]: newFinish
-      }
-    }
-    setState(newState)
+    addTask = newState;
+    console.log('***: ', newState);
   }
 
-  // Column1, Column2 tasks 분기.
-  const tasks1 = state.columns['column-1'].taskIds.map(
-    (taskId:any) => state.tasks[taskId]
-  )
+  // Add 모달
+  const [addTaskModal, setaddTaskModal] = useState(false);
+  // Add 모달 open
+  const openModal = function() {
+    setaddTaskModal(true);
+    const background = document.querySelector('#custom-planner-container ') as HTMLElement;
+    background.style.backgroundColor = '#1d469844';
+  }
+  const closeModal = () => {
+    setaddTaskModal(false);
+    const background = document.querySelector('#custom-planner-container ') as HTMLElement;
+    background.style.backgroundColor = '#fff';
+  }
+  
+  // id 값 상태.
+  const [id, setId] = useState<number>(5);
 
   return(
     <>
       <div id="plannerform-container">
-      <div className="plnnerfrom-date">{dummyData.date}</div>
-      <div className="plnnerfrom-dday">{dummyData.dday}</div>
-      <div className="plnnerfrom-memo">{dummyData.memo}</div>
-      <div className="plnnerfrom-hour">{dummyData.hour}</div>
+      <div className="plnnerfrom-date">{initialState.plannerData.date}</div>
+      <div className="plnnerfrom-dday">{initialState.plannerData.dday}</div>
+      <div className="plnnerfrom-memo">{initialState.plannerData.memo}</div>
+      <div className="plnnerfrom-hour">{initialState.plannerData.hour}</div>
         <DragDropContext onDragEnd={onDragEnd}>
-          <Timetable id="task1">
-            <Column key={state.columns['column-1'].id} column={state.columns['column-1']} tasks={tasks1} />
-          </Timetable>
+          <ToDoContainer>
+          <div className="title-container">
+            <Title>TO DO LIST</Title>
+            <button onClick={() => openModal()} className="todo-add-btn">+</button>
+          </div>
+          {addTaskModal && 
+            <AddTask closeModal={closeModal} setId={setId} id={id}/>
+          }
+          <Droppable droppableId="TASK">
+            {(provided, snapshot) => (
+              <TaskList
+                ref={provided.innerRef}
+                draggable={snapshot.isDraggingOver}
+                {...provided.droppableProps}
+              >
+                {addTask.map((ele:any , index:number) => (
+                    <Draggable
+                      draggableId={ele.id}
+                      index={index}
+                      key={ele.id}
+                    >
+                    {(provided, snapshot) => (
+                      <Container
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                        id="task-container"
+                      >
+                        <p>{ele.subject}</p>
+                        <div>{ele.task}</div>
+                      </Container>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </TaskList>
+            )}
+          </Droppable>
+          </ToDoContainer>
+          <Container>
+          
+          </Container>
          </DragDropContext>
       </div>
     </>
