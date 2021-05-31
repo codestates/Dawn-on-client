@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap");
 html,
 body {
   margin: 0;
@@ -14,9 +14,14 @@ body {
 #root {
   display: grid;
   width: 100%;
+  height: 100%;
   grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
-  grid-template-rows: 60px 0.5fr repeat(4, 1fr) 100px;
+  grid-template-rows: 60px repeat(5, 1fr) 60px;
   column-gap: 15px;
+}
+
+.swal-title {
+  font-size: 20px;
 }
 
 button {
@@ -34,13 +39,24 @@ button {
 }
 
 #nav-logo {
-  font-family: 'KoHo', sans-serif;
+  font-family: "KoHo", sans-serif;
   justify-self: left;
   margin-left: 100px;
   flex-basis: 50%;
 }
 
-#nav-btn-container {
+#nav-main-btn-container {
+  display: flex;
+  flex-basis: 50%;
+  align-self: center;
+  margin-left: 300px;
+}
+
+#main-nav-search {
+  width: 160px;
+}
+
+#nav-landing-btn-container {
   flex-basis: 50%;
   justify-self: end;
   text-align: right;
@@ -61,11 +77,17 @@ button {
   font-weight: 400;
   letter-spacing: 1.5px;
   color: #424242;
+  font-family: "KoHo", sans-serif;
+  font-size: 1.5rem;
+  background-color: none;
   background: none;
+  outline: none;
+  border: none;
+  margin-left: 1rem;
 }
 
 .landing-btn {
-  font-family: 'KoHo', sans-serif;
+  font-family: "KoHo", sans-serif;
   font-size: 1.5rem;
   background-color: none;
   background: none;
@@ -89,7 +111,7 @@ button {
   }
 }
 
-@media all and (max-width:767px) {
+@media all and (max-width: 767px) {
   #nav-container {
     background-color: cadetblue;
   }

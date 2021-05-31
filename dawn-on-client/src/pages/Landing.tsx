@@ -11,7 +11,7 @@ const LandingSection = styled.div`
   text-align: center;
   font-size: 50px;
   transition: transform 1s, opacity 1s;
-  overflow-y:scroll;
+  overflow-y: scroll;
 `;
 const Button = styled.button`
   position: fixed;
@@ -51,7 +51,6 @@ function Landing() {
 
   return (
     <>
-      {/* <Login /> */}
       <LandingSection id="section1">
         {/* <img className="back-circle" src={circle} alt=""></img> */}
         <div className="circle"></div>
@@ -60,7 +59,7 @@ function Landing() {
           <p className="description">Project description</p>
         </div>
         <div className="right-img">
-          <img className="section01-img" src={section01} alt="프로젝트 소개"/> 
+          <img className="section01-img" src={section01} alt="프로젝트 소개" />
         </div>
       </LandingSection>
       <LandingSection id="section2">
@@ -69,12 +68,12 @@ function Landing() {
           <p className="description">Target description</p>
         </div>
         <div className="right-img">
-          <img alt="타겟 소개"/> 
+          <img alt="타겟 소개" />
         </div>
       </LandingSection>
       <LandingSection id="section3">
         <div className="left-img">
-          <img alt="star collection 소개"/> 
+          <img alt="star collection 소개" />
         </div>
         <div className="right-txt">
           <div className="title up-on-scroll">Star collection</div>
@@ -85,29 +84,30 @@ function Landing() {
         <div className="inner-scroll">
           <div className="title up-on-scroll">How It Works</div>
           <div className="inner-scroll-pair">
-            <div className="inner-scroll-title">Custom planner</div> 
-            <img alt="howto01"/> 
+            <div className="inner-scroll-title">Custom planner</div>
+            <img alt="howto01" />
           </div>
           <div className="inner-scroll-pair">
-            <div className="inner-scroll-title">Save your feed</div> 
-            <img alt="howto02"/> 
+            <div className="inner-scroll-title">Save your feed</div>
+            <img alt="howto02" />
           </div>
           <div className="inner-scroll-pair">
-            <div className="inner-scroll-title">Share with other learner</div> 
-            <img alt="howto03"/> 
+            <div className="inner-scroll-title">Share with other learner</div>
+            <img alt="howto03" />
           </div>
           <div className="inner-scroll-pair">
-            <div className="inner-scroll-title">Star collection</div> 
-            <img alt="howto04"/> 
+            <div className="inner-scroll-title">Star collection</div>
+            <img alt="howto04" />
           </div>
         </div>
       </LandingSection>
       <LandingSection id="section5">
-        <div>
-          이미지 슬라이드
-        </div>
+        <div>이미지 슬라이드</div>
       </LandingSection>
-      <Button id="landing-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+      <Button
+        id="landing-btn"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
         Top
       </Button>
       <Footer />

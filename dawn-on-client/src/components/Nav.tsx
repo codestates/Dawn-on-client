@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLoginState } from "../module/isLogin";
 import { useHistory } from "react-router-dom";
 
+// 검색 기능 로직 구현하기
 const Nav = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -18,6 +19,10 @@ const Nav = () => {
   const isLogin = useSelector((status: RootState) => {
     return status.isLoginReducer.isLogin;
   });
+
+  // 검색한 값을 임시 저장해두고 검색버튼 클릭 시, 해당 변수를 사용한다
+  const [search, setsearch] = useState<string>("");
+  // console.log("검색: ", search);
 
   // 로그인 , 회원가입 모달창을 boolean값을 사용하여 열고 닫는다
   const [JoinModal, setJoinModal] = useState<boolean>(false);
@@ -39,17 +44,27 @@ const Nav = () => {
     setJoinModal(false);
   };
 
+  // 로그아웃 함수 => 로컬 로그아웃은 성공돠나, 소셜 로그아웃은 실패됌
   const logoutRequestHandler = function () {
+    const accessToken = window.localStorage.getItem("accessToken");
+
     axios
-      .post(`https://localhost:4000/signout`, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .post(
+        `http://localhost:4000/auth/signout`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
+        }
+      )
       .then(() => {
         swal("로그아웃되었습니다", "", "success");
-        // Explore 페이지로 리디렉션.
         dispatch(getLoginState(false));
         history.push("/");
+        window.localStorage.clear();
       })
       .catch((err) => {
         console.log(err);
@@ -61,17 +76,21 @@ const Nav = () => {
     <div id="nav-container">
       <h1 id="nav-logo">Dawn-on</h1>
       {isLogin ? (
-        <div>
-          <input
-            className="main-nav"
-            placeholder="아이디 혹은 테그를 검색하세요"
-          />
-          <button className="main-nav">플래너 작성</button>
+        <div id="nav-main-btn-container">
+          <div>
+            <input
+              id="main-nav-search"
+              placeholder="아이디 혹은 테그를 검색하세요"
+              onChange={(e) => setsearch(e.target.value)}
+            />
+            <button>Search</button>
+          </div>
+          <button className="main-nav">Make a Planner</button>
           <button className="main-nav" onClick={() => history.push("/explore")}>
-            모아보기
+            Explore
           </button>
           <button className="main-nav" onClick={() => history.push("/myfeed")}>
-            개인피드
+            My Feed
           </button>
           <button
             className="main-nav"
@@ -79,11 +98,11 @@ const Nav = () => {
               logoutRequestHandler();
             }}
           >
-            로그아웃
+            Log OUT
           </button>
         </div>
       ) : (
-        <div id="nav-btn-container">
+        <div id="nav-landing-btn-container">
           <button
             className="landing-btn"
             onClick={() => {

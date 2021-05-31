@@ -1,5 +1,6 @@
 import { compose, createStore, applyMiddleware } from "redux";
 import rootReducer from "../module/index";
+import { persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 
 declare global {
@@ -10,10 +11,14 @@ declare global {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
+export const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 
+export const persistor = persistStore(store);
+
 export type RootState = ReturnType<typeof rootReducer>;
-export default store;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type AppDispatch = typeof store.dispatch
+export default { store, persistor };
