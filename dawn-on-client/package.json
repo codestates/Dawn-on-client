@@ -18,17 +18,21 @@
     "@types/react-dom": "^17.0.5",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
+    "@types/sweetalert": "^2.0.4",
     "antd": "^4.16.0",
     "axios": "^0.21.1",
+    "jquery": "^3.6.0",
     "material-ui-color": "^1.2.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-beautiful-dnd": "^13.1.0",
+    "react-circular-progressbar": "^2.0.4",
     "react-dom": "^17.0.2",
     "react-google-login": "^5.2.2",
     "react-kakao-login": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "sweetalert": "^2.1.2",
     "typescript": "^4.2.4",
@@ -57,5 +61,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.5"
   }
 }

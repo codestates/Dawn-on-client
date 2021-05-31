@@ -1,5 +1,6 @@
 const initialState = {
   isLogin: false,
+  isEditProfile: false,
   subject_label: [
     {
       subject: '국어',

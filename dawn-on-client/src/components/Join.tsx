@@ -4,10 +4,11 @@ import swal from "sweetalert";
 import "../App.css";
 import "../css/join.css";
 import axios from "axios";
+import $ from "jquery";
 
 type JoinProps = {
-  closeJoinModal: any;
-  openLoginModal: any;
+  closeJoinModal: Function;
+  openLoginModal: Function;
 };
 
 const JoinContainer = styled.div`
@@ -41,16 +42,16 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
   const [form, setForm] = useState({
     user_id: "",
     user_nickname: "",
-    user_name: "",
+    user_job: "",
     user_password: "",
     user_passwordcheck: "",
   });
 
   const {
     user_id,
-    user_password,
     user_nickname,
-    user_name,
+    user_job,
+    user_password,
     user_passwordcheck,
   } = form;
 
@@ -62,12 +63,21 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     });
   };
 
+  // 셀렉트 박스 value값 가져오기
+  const getSelectValue = () => {
+    const value = $("#join-selectbox option:selected").text();
+    setForm({
+      ...form,
+      user_job: value,
+    });
+  };
+
   //입력하다 말고 닫기 버튼 누르면 그동안 Hooks에 임시저장된 데이터 다시 초기화
   const clearformData = () => {
     setForm({
       user_id: "",
       user_nickname: "",
-      user_name: "",
+      user_job: "",
       user_password: "",
       user_passwordcheck: "",
     });
@@ -75,6 +85,7 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
 
   // 입력한 정보 확인 및 비밀번호 확인검사
   const checkInputDataHandler = function () {
+    console.log("회원가입 정보: ", form);
     const formdata = Object.values(form);
     for (let data of formdata) {
       if (data === "") {
@@ -84,26 +95,29 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     if (user_password !== user_passwordcheck) {
       return swal("비밀번호가 일치하지 않습니다", "", "warning");
     }
-    joinRequestHandler();
+    Local_joinRequestHandler();
   };
 
-  const joinRequestHandler = function () {
+  const Local_joinRequestHandler = function () {
     console.log("회원가입 데이터", form);
     axios
       .post(
-        `https://localhost:4000/signup`,
+        `http://localhost:4000/auth/signup`,
         {
-          user_id: user_id,
-          user_password: user_password,
-          user_nickname: user_nickname,
-          user_name: user_name,
+          userdto: {
+            user_id: user_id,
+            user_password: user_password,
+            user_nickname: user_nickname,
+            user_job: user_job,
+            // provider: "local",
+          },
         },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       )
-      .then((res) => {
+      .then(() => {
         swal("회원가입 되었습니다", "", "success");
         clearformData();
         closeJoinModal();
@@ -111,6 +125,8 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
       })
       .catch((err) => {
         console.log(err);
+        swal("아이디가 중복됩니다", "", "error");
+        // 낙네임도 중복되면 회원가입 불가
       });
   };
 
@@ -130,14 +146,6 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
         <div className="join-input-container">
           <input
             className="join-input"
-            id="login-input-name"
-            name="user_name"
-            value={user_name}
-            placeholder="이름"
-            onChange={onChange}
-          />
-          <input
-            className="join-input"
             id="login-input-nickname"
             name="user_nickname"
             value={user_nickname}
@@ -152,11 +160,24 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             placeholder="아이디"
             onChange={onChange}
           />
+          <select
+            className="join-input"
+            id="join-selectbox"
+            onChange={getSelectValue}
+          >
+            <option value="default">- 직업을 선택해주세요 -</option>
+            <option value="수험생">수험생</option>
+            <option value="공시생">공시생</option>
+            <option value="고시생">고시생</option>
+            <option value="대학생">대학생</option>
+            <option value="기타">기타</option>
+          </select>
           <input
             className="join-input"
             id="login-input-password"
             name="user_password"
             value={user_password}
+            type="password"
             placeholder="비밀번호"
             onChange={onChange}
           />
@@ -165,6 +186,7 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             id="login-input-id"
             name="user_passwordcheck"
             value={user_passwordcheck}
+            type="password"
             placeholder="비밀번호 확인"
             onChange={onChange}
           />
