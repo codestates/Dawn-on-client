@@ -7,17 +7,10 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getLoginState } from "../module/isLogin";
-import GoogleLogin from "react-google-login";
-import KakaoLogin from "react-kakao-login";
-
-const googleClientID =
-  "89393125923-mkfjgjjtfd75qt39snddv1po0lfca2l0.apps.googleusercontent.com";
-
-const kakaoJSkeys = "91e640cbb9c3ec3d5acef0ef3f7fdc28";
 
 type LoginProps = {
-  closeLoginModal: any;
-  openJoinModal: any;
+  closeLoginModal: Function;
+  openJoinModal: Function;
 };
 
 const LoginContainer = styled.div`
@@ -46,6 +39,7 @@ const CloseButton = styled.button`
   grid-row: 1 / 2;
 `;
 
+// 로그인 성공 시, Redux-persist에 해당 사용자의 정보, 로그인 상태값, accessToken을 저장시켜줘야한다
 function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -64,44 +58,65 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
     });
   };
 
-  // Google Login
-  // 소셜 로그인을 위한 axios 요청를 따로 사용해야함
-  const responseGoogle = (res: any) => {
-    console.log("구글: 전체 데이터", res);
-    console.log("구글: 사용자 프로필 데이터", res.profileObj);
-    dispatch(getLoginState(true));
+  // 로그인 성공 시, 서버로부터 token을 받아온다
+  function Local_Login_getToken() {
+    axios
+      .get("http://localhost:4000/auth/signin/check", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("로컬 로그인 성공");
+        //Token을 LocalStorge에 저장해서 다른 axios에서 필요할 때마다 사용한다
+        //추가적으로 로그인한 사용자의 고유 Primary key를 저장해줘야한다
+        window.localStorage.setItem("accessToken", res.data.accessToken);
+        window.localStorage.setItem("refreshToken", res.data.refreshToken);
+
+        // 로그인 모달창 닫기
+        closeLoginModal();
+        // 로그인 상태값 true로 변경
+        dispatch(getLoginState(true));
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("token 가져오기 실패", "", "error");
+        history.push("/");
+        dispatch(getLoginState(false));
+      });
+  }
+
+  //구글 로그인
+  const googleLogins = () => {
+    window.open(`http://localhost:4000/auth/google`, "_self");
     closeLoginModal();
-    history.push("/explore");
   };
 
-  //Kakao Login
-  const responseKaKao = (res: any) => {
-    console.log("카카오톡 로그인 성공:", res);
-    dispatch(getLoginState(true));
+  //카카오톡 로그인
+  const kakakoLogins = () => {
+    window.open(`http://localhost:4000/auth/kakao`, "_self");
     closeLoginModal();
-    history.push("/explore");
   };
 
-  // Login Fail
-  const responseFail = (err: any) => {
-    console.error(err);
-    swal("로그인 실패", "", "warning");
-  };
-
-  const loginRequestHandler = function () {
-    console.log("입력한 사용자 정보", form);
+  //로컬 로그인 함수
+  const Local_loginRequestHandler = function () {
+    console.log("로그인한 사용자 정보", form);
     axios
       .post(
-        `https://localhost:4000/signin`,
+        `http://localhost:4000/auth/signin`,
         { user_id: user_id, user_password: user_password },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       )
-      .then((res) => {
+      .then(() => {
         swal("로그인되었습니다", "", "success");
-        // Explore 페이지로 리디렉션.
+        Local_Login_getToken();
+      })
+      .then(() => {
+        closeLoginModal();
         dispatch(getLoginState(true));
         history.push("/explore");
       })
@@ -147,29 +162,27 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
             <button
               id="login-btn"
               onClick={() => {
-                loginRequestHandler();
+                Local_loginRequestHandler();
               }}
             >
               LOG IN
             </button>
           </div>
           <div id="login-btn-container">
-            <GoogleLogin
-              clientId={googleClientID}
-              buttonText="Google로 로그인하기"
-              onSuccess={responseGoogle}
-              onFailure={responseFail}
-              // render={(props: any) => (
-              //   <button onClick={props.onClick}>구글 로그인</button>
-              // )}
-            />
-            <KakaoLogin
-              token={kakaoJSkeys}
-              onSuccess={responseKaKao}
-              onFail={responseFail}
-              onLogout={console.info}
-              useLoginForm
-            />
+            <button
+              onClick={() => {
+                googleLogins();
+              }}
+            >
+              구글 로그인
+            </button>
+            <button
+              onClick={() => {
+                kakakoLogins();
+              }}
+            >
+              카카오톡 로그인
+            </button>
           </div>
         </LoginContainer>
       </div>
