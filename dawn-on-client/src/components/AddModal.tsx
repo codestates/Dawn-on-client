@@ -14,13 +14,29 @@ const AddTodoBar = styled.div`
   left: calc(50% - 15vw);
   background-color: #fff;
   z-index: 1;
-  width: 30vw;
+  width: 24vw;
   height: 60vh;
   border: 1px solid #000;
   border-radius: 5px;
   flex-direction: column;s
   overflow-y: scroll;
   padding: 10px 15px;
+`
+
+const LabelContainer = styled.div`
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 2px;
+`
+
+const DeleteBtn = styled.button`
+  background: none;
+  text-align: center;
+  border: none;
+  outline: none;
+  float: right;
 `
 
 type Props = {
@@ -106,12 +122,13 @@ function AddTodoModal ({clickHandler} :Props) {
     if(selectStatus) { // 이미 선택한 라벨이 있다면?
       selectStatus.classList.remove("selected"); 
       e.target.classList.add("selected"); 
-      setSelectedSub(e.target.value);
+      setSelectedSub(e.target.id);
     }      
     else {
       e.target.classList.add("selected"); 
-      setSelectedSub(e.target.value);
+      setSelectedSub(e.target.id);
     }
+    console.log(selectedSub);
   }
 
   // 새로운 과목 라벨 생성 함수.
@@ -137,6 +154,11 @@ function AddTodoModal ({clickHandler} :Props) {
     if(subject.length > 7) {
       swal("라벨은 8개 이상 생성할 수 없습니다.", "", "error");
     }
+  }
+
+  const deleteLabel = function (e:any) {
+    const sub = subject.filter(ele => e.target.id !== ele.subject);
+    setSubject(sub);
   }
   
   // save 버튼 이벤트
@@ -185,11 +207,10 @@ function AddTodoModal ({clickHandler} :Props) {
         </form>
         <button className="subject-edit-btn">edit</button>
         <div className="select-subject">
-        <ColorPalette onSelect={(bgColor) => {
+            <ColorPalette onSelect={(bgColor) => {
               setColor(palette[bgColor]);
               console.log(bgColor)
-            }} 
-            
+            }}
             palette={palette} />
           <div className="make-new-label">
             <input 
@@ -203,22 +224,24 @@ function AddTodoModal ({clickHandler} :Props) {
               <i className="fas fa-plus"></i>
             </button>
           </div>
+          <LabelContainer>
             {
               subject.map(ele => 
-                  <button onClick={(e:any)=> selectHandler(e)} 
-                  key={ele.subject} 
-                  name="subject" 
-                  value={ele.subject} 
-                  id={ele.subject}
-                  style={{border:`1px solid ${ele.color}`}}
-                  className="todobar-subject">{ele.subject}</button>
+                <div onClick={(e:any) => selectHandler(e)} 
+                key={ele.subject} 
+                id={ele.subject}
+                style={{backgroundColor: ele.color}}
+                className="todobar-subject">{ele.subject}
+                <DeleteBtn onClick={(e:any) => deleteLabel(e)} id={ele.subject}>x</DeleteBtn>
+                </div>
               )
             }
+          </LabelContainer>
         </div>
-        <textarea onChange={(e:any) => setTodo(e.target.value)} value={todo} className="todobar-todo" placeholder="할 일을 입력해주세요."></textarea>
+        <textarea onChange={(e:any) => setTodo(e.target.value)} value={todo} className="todobar-todo" placeholder="할 일을 입력해주세요.">{selectedSub}</textarea>
         <div className="modal-btn-container">
-          <button onClick={() => clickHandler()} className="todobar-save-btn" >Cancel</button>
           <button onClick={() => {setId(id + 1);saveTodo();}} className="todobar-save-btn" >SAVE</button>
+          <button onClick={() => clickHandler()} className="todobar-save-btn" >Cancel</button>
         </div>
        </AddTodoBar>
   )
