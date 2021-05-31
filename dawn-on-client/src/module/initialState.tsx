@@ -1,23 +1,58 @@
 const initialState = {
   isLogin: false,
-  tasks: {
-    'task-1': { id: 'task-1', subject:'국어', content: '6월 모의고사 풀이', hour: 2},
-    'task-2': { id: 'task-2', subject:'영어', content: '9월 모의고사 오답노트', hour: 1 },
-    'task-3': { id: 'task-3', subject:'국어', content: '비문학 공부', hour:2 },
-    'task-4': { id: 'task-4', subject:'생명과학', content: '2019 수능 문제 풀이', hour:1 }
-  },
-  columns: {
-    'column-1': {
-      id: 'column-1',
-      title: 'Time table',
-      taskIds: ['task-1', 'task-2', 'task-4']
+  subject_label: [
+    {
+      subject: '국어',
+      color: '#ecf0f1',
     },
-    'column-2': {
-      id: 'column-2',
-      title: 'To Do',
-      taskIds: ['task-3']
+    {
+      subject: '수학',
+      color: '#ecf0f1',
     },
-  },
+  ],
+  plannerDatas: {
+    date: "2021-05-18",
+    dday: 50,
+    today_learning_time: 0,
+    memo:"수능만점 받을거야아아앍",
+    comment: "힘들어..",
+    hour:"6h30m",
+    back_color: "#fff",
+    todos: [
+      {
+          id: '1',
+          learning_time: 1,
+          box_color: "#ecf0f1",
+          todo_comment: '오늘 해야할 공부는 이거야',
+          subject: '국어',
+          start_time: "07:00",
+          checked: false,
+      },
+      {
+          id: '2',
+          learning_time: 2,
+          box_color: "#ecf0f1",
+          todo_comment: '오늘 해야할 공부는 이거야',
+          subject: '수학',
+          start_time: "08:00",
+          checked: true,
+      },
+    ],
+    tags : [
+      {
+          "id": 1,
+          "tag": "취준"
+      },
+      {
+          "id": 2,
+          "tag": "개발"
+      },
+      {
+          "id": 3,
+          "tag": "코딩"
+      }
+  ]
+  }
 };
 
 export default initialState;
