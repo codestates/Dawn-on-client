@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import isLoginReducer from "./isLogin";
-import addColumnReducer from "./dragging";
+import addTaskReducer from "./addTaskModule";
 
 const rootReducer = combineReducers({
   isLoginReducer,
-  addColumnReducer
+  addTaskReducer
 });
 
 export default rootReducer;
