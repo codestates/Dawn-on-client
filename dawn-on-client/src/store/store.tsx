@@ -16,4 +16,6 @@ const store = createStore(
 );
 
 export type RootState = ReturnType<typeof rootReducer>;
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type AppDispatch = typeof store.dispatch
 export default store;
