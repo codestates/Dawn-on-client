@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import isEditProfileReducer from "./EditProfileModule";
+import editTodoReducer from "./editTodoModule";
 import isLoginReducer from "./isLogin";
 import addTaskReducer from "./addTaskModule";
 const persistConfig = {
@@ -12,6 +13,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   isLoginReducer,
   addTaskReducer,
-  isEditProfileReducer
+  isEditProfileReducer,
+  editTodoReducer
 });
 export default persistReducer(persistConfig, rootReducer);
