@@ -1,27 +1,40 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import { useDispatch } from "react-redux";
 import { getEditProfileState } from "../module/EditProfileModule";
+import { useEffect } from "react";
 
 // 로그인,회원가입 모달창의 닫기버튼과 비슷하게 EditProfile 컴포넌트 상태값을 Redux에 boolean타입으로 저장하여
 // true,false로 열고 닫기를 수행한다
 
-type MyProfileProps = {
+type MyProfileInfo = {
   user_nickname: string;
-  user_img: any;
+  user_img: string;
   user_job: string;
-  user_comment: string;
+  profile_comment: string;
   total_learning_time: number;
   total_posting: number;
 };
 
-function MyProfileSidebar({
-  user_nickname,
-  user_img,
-  user_job,
-  user_comment,
-  total_learning_time,
-  total_posting,
-}: MyProfileProps) {
+function MyProfileSidebar() {
   const dispatch = useDispatch();
+
+  const MyFeedInfo: MyProfileInfo = useSelector((status: RootState) => {
+    return status.getMyFeedListReducer.MyFeedinfo;
+  });
+
+  let user_nickname = "";
+  user_nickname = MyFeedInfo.user_nickname;
+  let user_img = "";
+  user_img = MyFeedInfo.user_img;
+  let user_job = "";
+  user_job = MyFeedInfo.user_job;
+  let profile_comment = "";
+  profile_comment = MyFeedInfo.profile_comment;
+  let total_learning_time = 0;
+  total_learning_time = MyFeedInfo.total_learning_time;
+  let total_posting = 0;
+  total_posting = MyFeedInfo.total_posting;
 
   return (
     <div id="MyProfileSidebar-container">
@@ -51,7 +64,7 @@ function MyProfileSidebar({
 
           <div id="info-container-2">
             <div id="user_comment_title">Comment</div>
-            <div id="user_comment">{user_comment}</div>
+            <div id="user_comment">{profile_comment}</div>
           </div>
         </div>
 
