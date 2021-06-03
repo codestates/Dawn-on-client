@@ -112,10 +112,12 @@ const Nav = () => {
         }
       )
       .then(() => {
-        swal("로그아웃되었습니다", "", "success");
         dispatch(getLoginState(false));
         dispatch(getClickPostView({}));
         dispatch(getClickExploreView({}));
+      })
+      .then(() => {
+        swal("로그아웃되었습니다", "", "success");
         history.push("/");
         window.localStorage.clear();
       })
