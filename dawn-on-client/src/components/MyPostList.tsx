@@ -1,37 +1,33 @@
-import React from "react";
 import MyPost from "./MyPost";
 import empty_folder from "../img/empty_folder.png";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 // map함수를 이용하여 게시물 목록을 각각 하나씩 렌더링한다
 // 인피니티 스크롤사용...
-type MyPostListProps = {
-  postDatas: Array<any>;
-};
 
-function MyPostList({ postDatas }: MyPostListProps) {
-  console.log("게시물 목록에 전달받은 데이터: ", postDatas);
+// 가장 오래된 순으로 입력되어서 역순으로 maping을 하여 랜더링함
+function MyPostList() {
+  const MyFeedList = useSelector((status: RootState) => {
+    return status.getMyFeedListReducer.MyFeedList;
+  });
+
+  let data_Size = 0;
+  data_Size = MyFeedList.length ? MyFeedList.length : 0;
+
   return (
     <div id="MyPostList-container">
       <div id="MyPostList-subtitle">내 게시물 목록</div>
-      {postDatas.length === 0 ? (
-        // <div id="postDatas-empty">
-        //   <img alt="empty_img" src={empty_folder} />
-        //   <div id="postDatas-empty-comment">목록이 비어있습니다</div>
-        // </div>
+      {data_Size !== 0 ? (
         <div id="MyPostList-posts">
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-          <MyPost postData={postDatas} />
-        </div>
-      ) : (
-        <div id="MyPostList-posts">
-          {postDatas.map((post) => (
+          {MyFeedList.map((post: any) => (
             <MyPost key={post.id} postData={post} />
           ))}
+        </div>
+      ) : (
+        <div id="postDatas-empty">
+          <img alt="empty_img" src={empty_folder} />
+          <div id="postDatas-empty-comment">목록이 비어있습니다</div>
         </div>
       )}
     </div>

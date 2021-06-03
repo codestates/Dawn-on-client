@@ -59,8 +59,8 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   };
 
   // 로그인 성공 시, 서버로부터 token을 받아온다
-  function Local_Login_getToken() {
-    axios
+  async function Local_Login_getToken() {
+    await axios
       .get("http://localhost:4000/auth/signin/check", {
         headers: {
           "Content-Type": "application/json",
@@ -68,7 +68,6 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("로컬 로그인 성공");
         //Token을 LocalStorge에 저장해서 다른 axios에서 필요할 때마다 사용한다
         //추가적으로 로그인한 사용자의 고유 Primary key를 저장해줘야한다
         window.localStorage.setItem("accessToken", res.data.accessToken);
@@ -100,9 +99,9 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   };
 
   //로컬 로그인 함수
-  const Local_loginRequestHandler = function () {
+  const Local_loginRequestHandler = async function () {
     console.log("로그인한 사용자 정보", form);
-    axios
+    await axios
       .post(
         `http://localhost:4000/auth/signin`,
         { user_id: user_id, user_password: user_password },
@@ -112,7 +111,6 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
         }
       )
       .then(() => {
-        swal("로그인되었습니다", "", "success");
         Local_Login_getToken();
       })
       .then(() => {

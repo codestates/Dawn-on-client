@@ -6,7 +6,7 @@ import {deleteTodo,
         changeTotalHour,
         changeCheckedState, 
         addTheSticker} from "../module/addTaskModule";
-import AddTodoModal from "./AddModal";
+import AddModal from "./AddModal";
 import moment from "moment";
 import EditTodoModal from "./EditTodoModal";
 import sticker01 from "../img/sticker/sticker01.png";
@@ -25,7 +25,7 @@ import { Drawer } from 'antd';
 import { Checkbox } from 'antd';
 
 const Container = styled.div`
-  font-family: 'KoHo', sans-serif;
+  font-family: "KoHo", sans-serif;
   font-size: 1rem;
   border: 1px solid rgba(94, 94, 94, 0.212);
   background-color: #fff;
@@ -57,9 +57,9 @@ const TodoBox = styled.div`
 `
 const Subject =styled.span`
   margin-top: 5px;
-`
+`;
 
-const TimeBar =styled.div`
+const TimeBar = styled.div`
   margin-top: 15px;
   width: 100%;
   margin-right: 10px;
@@ -80,9 +80,9 @@ const Hours =styled.span`
   justify-self: right;
 `
 
-const Todo =styled.div`
+const Todo = styled.div`
   margin-top: 5px;
-`
+`;
 
 function AddTodo () {
     const dispatch = useDispatch();
@@ -153,9 +153,6 @@ function AddTodo () {
         setVisible(true);
         e.stopPropagation()
     }
-
-
-
     // add todo card button 이벤트
     const [isClick, setIsClick] = useState(false);
     const clickHandler = function () {
@@ -166,7 +163,6 @@ function AddTodo () {
         setIsClick(true);
       }
     }
-
     // pop over 라이브러리 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -178,6 +174,7 @@ function AddTodo () {
     const opened = Boolean(anchorEl);
     const id = opened ? 'simple-popover' : undefined;
 
+    const [selectedIcon, setSelectedIcon] = useState<string>("");
     // 스티커 선택지
     const stickers = [
       sticker01,
@@ -191,11 +188,12 @@ function AddTodo () {
       sticker09,
     ]
 
-    const [selectedIcon, setSelectedIcon] = useState<string>("");
+
 
     const stickerHandler = function (e:any) {
       dispatch(addTheSticker(e.target.id));
     }
+
 
     const checkedHandler = function(e:any) {
       console.log(`checked = ${e.target.checked}`);
@@ -268,7 +266,7 @@ function AddTodo () {
         <Container id="todo-veiw-container">
           <button onClick={() => clickHandler()} className="add-todo-btn"><i className="fas fa-plus-circle"></i></button>
           {isClick && 
-            <AddTodoModal clickHandler={clickHandler} />
+            <AddModal clickHandler={clickHandler} />
           }
           <h3 className="todobar-title">Time Table</h3>
           {todoDatas.length === 0
@@ -313,7 +311,10 @@ function AddTodo () {
         </Drawer>
       </>
     )
-}
+};
+
+
+
+  
 
 export default AddTodo;
-

@@ -33,7 +33,38 @@ const initialState = {
           checked: true,
       },
     ],
-  }
+  },
+  click_postview: Object,
+  click_exploreview: Object,
+  ExploreList: [],
+  MyFeedList: [],
+  MyFeedinfo: {
+    user_nickname: "",
+    user_img: "",
+    user_job: "",
+    profile_comment: "",
+    total_learning_time: 0,
+    total_posting: 0,
+  },
+  ranking_first: {
+    user_img: "",
+    user_nickname: "",
+    total_thumbsup: 0,
+  },
+  ranking_second: {
+    user_img: "",
+    user_nickname: "",
+    total_thumbsup: 0,
+  },
+  ranking_third: {
+    user_img: "",
+    user_nickname: "",
+    total_thumbsup: 0,
+  },
+  MyPostThumbsUp: Boolean,
+  ExploreThumbsUp: Boolean,
+  MyPostThumbsUpCount: Number,
+  ExploreThumbsUpCount: Number,
 };
 
 export default initialState;
