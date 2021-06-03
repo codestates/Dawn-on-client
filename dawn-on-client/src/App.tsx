@@ -5,6 +5,7 @@ import MyFeed from "./pages/MyFeed";
 import CustomPlanner from "./pages/CustomPlanner";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
+import { hot } from "react-hot-loader";
 
 const App = () => {
   return (
@@ -22,4 +23,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(module)(App);

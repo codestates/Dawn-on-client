@@ -1,38 +1,54 @@
-import { useState } from "react";
+import { useState, createRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled"; 
-import {deleteTodo, addUpperData} from "../module/addTaskModule";
-import AddTodoModal from "./AddModal"
+import {deleteTodo, 
+        addMemoData, 
+        changeTotalHour,
+        changeCheckedState, 
+        addTheSticker} from "../module/addTaskModule";
+import AddModal from "./AddModal";
 import moment from "moment";
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import CreateIcon from '@material-ui/icons/Create';
-import DoneIcon from '@material-ui/icons/Done';
-import { Progress } from 'antd';
-
-// 직업군에 맞는 select box 선택지 미리 만들어주고 조건부 -> map;
+import EditTodoModal from "./EditTodoModal";
+import sticker01 from "../img/sticker/sticker01.png";
+import sticker02 from "../img/sticker/sticker02.png";
+import sticker03 from "../img/sticker/sticker03.png";
+import sticker04 from "../img/sticker/sticker04.png";
+import sticker05 from "../img/sticker/sticker05.png";
+import sticker06 from "../img/sticker/sticker06.png";
+import sticker07 from "../img/sticker/sticker07.png";
+import sticker08 from "../img/sticker/sticker08.png";
+import sticker09 from "../img/sticker/sticker09.png";
+import 'antd/dist/antd.css';
+import { RootState } from "../store/store";
+import Popover from '@material-ui/core/Popover';
+import { Drawer } from 'antd';
+import { Checkbox } from 'antd';
 
 const Container = styled.div`
-  font-family: 'KoHo', sans-serif;
+  font-family: "KoHo", sans-serif;
   font-size: 1rem;
   border: 1px solid rgba(94, 94, 94, 0.212);
   background-color: #fff;
-  grid-column: 1 / 4;
-  grid-row: 3 / 4;
+  grid-column: 2 / 4;
+  grid-row: 1 / 5;
   border-radius: 3px;
   flex-direction: column;
   overflow-y: scroll;
   transition: all 1s;
+  box-shadow:
+  7px 7px 20px 0px #0002,
+  4px 4px 5px 0px #0001;
 `
 const TodoBox = styled.div`
   background-color: #fff;
   display: flex;
   border-radius: 3px;
   margin: 5px 5px;
-  background-color: #fff;
-  animation: fadeIn ease 1s;
+  animation: fadeIn ease 1;
+  font-size: 1.2rem;
+  // border: 1px solid rgba(0, 0, 0, 0.212);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.212);
+  border-right: 1px solid rgba(0, 0, 0, 0.212);
   box-shadow:
   -7px -7px 20px 0px #fff9,
   -4px -4px 5px 0px #fff9,
@@ -41,192 +57,264 @@ const TodoBox = styled.div`
 `
 const Subject =styled.span`
   margin-top: 5px;
-`
+`;
 
-const TimeBar =styled.div`
+const TimeBar = styled.div`
   margin-top: 15px;
   width: 100%;
   margin-right: 10px;
+  display: flex;
 `
 
 
 const StartTime =styled.span`
-  font-size: 1rem;
-  margin-top: 5px;
+  font-size: 1.1rem;
   margin-left: 10px;
+  align-self: center;
+  flex-basis: 83%;
 `
 
 const Hours =styled.span`
-  font-size: 1rem;
-  margin-rignth: 10px;
-  margin-left: 10px;
+  font-size: 1.1rem;
+  align-self: center;
+  justify-self: right;
 `
 
-const Todo =styled.div`
+const Todo = styled.div`
   margin-top: 5px;
-`
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    modal: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #000',
-      borderRadius: '3px',
-      boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
-    },
-    text: {
-      height: '40px',
-    }
-  }),
-);
+`;
 
 function AddTodo () {
-    const classes = useStyles();
     const dispatch = useDispatch();
-    const plannerDatas = useSelector(state => state.addTaskReducer.plannerDatas);
-    const todos = useSelector(state => state.addTaskReducer.plannerDatas.todos);
-    todos.sort(function (a:any, b:any) {
+    const divRef = createRef<HTMLDivElement>();
+    const plannerDatas = useSelector((state:RootState) => state.addTaskReducer.plannerDatas);
+    const todos = useSelector((state:RootState) => state.addTaskReducer.plannerDatas.todos);
+
+    const [todoDatas, setTodoDatas] = useState(todos);
+    useEffect(() => {
+      setTodoDatas(todos)
+    }, [todos]);
+    
+    // useSelector로 받아온 todos 목록을 시간대에 따라 정렬.
+    todoDatas.sort(function (a:any, b:any) {
       return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
     })
-    console.log(todos);
-    //todos의 hour의 합계를 구하자
-    const runningTime = todos.reduce((acc: any, todo:any) => {
-      return acc + todo.learning_time;
-    }, 0)
 
+    //todos의 hour의 합계를 구해 total running time 표시.
+    const runningTime = todoDatas.reduce((acc: any, todo: any) => {
+      return acc + todo.learning_time;
+    }, 0);
+    
+    // runningTime 바뀔 때 마다 total time 바뀌도록 dispatch 요청
+    useEffect(() => {
+      console.log('작동');
+      dispatch(changeTotalHour(`${runningTime}h`))}, [dispatch, runningTime]);
 
     const today = moment().format('YYYY-MM-DD');
-    const [memo, setMemo] = useState("오늘도 화이팅!");
-    const date =  plannerDatas.date;
-    const hour = useSelector(state => state.addTaskReducer.plannerDatas.learning_time);
 
-    const [open, setOpen] = useState(false);
-
-    const handleModal = () => {
-      if(open) {
-        setOpen(false);
-      }else {
-        setOpen(true);
-      }
-    };
 
     // todo 삭제 버튼
     const deleteHandler = function (e:any) {
-      console.log(e.target);
+      console.log('삭제아이디: ', e.target.id);
       dispatch(deleteTodo(e.target.id));
+      closeEditModal();
     }
 
+    const [memo, setMemo] = useState<string>("오늘도 화이팅!");
+    const [memoEdit, setMemoEdit] = useState<boolean>(false);
+    const memoHandler = function () {
+      if(memoEdit) {
+        setMemoEdit(false); 
+        dispatch(addMemoData(memo));
+      }else {
+        setMemoEdit(true);
+      }
+    }
+
+    // Edit Drawer
+    const [visible, setVisible] = useState<boolean>(false);
+    const [editData, setEditData] = useState({
+      id: "",
+      suject: "",
+      color: "",
+      todo_commnet: "",
+      start_time: "",
+      end_time: "",
+      learning_time: 0,
+    })
+
+    const closeEditModal = function () {
+      setVisible(false);
+    }
+
+    const openEditModal = function (e:any) {
+        const editData = todoDatas.filter((el:any) => el.id === e.target.id);
+        setEditData(editData[0]);
+        setVisible(true);
+        e.stopPropagation()
+    }
     // add todo card button 이벤트
     const [isClick, setIsClick] = useState(false);
-
     const clickHandler = function () {
       if(isClick) {
         setIsClick(false);
       }else {
         const rootEle = document.getElementById("root") as HTMLElement;
-        console.log(rootEle);
-        if(rootEle) {
-          rootEle.style.animation = `fadeIn`;
-        }
-
         setIsClick(true);
       }
     }
+    // pop over 라이브러리 
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+    const opened = Boolean(anchorEl);
+    const id = opened ? 'simple-popover' : undefined;
 
-    const [percent, setPercent] = useState(0); 
-    const checkHandler = function (e:any) {
-      const checked = document.querySelectorAll('input[type="checkbox"]:checked')
-      const checklist = document.querySelectorAll('input[type="checkbox"]');
-      const percent = checked.length / checklist.length;
-      setPercent(Math.floor(percent * 100));
+    const [selectedIcon, setSelectedIcon] = useState<string>("");
+    // 스티커 선택지
+    const stickers = [
+      sticker01,
+      sticker02,
+      sticker03,
+      sticker04,
+      sticker05,
+      sticker06,
+      sticker07,
+      sticker08,
+      sticker09,
+    ]
+
+
+
+    const stickerHandler = function (e:any) {
+      dispatch(addTheSticker(e.target.id));
     }
 
 
+    const checkedHandler = function(e:any) {
+      console.log(`checked = ${e.target.checked}`);
+      console.log(`checkedId = ${e.target.id}`);
+      dispatch(changeCheckedState(e.target.id, e.target.checked));
+    }
+
     return (
       <>
-        <div id="todo-view-upper">
-          <div className="plnnerfrom-date">{date}</div>
-          <div className="plnnerfrom-progress">
-          <Progress type="circle" strokeColor='#000' percent={percent} width={50} />
+          <div className="plnnerfrom-date">
+            <span>{today}</span>
           </div>
-          <div className="plnnerfrom-memo">
-          <button className="memo-edit-btn" onClick={handleModal}>
-            <i className="fas fa-pencil-alt"></i>
-          </button>
-            {memo}
-          <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={open}
-            className={classes.modal}
-            onClose={handleModal}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-              timeout: 500,
-            }}
-          >
-            <Fade in={open}>
-              <div className={classes.paper}>
-                <p id="transition-modal-description">오늘의 다짐을 입력해주세요.</p>
-                <input onChange={(e) => {setMemo(e.target.value);dispatch(addUpperData(memo))}} value={memo} className={classes.text}></input>
-                <button className="memo-save-btn" onClick={handleModal}>
-                  <DoneIcon /> 
-                </button>
-              </div>
-            </Fade>
-          </Modal>
 
+          <div className="plnnerfrom-memo">
+          {memoEdit
+            ? 
+            <button className="memo-edit-btn" onClick={() => memoHandler()}>
+              <i className="fas fa-check"></i>
+            </button> 
+            :          
+            <button className="memo-edit-btn" onClick={() => memoHandler()}>
+              <i className="fas fa-pencil-alt"></i>
+            </button>
+          }
+            { memoEdit
+              ? <textarea className="memo-edit-input" value={memo} onChange={(e:any) => setMemo(e.target.value)} />
+              : <span>{plannerDatas.memo}</span>
+            }
           </div>
-          <div className="plnnerfrom-hour"><i className="fas fa-stopwatch"></i>{runningTime}h</div>
-        </div>
+
+          <div className="plnnerfrom-hour">
+          <h5>Total study time</h5>
+            <span><i className="fas fa-stopwatch"></i>
+            {runningTime}h
+            </span>
+          </div>
+
+          <div className="plnnerfrom-sticker">
+          <button id="sticker-add-btn" aria-describedby={id} onClick={handleClick}>
+            <i className="fas fa-palette"></i>
+          </button>
+              <Popover
+                id={id}
+                open={opened}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+              >
+              <div className="sticker-selector">
+              {
+                stickers.map(ele => 
+                <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);;stickerHandler(e)}}>
+                    <img id={ele} width="40px" alt="sticker" src={ele}></img>
+                </span>
+                )
+              }
+              </div>
+            </Popover>
+            { selectedIcon !== "" && 
+                <img id="selected-sticker" alt="selected-sticker" src={selectedIcon}></img>
+            }
+          </div>
         <Container id="todo-veiw-container">
-          <button onClick={() => clickHandler()} className="add-todo-btn"> <CreateIcon /> </button>
+          <button onClick={() => clickHandler()} className="add-todo-btn"><i className="fas fa-plus-circle"></i></button>
           {isClick && 
-            <AddTodoModal clickHandler={clickHandler} />
+            <AddModal clickHandler={clickHandler} />
           }
           <h3 className="todobar-title">Time Table</h3>
-          {todos.length === 0
-          ?  <div className="warning-message">Make your todo list</div>
+          {todoDatas.length === 0
+          ?  <div className="empty-list-message">Make your todo list</div>
           : 
-            todos.map((task:any) => {
-              console.log(task.id);
+          todoDatas.map((task:any) => {
               return(
-                <div key={task.id}>
+                <div key={task.id} ref={divRef}>
                   <TimeBar>
                     <StartTime>{task.start_time}</StartTime>
                     <Hours>{task.learning_time}hours</Hours>
                   </TimeBar>
+                  
                   <TodoBox 
                   id={task.id} 
                   style={{height: `calc(${task.learning_time} * 43px)`}}>
-                      <div className="color-label" style={{backgroundColor: task.box_color}}></div>
-                      <input type="checkbox" 
-                      className="todo-checkbox"
-                      onChange={(e)=> {
-                        checkHandler(e)
-                      }} 
-                      id={task.id}></input>
-                      <div className="todobox-content">
-                        <Subject>{task.subject}</Subject>
-                        <Todo>{task.todo_comment}</Todo>
-                      </div>
-                      <button onClick={(e:any) => deleteHandler(e)} id={task.id} className="todo-delete-btn"><i id={task.id} className="fas fa-minus"></i></button>
-                    </TodoBox>
+                    <div id={task.id} className="color-label" style={{backgroundColor: task.box_color}}></div>
+                    <div onClick={(e:any) => openEditModal(e)} id={task.id} className="todobox-content">
+                      <Subject id={task.id} >{task.subject}</Subject>
+                      <Todo id={task.id}>{task.todo_comment}</Todo>
+                    </div>
+                    <Checkbox id={task.id} className="todo-checkbox" onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
+                  </TodoBox>
                 </div>
                 )})
             }
-
         </Container>
-        </>
+        <Drawer
+          title="Edit Todo"
+          placement="right"
+          closable={false}
+          width={300}
+          onClose={closeEditModal}
+          visible={visible}
+        >
+          <button onClick={(e:any) => deleteHandler(e)} 
+              id={editData.id} 
+              className="todo-delete-btn">
+            <i id={editData.id} className="far fa-trash-alt"></i>
+          </button>
+        <EditTodoModal editData={editData} closeEditModal={closeEditModal} />
+        </Drawer>
+      </>
     )
-}
+};
+
+
+
+  
 
 export default AddTodo;
-

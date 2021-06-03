@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import TextField from '@material-ui/core/TextField';
 import swal from "sweetalert";
-import { addToTimetable, addNewSubject } from "../module/addTaskModule";
-import { ColorPalette } from "material-ui-color";
+import { addToTimetable, 
+        addNewSubject, 
+        deleteSubject,
+       } from "../module/addTaskModule";
+import { ColorPicker } from "material-ui-color";
+import { RootState } from "../store/store";
+import {v4 as uuidv4} from 'uuid';
 
 const AddTodoBar = styled.div`
   font-family: 'KoHo', sans-serif;
@@ -37,19 +42,30 @@ const DeleteBtn = styled.button`
   border: none;
   outline: none;
   float: right;
+  color: #2b3390;
 `
 
 type Props = {
   clickHandler: any;
 }
 
-function AddTodoModal ({clickHandler} :Props) {
+function AddModal ({clickHandler} :Props) {
   const dispatch = useDispatch();
+  const todos = useSelector((state:RootState) => state.addTaskReducer.plannerDatas.todos);
+
+const [todoDatas, setTodoDatas] = useState(todos);
+  useEffect(() => {
+    setTodoDatas(todos)
+  }, [todos]);
+
+  todoDatas.sort(function (a:any, b:any) {
+    return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
+  })
   
-  const [id, setId] = useState<number>(3);
+  console.log('aaa: ',todoDatas[todoDatas.length - 1]);
 
   // 유저가 선택한 color
-  const [color, setColor] = useState("#fff");
+  const [color, setColor] = useState<string>("#fff");
   console.log('color', color);
 
 
@@ -60,7 +76,7 @@ function AddTodoModal ({clickHandler} :Props) {
   })
 
   // startTime, endTime의 type이 string이기 때문에 계산해줘야함.
-  const [totalHour, setTotalHour] = useState(3);
+  const [totalHour, setTotalHour] = useState<number>(3);
   console.log(time);
   const timeCalculator = function () {
     const startHour = Number(time.startTime.split(":")[0]);
@@ -74,43 +90,17 @@ function AddTodoModal ({clickHandler} :Props) {
     if(totalHours > 0) {
       setTotalHour(totalHours);
     }else {
-      swal('종료시간을 다시 선택해주세요.', '', 'error');
+      swal("시간을 다시 선택해주세요.", "", "error");
     }
     console.log(totalHour);
   }
 
-
-  // 과목 목록 상태.
-  const [subject, setSubject] = useState([
-    { 
-      subject: '국어',
-      color: "#ecf0f1", 
-    }, 
-    { 
-      subject: '영어',
-      color: "#f5cd79", 
-    }, 
-    { 
-      subject: '수학',
-      color: "#F8EFBA", 
-    }
-  ]);
-
-  const palette = {
-    while: '#ecf0f1', 
-    yellow1: '#F8EFBA', 
-    yellow2: '#f5cd79', 
-    green1: '#9AECDB',
-    green2: '#55E6C1', 
-    purple: '#D6A2E8', 
-    orange: '#FEA47F', 
-    deeporange: '#F97F51'
-  };
-  
   // 선택한 과목 저장.
   const [selectedSub, setSelectedSub] = useState<string>("");
   // 새로운 과목 생성 상태.(새로운 과목 input 값)
   const [newSubject, setNewSubject] = useState<string>("");
+  // redux sub
+  const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
   // 추후에 과목 추가 버튼 누르면 input창 뜨도록
   // const [subjectAddBtn, setSubjectAddBtn] = useState(false);
   // todo 상태.
@@ -123,6 +113,7 @@ function AddTodoModal ({clickHandler} :Props) {
       selectStatus.classList.remove("selected"); 
       e.target.classList.add("selected"); 
       setSelectedSub(e.target.id);
+      console.log(e.target.id);
     }      
     else {
       e.target.classList.add("selected"); 
@@ -135,13 +126,11 @@ function AddTodoModal ({clickHandler} :Props) {
   const newSubjectHandler = function (e:any) {
     const inputSub = document.querySelector(".todobar-newsubject-input") as HTMLInputElement;
     // 중복여부 체크용.
-    const check = subject.filter(sub => sub.subject === newSubject);
+    const check = subjectLabel.filter((sub:string) => sub === newSubject);
     console.log(check);
     if(newSubject !== "" && check.length === 0) {
-      dispatch(addNewSubject(newSubject, color));
+      dispatch(addNewSubject(newSubject));
       console.log(newSubject);
-      setSubject([...subject, {subject: newSubject, color: color}]); // subject array에 넣어준다.
-      console.log(subject);
     }
     if(check.length !== 0) {
       swal("이미 존재하는 과목입니다.", "", "error");
@@ -151,26 +140,44 @@ function AddTodoModal ({clickHandler} :Props) {
       swal("과목명을 입력해주세요.", "", "error");
       inputSub.value= ""
     }
-    if(subject.length > 7) {
+    if(subjectLabel.length > 7) {
       swal("라벨은 8개 이상 생성할 수 없습니다.", "", "error");
     }
   }
 
+  // 라벨 컬러 설정 함수.
+  const handleChange = (newValue:any) => {
+    setColor(`#${newValue.hex}`);
+  };
+
   const deleteLabel = function (e:any) {
-    const sub = subject.filter(ele => e.target.id !== ele.subject);
-    setSubject(sub);
+    console.log(e.target.id);
+    dispatch(deleteSubject(e.target.id));
   }
-  
+
   // save 버튼 이벤트
   // dispatch로 리덕스 모듈에 넘겨주어 state 변경.
   const saveTodo = function () {
+    let myuuid = uuidv4();
+    const startHour = Number(time.startTime.split(":")[0]);
+    const endHour = Number(time.endTime.split(":")[0]);
+    const startMin = Number(time.startTime.split(":")[1]);
+    const endMin = Number(time.endTime.split(":")[1]);
+    const start = startHour * 60 + startMin;
+    const end = endHour * 60 + endMin;
+
+    const totalHours = Math.floor((end - start) / 60);
+    if(totalHours > 0) {
+      setTotalHour(totalHours);
+    }else {
+      swal("시간을 다시 선택해주세요.", "", "error");
+    }
     if(selectedSub === "") {
       swal("과목을 선택해주세요.", "", "error");
     }else if(todo === "") {
       swal("오늘 할 일을 입력해주세요.", "", "error");
     }else {
-      console.log(totalHour);
-      dispatch(addToTimetable(id, selectedSub, todo, time.startTime , totalHour, color));
+      dispatch(addToTimetable(myuuid, selectedSub, todo, time.startTime, totalHour, color));
       setTodo("");
       document.querySelector(".selected")?.classList.remove("selected");
       clickHandler();
@@ -185,7 +192,7 @@ function AddTodoModal ({clickHandler} :Props) {
         </div>
          <form noValidate>
           <TextField
-            onChange={(e:any) => {setTime({...time, startTime: e.target.value,});timeCalculator()}}
+            onChange={(e:any) => {setTime({...time, startTime: e.target.value,})}}
             id="start-time"
             label="Start Time"
             type="time"
@@ -195,7 +202,7 @@ function AddTodoModal ({clickHandler} :Props) {
             }}
           />
           <TextField
-            onChange={(e:any) => {setTime({...time, endTime: e.target.value});timeCalculator();}}
+            onChange={(e:any) => {setTime({...time, endTime: e.target.value});}}
             id="end-time"
             label="End Time"
             type="time"
@@ -205,13 +212,13 @@ function AddTodoModal ({clickHandler} :Props) {
             }}
           />
         </form>
-        <button className="subject-edit-btn">edit</button>
         <div className="select-subject">
-            <ColorPalette onSelect={(bgColor) => {
-              setColor(palette[bgColor]);
-              console.log(bgColor)
-            }}
-            palette={palette} />
+            <span>Pick label color: </span>
+            <ColorPicker 
+            value={color} 
+            onChange={(newValue:any) => {
+              handleChange(newValue)}}
+            />
           <div className="make-new-label">
             <input 
               onChange={(e:any) => setNewSubject(e.target.value)} 
@@ -226,25 +233,24 @@ function AddTodoModal ({clickHandler} :Props) {
           </div>
           <LabelContainer>
             {
-              subject.map(ele => 
+              subjectLabel.map((ele:any) => 
                 <div onClick={(e:any) => selectHandler(e)} 
-                key={ele.subject} 
-                id={ele.subject}
-                style={{backgroundColor: ele.color}}
-                className="todobar-subject">{ele.subject}
-                <DeleteBtn onClick={(e:any) => deleteLabel(e)} id={ele.subject}>x</DeleteBtn>
+                  key={ele} 
+                  id={ele}
+                  className="todobar-subject">{ele}
+                  <DeleteBtn key={ele.subject} onClick={(e:any) => deleteLabel(e)} id={ele}>x</DeleteBtn>
                 </div>
               )
             }
           </LabelContainer>
         </div>
-        <textarea onChange={(e:any) => setTodo(e.target.value)} value={todo} className="todobar-todo" placeholder="할 일을 입력해주세요.">{selectedSub}</textarea>
+        <textarea onChange={(e:any) => setTodo(e.target.value)} value={todo} className="todobar-todo" placeholder="할 일을 입력해주세요."></textarea>
         <div className="modal-btn-container">
-          <button onClick={() => {setId(id + 1);saveTodo();}} className="todobar-save-btn" >SAVE</button>
+          <button onClick={() => saveTodo()} className="todobar-save-btn" >SAVE</button>
           <button onClick={() => clickHandler()} className="todobar-save-btn" >Cancel</button>
         </div>
        </AddTodoBar>
   )
 }
-
-export default AddTodoModal;
+ 
+export default AddModal;
