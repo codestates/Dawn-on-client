@@ -35,11 +35,11 @@ function MyFeed() {
 
   //현재 클릭한 게시물이 없다면(로그인하고 첫 myfeed에 들어간 상태라면)
   //첫번째 게시물을 보여준다
-  const isChecked = function (firstPost: object) {
-    if (Object.keys(click_postview).length === 0) {
-      dispatch(getClickPostView(firstPost));
-    }
-  };
+  // const isChecked = function (firstPost: object) {
+  //   if (Object.keys(click_postview).length === 0) {
+  //     dispatch(getClickPostView(firstPost));
+  //   }
+  // };
 
   const getMyfeedInfo = async function () {
     await axios
@@ -61,13 +61,6 @@ function MyFeed() {
 
         console.log("사용자의 게시물 목록 데이터", postDatas);
         console.log("사용자의 개인정보 데이터", userDatas);
-
-        window.setTimeout(() => {
-          isChecked(MyFeedList[0]);
-          searchThumbsUpHandler();
-        }, 200);
-        // isChecked(MyFeedList[0]);
-        // searchThumbsUpHandler();
 
         console.log("현재보여지는 데이터", click_postview);
       })
@@ -92,6 +85,7 @@ function MyFeed() {
       .then((res) => {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(MyPostThumbsUp(res.data));
+        dispatch(getClickPostView(click_postview));
         console.log("myfeed 가리키는 페이지", click_postview);
       })
       .catch((err) => {
@@ -101,6 +95,10 @@ function MyFeed() {
 
   useEffect(() => {
     getMyfeedInfo();
+    window.setTimeout(() => {
+      // isChecked(MyFeedList[0]);
+      searchThumbsUpHandler();
+    }, 200);
   }, []);
 
   return (

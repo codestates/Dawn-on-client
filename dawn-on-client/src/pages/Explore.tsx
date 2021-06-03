@@ -51,11 +51,11 @@ function Explore() {
 
   //현재 클릭한 게시물이 없다면(로그인하고 첫 main에 들어간 상태라면)
   //첫번째 게시물을 보여준다
-  const isChecked = function (firstPost: object) {
-    if (Object.keys(click_exploreview).length === 0) {
-      dispatch(getClickExploreView(firstPost));
-    }
-  };
+  // const isChecked = function (firstPost: object) {
+  //   if (Object.keys(click_exploreview).length === 0) {
+  //     dispatch(getClickExploreView(firstPost));
+  //   }
+  // };
 
   // 소셜 로그인 성공 후, explore 페이지로 리디랙션 된다.
   // 이후, 서버로부터 토큰을 받아온다
@@ -101,14 +101,6 @@ function Explore() {
         // 모아보기 게시물 데이터 저장 (배열)
         dispatch(getExploreList(res.data.postDatas || []));
 
-        // 첫번째 게시물 데이터 저장 (객체)
-        window.setTimeout(() => {
-          isChecked(exploreList[0]);
-          searchThumbsUpHandler();
-        }, 200);
-        // isChecked(exploreList[0]);
-        // searchThumbsUpHandler();
-
         console.log("모아보기 게시물 목록 데이터", res.data.postDatas);
         console.log("Ranking 데이터", res.data.ranking);
         console.log("현재보여지는 데이터", click_exploreview);
@@ -135,6 +127,7 @@ function Explore() {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(ExploreThumbsUp(res.data));
         console.log("explore 가리키는 페이지", click_exploreview);
+        dispatch(getClickExploreView(click_exploreview));
       })
       .catch((err) => {
         console.log(err);
@@ -144,6 +137,10 @@ function Explore() {
   useEffect(() => {
     Social_Login_getToken();
     get_MainFeed_Data();
+    window.setTimeout(() => {
+      // isChecked(exploreList[0]);
+      searchThumbsUpHandler();
+    }, 200);
   }, []);
 
   return (
