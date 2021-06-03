@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import TextField from '@material-ui/core/TextField';
 import swal from "sweetalert";
-import { editTodoData, addNewSubject, deleteSubject } from "../module/addTaskModule";
+import { editTodoData, addNewSubject, deleteSubject, fetchState } from "../module/addTaskModule";
 import { ColorPicker } from "material-ui-color";
 import { RootState } from "../store/store";
 
@@ -30,9 +30,14 @@ type Props = {
 
 function EditTodoModal ({ editData , closeEditModal } :Props) {
   const dispatch = useDispatch();
-  const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
 
   const [newData, setNewData] = useState(editData);
+
+  useEffect(() => {
+    dispatch(fetchState());
+  }, [])
+  const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
+  console.log(subjectLabel);
 
   useEffect(() =>{
     console.log(editData);

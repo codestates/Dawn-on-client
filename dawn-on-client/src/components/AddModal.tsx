@@ -53,7 +53,7 @@ function AddModal ({clickHandler} :Props) {
   const dispatch = useDispatch();
   const todos = useSelector((state:RootState) => state.addTaskReducer.plannerDatas.todos);
 
-const [todoDatas, setTodoDatas] = useState(todos);
+  const [todoDatas, setTodoDatas] = useState(todos);
   useEffect(() => {
     setTodoDatas(todos)
   }, [todos]);
@@ -101,7 +101,8 @@ const [todoDatas, setTodoDatas] = useState(todos);
   const [newSubject, setNewSubject] = useState<string>("");
   // redux sub
   const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
-  // 추후에 과목 추가 버튼 누르면 input창 뜨도록
+  console.log(subjectLabel);
+
   // const [subjectAddBtn, setSubjectAddBtn] = useState(false);
   // todo 상태.
   const [todo, setTodo] = useState<string>("");
@@ -128,6 +129,7 @@ const [todoDatas, setTodoDatas] = useState(todos);
     // 중복여부 체크용.
     const check = subjectLabel.filter((sub:string) => sub === newSubject);
     console.log(check);
+    
     if(newSubject !== "" && check.length === 0) {
       dispatch(addNewSubject(newSubject));
       console.log(newSubject);

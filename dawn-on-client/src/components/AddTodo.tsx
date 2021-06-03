@@ -188,8 +188,6 @@ function AddTodo () {
       sticker09,
     ]
 
-
-
     const stickerHandler = function (e:any) {
       dispatch(addTheSticker(e.target.id));
     }
