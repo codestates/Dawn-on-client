@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { MyPostThumbsUp } from "../module/ClickPostViewModule";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
 
 function MyPostView() {
   const dispatch = useDispatch();
@@ -28,6 +27,8 @@ function MyPostView() {
     return status.getClickPostViewReducer.MyPostThumbsUp;
   });
 
+  console.log(isClickThumbsUp);
+
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
@@ -43,7 +44,6 @@ function MyPostView() {
       .then((res) => {
         if (res.data === "up") {
           dispatch(MyPostThumbsUp(true));
-
           console.log("좋아요 클릭");
         } else if (res.data === "down") {
           dispatch(MyPostThumbsUp(false));
@@ -72,7 +72,7 @@ function MyPostView() {
           </div>
           <div id="MyPostView-Footer">
             <div>
-              {isClickThumbsUp === true ? (
+              {isClickThumbsUp ? (
                 <i
                   className="fas fa-heart"
                   id="MyFeed-full-heart"

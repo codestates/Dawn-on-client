@@ -99,11 +99,15 @@ function Explore() {
         dispatch(getRankingThird(res.data.ranking[2] || {}));
 
         // 모아보기 게시물 데이터 저장 (배열)
-        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getExploreList(res.data.postDatas || []));
 
         // 첫번째 게시물 데이터 저장 (객체)
-        isChecked(exploreList[0]);
-        searchThumbsUpHandler();
+        window.setTimeout(() => {
+          isChecked(exploreList[0]);
+          searchThumbsUpHandler();
+        }, 200);
+        // isChecked(exploreList[0]);
+        // searchThumbsUpHandler();
 
         console.log("모아보기 게시물 목록 데이터", res.data.postDatas);
         console.log("Ranking 데이터", res.data.ranking);
@@ -130,7 +134,6 @@ function Explore() {
       .then((res) => {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(ExploreThumbsUp(res.data));
-        //해당 게시물 좋아요 개수 넘겨줌
         console.log("explore 가리키는 페이지", click_exploreview);
       })
       .catch((err) => {
@@ -140,9 +143,6 @@ function Explore() {
 
   useEffect(() => {
     Social_Login_getToken();
-  }, []);
-
-  useEffect(() => {
     get_MainFeed_Data();
   }, []);
 

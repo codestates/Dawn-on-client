@@ -13,6 +13,7 @@ function ExplorePostView() {
     return status.getClickExploreViewReducer.ExploreThumbsUp;
   });
 
+  console.log(isExploreThumbsUp);
   //모아보기 피드 전체 리스트
   const ExploreList = useSelector((status: RootState) => {
     return status.getExploreListReducer.ExploreList;

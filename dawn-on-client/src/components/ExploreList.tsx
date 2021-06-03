@@ -86,7 +86,7 @@ function ExploreList() {
   // 최신순 + 직업
   const search_Job_Handler = async function (job: string) {
     if (job === "전체") {
-      return get_MainFeed_Data();
+      get_MainFeed_Data();
     } else {
       return await axios
         .post(
@@ -157,11 +157,11 @@ function ExploreList() {
         <button
           onClick={() => {
             if (SortBy === "인기순" && Job !== "전체") {
-              return search_Popular_Handler(Job);
+              search_Popular_Handler(Job);
             } else if (SortBy === "인기순" && Job === "전체") {
-              return search_Popular_All_Handler();
+              search_Popular_All_Handler();
             } else if (SortBy === "최신순") {
-              return search_Job_Handler(Job);
+              search_Job_Handler(Job);
             }
           }}
         >

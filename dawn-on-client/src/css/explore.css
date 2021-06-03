@@ -148,7 +148,6 @@
   display: grid;
   border: 1px solid black;
   grid-template-rows: 60px repeat(5, 1fr);
-
   border-radius: 10px;
 }
 
@@ -208,6 +207,9 @@
   width: 59.33px;
   height: 61px;
   grid-row: 2 / 4;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
 }
 
 .Explore-Thumbnail-info > .Thumbnail-info-2 {
