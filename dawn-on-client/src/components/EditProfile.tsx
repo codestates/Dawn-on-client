@@ -1,6 +1,8 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getEditProfileState } from "../module/EditProfileModule";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import axios from "axios";
 import swal from "sweetalert";
 import $ from "jquery";
@@ -60,8 +62,8 @@ function EditProfile() {
       buttons: ["No", true],
     }).then((willDelete) => {
       if (willDelete) {
-        clearMyInfoData();
         console.log("프로필 수정 취소");
+        clearMyInfoData();
       } else {
         console.log("프로필 수정 유지");
       }
@@ -102,12 +104,12 @@ function EditProfile() {
         // setMyfeedInfo를 이용하여 값을 저장한다
         setMyInfo({
           ...MyInfo,
-          user_nickname: res.data.user_nickname,
-          user_img: res.data.user_img,
+          user_nickname: res.data.user.user_nickname,
+          user_img: res.data.user.user_img,
           // user_password: res.data.user_password,
-          user_job: res.data.user_job,
-          profile_comment: res.data.profile_comment,
-          provider: res.data.provider,
+          user_job: res.data.user.user_job,
+          profile_comment: res.data.user.profile_comment,
+          provider: res.data.user.provider,
         });
       })
       .then(() => {
@@ -120,13 +122,11 @@ function EditProfile() {
 
   // 수정완료된 유저의 정보에 대해서 수정요청을 보낸다
   const patchEditPageInfo = function () {
-    const accessToken = window.localStorage.getItem("accessToken");
-    const user_PK = window.localStorage.getItem("user_PK");
+    // const accessToken = window.localStorage.getItem("accessToken");
     axios
       .patch(
         `http://localhost:4000/auth/mypage`,
         {
-          user_PK: user_PK,
           user_nickname: user_nickname,
           user_img: user_img,
           user_password: user_password,
@@ -136,7 +136,7 @@ function EditProfile() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
+            // Authorization: `Bearer ${accessToken}`,
           },
           withCredentials: true,
         }
@@ -148,29 +148,26 @@ function EditProfile() {
       .then(() => {
         window.setTimeout(() => {
           window.location.replace("/myfeed");
-        }, 1500);
+        }, 1200);
       })
       .catch((err) => {
-        if (err.status === 401) {
-          swal(
-            "로그인 유효기간이 만료되었습니다. 다시 로그인 해주세요",
-            "",
-            "error"
-          );
-        } else {
-          console.log(err);
-        }
+        // swal("개인정보 수정 불가 오류", "", "error");
+        console.log(err);
       });
   };
 
   const checkEditinfo = function () {
     if (user_password !== user_passwordcheck) {
       return swal("비밀번호를 다시 확인해주세요", "", "error");
+    } else if (user_nickname === "") {
+      return swal("닉네임을 작성해주세요", "", "error");
     }
     return patchEditPageInfo();
   };
 
-  useEffect(() => getEditPageInfo(), []);
+  useEffect(() => {
+    getEditPageInfo();
+  }, []);
 
   return (
     <div id="EditProfile-container">
@@ -212,7 +209,7 @@ function EditProfile() {
             <input
               type="text"
               className="userinfo-input comment"
-              name="user_comment"
+              name="profile_comment"
               value={profile_comment}
               onChange={onChange}
             />
@@ -276,7 +273,7 @@ function EditProfile() {
             <input
               type="text"
               className="userinfo-input comment"
-              name="user_comment"
+              name="profile_comment"
               value={profile_comment}
               onChange={onChange}
             />
@@ -285,6 +282,7 @@ function EditProfile() {
             <div className="Editinfo-title">Job</div>
             <select className="userinfo-selectbox" onChange={getSelectValue}>
               <option value="default">- 직업을 선택해주세요 -</option>
+              <option value="전체">전체</option>
               <option value="수험생">수험생</option>
               <option value="공시생">공시생</option>
               <option value="고시생">고시생</option>
