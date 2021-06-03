@@ -98,9 +98,9 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     Local_joinRequestHandler();
   };
 
-  const Local_joinRequestHandler = function () {
+  const Local_joinRequestHandler = async function () {
     console.log("회원가입 데이터", form);
-    axios
+    await axios
       .post(
         `http://localhost:4000/auth/signup`,
         {
