@@ -10,18 +10,6 @@
 */
 
 /* 
-[ Explore 기능 관련 정리]
-검색 버튼 클릭 시, 무적권 explore 페이지로 리디랙션해야함
-모아보기 게시물 목록의 경우 Redux로 저장하고 useSelector로 가져온다
-useEffect를 사용하여 useSelector로 가져온 값이 변동되면 리스트를 랜더링 하는 함수가 작동되도록 로직 구현
-
-1) (서버 해결방법) axios 요청 : [ 검색, 아이디 클릭, 직업군 정렬 각각의 요청처리로 사용 ]
-해당 검색어 혹은 회원 아이디를 포함하고 있는 게시물들을 배열형태로 받아와서 Redux에 저장한다
-axios요청으로 구현한다면 값만 보내주면 받아와서 랜더링하면 끝이기 때문에 가장 간편함
-
-2) (클라이언트 해결방법) 게시물 탐색/정렬 로직 구현 : 전체 데이터를 다 받아온 후 redux에 저장
-검색 값, 아이디 값, 정렬하는 값에 따른 액션을 분기하고 reducer내에서  switch-case에 맞춰 값을 바꿔준다 
-해당 요건을 만족하는 값(검색,아이디,정렬 순)들만 findAll로 찾아 값을 변경 시켜준다
 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 아이디 검색 기능과 아이디 클릭 기능은 같은 요청 처리로 해결 가능
 검색창에서 해시태그를 검색할 경우, 조건문으로 분기
@@ -36,16 +24,43 @@ import ExplorePostView from "../components/ExplorePostView";
 import axios from "axios";
 import { getLoginState } from "../module/isLogin";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import swal from "sweetalert";
 import { useEffect } from "react";
+import {
+  ExploreThumbsUp,
+  getClickExploreView,
+} from "../module/ClickExploreViewModule";
+import { getExploreList } from "../module/ExplorePostListModule";
+import { getRankingFirst } from "../module/ExploreRankingListModule";
+import { getRankingSecond } from "../module/ExploreRankingListModule";
+import { getRankingThird } from "../module/ExploreRankingListModule";
+import { RootState } from "../store/store";
 
 function Explore() {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const Social_Login_getToken = function () {
-    axios
+  const click_exploreview = useSelector((status: RootState) => {
+    return status.getClickExploreViewReducer.click_exploreview;
+  });
+
+  const exploreList = useSelector((status: RootState) => {
+    return status.getExploreListReducer.ExploreList;
+  });
+
+  //현재 클릭한 게시물이 없다면(로그인하고 첫 main에 들어간 상태라면)
+  //첫번째 게시물을 보여준다
+  const isChecked = function (firstPost: object) {
+    if (Object.keys(click_exploreview).length === 0) {
+      dispatch(getClickExploreView(firstPost));
+    }
+  };
+
+  // 소셜 로그인 성공 후, explore 페이지로 리디랙션 된다.
+  // 이후, 서버로부터 토큰을 받아온다
+  const Social_Login_getToken = async function () {
+    await axios
       .get("http://localhost:4000/auth/signin/check", {
         headers: {
           "Content-Type": "application/json",
@@ -53,7 +68,6 @@ function Explore() {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("소셜 로그인 성공");
         //Token을 LocalStorge에 저장해서 다른 axios에서 필요할 때마다 사용한다
         window.localStorage.setItem("accessToken", res.data.accessToken);
         window.localStorage.setItem("refreshToken", res.data.refreshToken);
@@ -69,7 +83,68 @@ function Explore() {
       });
   };
 
-  useEffect(() => Social_Login_getToken(), []);
+  // main feed 데이터 받아오는 함수
+  const get_MainFeed_Data = async function () {
+    await axios
+      .get("http://localhost:4000/posts/mainfeed", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        // 랭킹 데이터 저장(배열)
+        dispatch(getRankingFirst(res.data.ranking[0] || {}));
+        dispatch(getRankingSecond(res.data.ranking[1] || {}));
+        dispatch(getRankingThird(res.data.ranking[2] || {}));
+
+        // 모아보기 게시물 데이터 저장 (배열)
+        dispatch(getExploreList(res.data.postDatas));
+
+        // 첫번째 게시물 데이터 저장 (객체)
+        isChecked(exploreList[0]);
+        searchThumbsUpHandler();
+
+        console.log("모아보기 게시물 목록 데이터", res.data.postDatas);
+        console.log("Ranking 데이터", res.data.ranking);
+        console.log("현재보여지는 데이터", click_exploreview);
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("main feed 데이터 가져오기 실패", "", "error");
+      });
+  };
+
+  const searchThumbsUpHandler = async function () {
+    await axios
+      .post(
+        "http://localhost:4000/posts/search-thumbsup",
+        { post_PK: click_exploreview.id },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        //해당 게시물 좋아요 유무 넘겨줌
+        dispatch(ExploreThumbsUp(res.data));
+        //해당 게시물 좋아요 개수 넘겨줌
+        console.log("explore 가리키는 페이지", click_exploreview);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    Social_Login_getToken();
+  }, []);
+
+  useEffect(() => {
+    get_MainFeed_Data();
+  }, []);
 
   return (
     <div id="Explore-container">
