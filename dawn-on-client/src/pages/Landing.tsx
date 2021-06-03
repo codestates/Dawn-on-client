@@ -20,10 +20,12 @@ const Button = styled.button`
   border-radius: 76px;
   outline: none;
   border: none;
-  background-color: #2b3390;
-  color: #faee9d;
-  font-size: 2rem;
-  padding: 10px 15px;
+  text-align: center;
+  width: 40px;
+  background-color: #b9b3d1;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 5px 10px;
 `;
 
 function Landing() {
@@ -46,7 +48,27 @@ function Landing() {
       }
     });
   }
+
+  function divScrollHandler() {
+    console.log(window.pageYOffset);
+    const section4 = document.getElementById('section4') as HTMLElement;
+    const { top, bottom } = section4.getBoundingClientRect();
+    console.log('top: ', top);
+    console.log('bottom: ', bottom);
+    if(top > -698 && top < 0) {
+      section4.style.overflow = "scroll";
+
+    }
+    else {
+      section4.style.overflow = "hidden";
+      // section4.classList.remove('visible');
+      // section4.classList.add('hidden');
+    }
+  
+  }
+
   window.addEventListener("scroll", handleScroll);
+  // window.addEventListener("scroll", divScrollHandler);
   window.addEventListener("load", handleScroll);
 
   return (
@@ -55,11 +77,11 @@ function Landing() {
         {/* <img className="back-circle" src={circle} alt=""></img> */}
         <div className="circle"></div>
         <div className="left-txt">
-          <div className="title up-on-scroll">Dawn-on</div>
-          <p className="description">Project description</p>
+          <h4 className="title up-on-scroll">Dawn-on</h4>
+          <p className="description">Plan, Organize, Get Things Done</p>
         </div>
         <div className="right-img">
-          <img className="section01-img" src={section01} alt="프로젝트 소개" />
+          {/* <img className="section01-img" src={section01} alt="프로젝트 소개" /> */}
         </div>
       </LandingSection>
       <LandingSection id="section2">
