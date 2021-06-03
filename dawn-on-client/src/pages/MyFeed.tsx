@@ -4,7 +4,6 @@ import MyProfileSidebar from "../components/MyProfileSidebar";
 import MyPostList from "../components/MyPostList";
 import MyPostView from "../components/MyPostView";
 import EditProfile from "../components/EditProfile";
-import MyPost from "../components/MyPost";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useDispatch } from "react-redux";
@@ -54,16 +53,21 @@ function MyFeed() {
         const postDatas = res.data.postDatas; //배열
         const userDatas = res.data.userDatas; //객체
 
-        // 게시물 데이터 저장
-        dispatch(getMyFeedList(postDatas.reverse() || {}));
         // 사용자 정보 저장
         dispatch(getMyFeedInfo(userDatas || {}));
+
+        // 게시물 데이터 저장
+        dispatch(getMyFeedList(postDatas.reverse() || []));
 
         console.log("사용자의 게시물 목록 데이터", postDatas);
         console.log("사용자의 개인정보 데이터", userDatas);
 
-        isChecked(MyFeedList[0]);
-        searchThumbsUpHandler();
+        window.setTimeout(() => {
+          isChecked(MyFeedList[0]);
+          searchThumbsUpHandler();
+        }, 200);
+        // isChecked(MyFeedList[0]);
+        // searchThumbsUpHandler();
 
         console.log("현재보여지는 데이터", click_postview);
       })
@@ -88,7 +92,7 @@ function MyFeed() {
       .then((res) => {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(MyPostThumbsUp(res.data));
-        //해당 게시물 좋아요 개수 넘겨줌
+        console.log("myfeed 가리키는 페이지", click_postview);
       })
       .catch((err) => {
         console.log(err);
@@ -96,9 +100,6 @@ function MyFeed() {
   };
 
   useEffect(() => {
-    // window.setTimeout(() => {
-    //   getMyfeedInfo();
-    // }, 2000);
     getMyfeedInfo();
   }, []);
 
