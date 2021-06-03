@@ -13,7 +13,6 @@
 #ExploreSidebar-container {
   grid-column: 2;
   grid-row: 1 / 6;
-  /* height: calc(100vh - 60px); */
   display: grid;
   grid-template-rows: repeat(5, 1fr);
   border: 1px solid black;
@@ -34,6 +33,107 @@
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   padding: 10px;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+}
+
+#like-explore-title {
+  font-size: 25px;
+  text-align: center;
+  grid-row: 1;
+}
+
+#like-rank-container {
+  grid-row: 2/7;
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.rank {
+  display: grid;
+  align-self: center;
+  grid-template-columns: 0.3fr 1fr 0.5fr;
+}
+
+.rank-subtitle {
+  grid-column: 1;
+  font-size: 15px;
+  justify-self: center;
+  margin-right: 15px;
+}
+
+.rank-subname {
+  grid-column: 2;
+  font-size: 15px;
+  margin-left: 40px;
+}
+
+.rank > .fa-thumbs-up {
+  grid-column: 3;
+  font-size: 15px;
+  justify-self: center;
+}
+
+.rank-likes {
+  font-size: 16px;
+  grid-column: 3;
+  align-self: center;
+  justify-self: center;
+}
+
+.rank-name {
+  font-size: 15px;
+  margin-right: 10px;
+  grid-column: 2;
+  display: flex;
+
+  align-self: center;
+  text-align: center;
+}
+
+.rank-name > .fa-user-circle {
+  font-size: 40px;
+}
+
+.rank-name > .profile-img {
+  width: 40px;
+  height: 40px;
+  align-self: center;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+
+.rank-nickname {
+  font-size: 15px;
+  margin-left: 10px;
+  align-self: center;
+  cursor: pointer;
+}
+
+.rank-number {
+  font-size: 20px;
+  margin-right: 15px;
+  color: skyblue;
+  font-weight: bold;
+  grid-column: 1;
+  align-self: center;
+  justify-self: center;
+}
+.rank-title {
+  grid-row: 1;
+}
+
+#rank-1st {
+  grid-row: 2;
+}
+
+#rank-2nd {
+  grid-row: 3;
+}
+
+#rank-3rd {
+  grid-row: 4;
 }
 
 #ExploreSide-star-ranking {
@@ -66,11 +166,9 @@
 
 .ExplorePost-container {
   margin: 10px 10px 10px 10px;
-  /* border: 1px solid black; */
   border-radius: 10px;
   height: 150px;
   padding: 10px;
-  background-color: white;
   cursor: pointer;
   box-shadow: 3px 3px 3px 3px gray;
 }
@@ -79,12 +177,93 @@
   background-color: #f5f5f5;
 }
 
+.user_nickname {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  float: left;
+  margin-left: 10px;
+}
+
+.Explore-Thumbnail-info {
+  display: flex;
+  width: 100%;
+  height: 90%;
+}
+
+.Explore-Thumbnail-info > .Thumbnail-info-1 {
+  flex-basis: 30%;
+  text-align: center;
+  display: grid;
+  grid-template-rows: 0.5fr repeat(3, 1fr);
+}
+
+.Thumbnail-info-1 > .fa-user-circle {
+  font-size: 60px;
+  grid-row: 2 / 4;
+}
+
+.Thumbnail-info-1 > .profile-img {
+  width: 59.33px;
+  height: 61px;
+  grid-row: 2 / 4;
+}
+
+.Explore-Thumbnail-info > .Thumbnail-info-2 {
+  flex-basis: 30%;
+  align-self: center;
+}
+
+.Explore-Thumbnail-info > .Thumbnail-info-3 {
+  flex-basis: 40%;
+  text-align: center;
+  align-self: center;
+}
+
+#ExploreList-container > #postDatas-empty {
+  grid-row: 3 / 4;
+  justify-self: center;
+}
+
+#ExploreList-container > #postDatas-empty-comment {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+#ExploreList-container > #postDatas-empty > img {
+  width: 12rem;
+  margin-bottom: 10px;
+}
+
 /* 오른쪽: 모아보기 게시물 클릭 시 보여지는 상세페이지  */
 #ExplorePostView-container {
   grid-column: 4 / 6;
   grid-row: 1 / 6;
   border: 1px solid black;
-  background-color: white;
   border-radius: 10px;
   padding: 10px;
+  display: grid;
+  grid-template-rows: 0.8fr 0.2fr;
+}
+
+#Explore-full-heart {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#Explore-empty-heart {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#ExploreView-Render {
+  grid-rows: 1;
+  overflow-y: scroll;
+}
+
+#ExploreView-Footer {
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: 0.3fr 0.7fr;
 }
