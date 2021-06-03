@@ -43,17 +43,8 @@
 .description {
   font-family: 'KoHo', sans-serif;
   color: #335296;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.back-circle {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: -1;
-  width: 10%;
-  background: #ecdae6;
+  font-size: 2.5rem;
+  margin-left: 80px;
 }
 
 .left-txt {
@@ -105,9 +96,8 @@
   color: #335296;
   margin-top: 50px;
   margin-left: 80px;
-  transform: translateY(100px);
-  opacity: 0;
-  transition: transform 1s, opacity 1s;
+  opacity: 1;
+  transition: transform 1s;
 }
 
 .inner-scroll-pair {
@@ -140,8 +130,8 @@
   border-radius: 50%;
   position: absolute;
   opacity: 0.6;
-  top: 20%;
-  left: -12%;
+  top: 35%;
+  left: 5%;
   z-index: -1;
   background-color: #8BC6EC;
   background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);

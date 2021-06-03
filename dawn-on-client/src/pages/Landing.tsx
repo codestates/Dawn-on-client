@@ -77,7 +77,7 @@ function Landing() {
         {/* <img className="back-circle" src={circle} alt=""></img> */}
         <div className="circle"></div>
         <div className="left-txt">
-          <h4 className="title up-on-scroll">Dawn-on</h4>
+          <h3 className="title">Dawn-on</h3>
           <p className="description">Plan, Organize, Get Things Done</p>
         </div>
         <div className="right-img">
