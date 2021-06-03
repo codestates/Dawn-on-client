@@ -21,6 +21,10 @@ export const addNewSubject = (subject: String) => ({
   payload: subject
 });
 
+export const fetchState = () => {
+  return {type: 'FETCH_STATE'}
+}
+
 // 과목 label 삭제 액션
 export const deleteSubject = (subject: String) => ({
   type: DELETE_SUBJECT,
@@ -112,6 +116,10 @@ export const editTodoData = (editData: any) => ({
 
 export default function addTaskReducer (state: any = initialState, action: any) {
   switch (action.type) {
+    case 'FETCH_STATE': 
+      return {
+        ...state,
+      }
     case ADD_A_TODO:
       console.log("새로운 todo: ", action.payload);
       return {
@@ -197,7 +205,7 @@ export default function addTaskReducer (state: any = initialState, action: any) 
         }
       }
     case DELETE_SUBJECT: 
-    const delSubject = state.tags.filter((el:any) => el !== action.payload);
+    const delSubject = state.subject.filter((el:any) => el !== action.payload);
       return {
         ...state,
         subject: [
