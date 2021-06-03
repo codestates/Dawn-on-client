@@ -37,10 +37,8 @@ function EditTodoModal ({ editData , closeEditModal } :Props) {
     dispatch(fetchState());
   }, [])
   const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
-  console.log(subjectLabel);
 
   useEffect(() =>{
-    console.log(editData);
     setNewData(editData);
   }, [editData])
   
@@ -49,30 +47,25 @@ function EditTodoModal ({ editData , closeEditModal } :Props) {
     const startHour = startTime.split(":")[0];
     const startMin = startTime.split(":")[1];
     let endTimeValue;
-    console.log(startHour);
     if(Number(startHour) < 9) {
-      console.log('낮: ',startHour);
       endTimeValue = `0${Number(startHour) + 1}:${startMin}` 
     }else {
-      // console.log('밤: ',startHour);
       endTimeValue = `${Number(startHour) + 1}:${startMin}`;
     }
     return endTimeValue;
   }
-
-  console.log(newData.start_time);
   // 시작시간, 종료시간 상태.
   const [startTime, setStartTime] = useState(newData.start_time);
   const [endTime, setEndTime] = useState(makeInitial(newData.start_time));
 
 
-  useEffect(() => {
-    console.log('시작시간: ', startTime);
-  }, [startTime])
+  // useEffect(() => {
+  //   console.log('시작시간: ', startTime);
+  // }, [startTime])
 
-  useEffect(() => {
-    console.log('종료시간: ', endTime);
-  }, [endTime])
+  // useEffect(() => {
+  //   console.log('종료시간: ', endTime);
+  // }, [endTime])
 
   // 선택한 과목 저장.
   const [selectedSub, setSelectedSub] = useState<string>(editData.subject);
@@ -88,7 +81,6 @@ function EditTodoModal ({ editData , closeEditModal } :Props) {
 
     if(newSubject !== "" && check.length === 0) {
       dispatch(addNewSubject(newSubject));
-      console.log(newSubject);
     }
     if(check.length !== 0) {
       swal("이미 존재하는 과목입니다.", "", "error");

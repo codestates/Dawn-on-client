@@ -107,7 +107,6 @@ function AddTodo () {
     
     // runningTime 바뀔 때 마다 total time 바뀌도록 dispatch 요청
     useEffect(() => {
-      console.log('작동');
       dispatch(changeTotalHour(`${runningTime}h`))}, [dispatch, runningTime]);
 
     const today = moment().format('YYYY-MM-DD');
@@ -194,8 +193,6 @@ function AddTodo () {
 
 
     const checkedHandler = function(e:any) {
-      console.log(`checked = ${e.target.checked}`);
-      console.log(`checkedId = ${e.target.id}`);
       dispatch(changeCheckedState(e.target.id, e.target.checked));
     }
 

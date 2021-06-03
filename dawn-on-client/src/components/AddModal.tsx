@@ -61,12 +61,9 @@ function AddModal ({clickHandler} :Props) {
   todoDatas.sort(function (a:any, b:any) {
     return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
   })
-  
-  console.log('aaa: ',todoDatas[todoDatas.length - 1]);
 
   // 유저가 선택한 color
   const [color, setColor] = useState<string>("#fff");
-  console.log('color', color);
 
 
   // 시작시간, 종료시간 상태.
@@ -77,7 +74,6 @@ function AddModal ({clickHandler} :Props) {
 
   // startTime, endTime의 type이 string이기 때문에 계산해줘야함.
   const [totalHour, setTotalHour] = useState<number>(3);
-  console.log(time);
   const timeCalculator = function () {
     const startHour = Number(time.startTime.split(":")[0]);
     const endHour = Number(time.endTime.split(":")[0]);
@@ -92,7 +88,6 @@ function AddModal ({clickHandler} :Props) {
     }else {
       swal("시간을 다시 선택해주세요.", "", "error");
     }
-    console.log(totalHour);
   }
 
   // 선택한 과목 저장.
@@ -101,7 +96,6 @@ function AddModal ({clickHandler} :Props) {
   const [newSubject, setNewSubject] = useState<string>("");
   // redux sub
   const subjectLabel = useSelector((state:RootState) => state.addTaskReducer.subject);
-  console.log(subjectLabel);
 
   // const [subjectAddBtn, setSubjectAddBtn] = useState(false);
   // todo 상태.
@@ -114,13 +108,11 @@ function AddModal ({clickHandler} :Props) {
       selectStatus.classList.remove("selected"); 
       e.target.classList.add("selected"); 
       setSelectedSub(e.target.id);
-      console.log(e.target.id);
     }      
     else {
       e.target.classList.add("selected"); 
       setSelectedSub(e.target.id);
     }
-    console.log(selectedSub);
   }
 
   // 새로운 과목 라벨 생성 함수.
@@ -128,11 +120,9 @@ function AddModal ({clickHandler} :Props) {
     const inputSub = document.querySelector(".todobar-newsubject-input") as HTMLInputElement;
     // 중복여부 체크용.
     const check = subjectLabel.filter((sub:string) => sub === newSubject);
-    console.log(check);
-    
+
     if(newSubject !== "" && check.length === 0) {
       dispatch(addNewSubject(newSubject));
-      console.log(newSubject);
     }
     if(check.length !== 0) {
       swal("이미 존재하는 과목입니다.", "", "error");
@@ -153,7 +143,6 @@ function AddModal ({clickHandler} :Props) {
   };
 
   const deleteLabel = function (e:any) {
-    console.log(e.target.id);
     dispatch(deleteSubject(e.target.id));
   }
 
