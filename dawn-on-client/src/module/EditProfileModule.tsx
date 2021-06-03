@@ -1,4 +1,4 @@
-import { initialState } from "./initialState";
+import initialState from "./initialState";
 
 const GET_EDITPROFILE_STATE = "GET_EDITPROFILE_STATE";
 
