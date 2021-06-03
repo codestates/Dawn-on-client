@@ -2,7 +2,7 @@
 // PlannerForm , CustomBar
 import PlannerView from "../components/PlannerView";
 import Uploadbar from "../components/Uploadbar";
-import Custombar from "../components/Custombar";
+import Custombar from "../components/CustomBar";
 import "../css/plannerview.css";
 
 function CustomPlanner() {
@@ -10,9 +10,9 @@ function CustomPlanner() {
     <>
       <div id="custom-planner-container">
         <div className="side-txt">Custom Planner</div>
-          <PlannerView />
-          <Custombar />
-          <Uploadbar />
+        <PlannerView />
+        <Custombar />
+        <Uploadbar />
       </div>
     </>
   );
