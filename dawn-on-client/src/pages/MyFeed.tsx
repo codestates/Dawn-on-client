@@ -28,19 +28,6 @@ function MyFeed() {
     return status.getClickPostViewReducer.click_postview;
   });
 
-  // 내 게시물 데이터
-  const MyFeedList = useSelector((status: RootState) => {
-    return status.getMyFeedListReducer.MyFeedList;
-  });
-
-  //현재 클릭한 게시물이 없다면(로그인하고 첫 myfeed에 들어간 상태라면)
-  //첫번째 게시물을 보여준다
-  // const isChecked = function (firstPost: object) {
-  //   if (Object.keys(click_postview).length === 0) {
-  //     dispatch(getClickPostView(firstPost));
-  //   }
-  // };
-
   const getMyfeedInfo = async function () {
     await axios
       .get(`http://localhost:4000/posts/myfeed`, {
@@ -95,10 +82,9 @@ function MyFeed() {
 
   useEffect(() => {
     getMyfeedInfo();
-    window.setTimeout(() => {
-      // isChecked(MyFeedList[0]);
-      searchThumbsUpHandler();
-    }, 200);
+  }, []);
+  useEffect(() => {
+    searchThumbsUpHandler();
   }, []);
 
   return (
