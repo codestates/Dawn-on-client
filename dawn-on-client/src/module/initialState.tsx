@@ -1,17 +1,17 @@
 import moment from "moment";
-const today = moment().format('YYYY-MM-DD');
+const today = moment().format("YYYY-MM-DD");
 const initialState = {
   isLogin: false,
   isEditProfile: false,
   subject: ["국어", "수학"],
-  tags : ["취준", "개발", "코딩"],
+  tags: ["취준", "개발", "코딩"],
   plannerDatas: {
     date: today,
     sticker: "sticker01",
-    memo:"오늘도 화이팅 : )",
+    memo: "오늘도 화이팅 : )",
     comment: "힘들어..",
-    hour:"6h30m",
-    selected_tags : [],
+    hour: "6h30m",
+    selected_tags: [],
     back_color: "#fff",
     todos: [
       // {
@@ -65,6 +65,7 @@ const initialState = {
   ExploreThumbsUp: Boolean,
   MyPostThumbsUpCount: Number,
   ExploreThumbsUpCount: Number,
+  SearchValue: String,
 };
 
 export default initialState;
