@@ -1,4 +1,6 @@
-import initialState from "./initialState";
+import initialState from "./initialState";import moment from "moment";
+const today = moment().format('YYYY-MM-DD');
+
 
 const ADD_NEW_SUBJECT = "ADD_NEW_SUBJECT";
 const DELETE_SUBJECT = "DELETE_SUBJECT";
@@ -14,6 +16,7 @@ const ADD_SELECTED_TAGS = "ADD_SELECTED_TAGS";
 const DELETE_A_TAG = "DELETE_A_TAG";
 const ADD_COMMENT_DATA = "ADD_COMMENT_DATA";
 const EDIT_TODO_DATA = "EDIT_TODO_DATA";
+const RESET_AFTER_UPLOAD = "RESET_AFTER_UPLOAD";
 
 export const addNewSubject = (subject: String) => ({
   type: ADD_NEW_SUBJECT,
@@ -46,7 +49,7 @@ export const addTheSticker = (sticker: string) => ({
 
 // todo 데이터 추가 액션
 export const addToTimetable = (
-  id: string,
+  todo_PK: string,
   subject: string,
   todo_comment: string,
   start_time: string,
@@ -55,7 +58,7 @@ export const addToTimetable = (
 ) => ({
   type: ADD_A_TODO,
   payload: {
-    id: id,
+    todo_PK: todo_PK,
     subject: subject,
     todo_comment: todo_comment,
     learning_time: learning_time,
@@ -70,18 +73,18 @@ export const changeTotalHour = (hour: string) => ({
   payload: hour,
 });
 
-export const changeCheckedState = (id: string, checked: boolean) => ({
+export const changeCheckedState = (todo_PK: string, checked: boolean) => ({
   type: CHANGE_CHECKED_STATE,
   payload: {
-    id: id,
+    todo_PK: todo_PK,
     checked: checked,
   },
 });
 
 // todos 삭제 액션
-export const deleteTodo = (id: number) => ({
+export const deleteTodo = (todo_PK: number) => ({
   type: DELETE_A_TASK,
-  payload: id,
+  payload: todo_PK,
 });
 
 // 배경 변경 액션
@@ -120,6 +123,10 @@ export const editTodoData = (editData: any) => ({
   payload: editData,
 });
 
+export const resetAfterUpload = () => ({
+  type: RESET_AFTER_UPLOAD,
+});
+
 export default function addTaskReducer(state: any = initialState, action: any) {
   switch (action.type) {
     case 'FETCH_STATE': 
@@ -137,7 +144,7 @@ export default function addTaskReducer(state: any = initialState, action: any) {
       };
     case DELETE_A_TASK:
       const without = state.plannerDatas.todos.filter((el: any) => {
-        return el.id !== action.payload;
+        return el.todo_PK !== action.payload;
       });
       return {
         ...state,
@@ -152,9 +159,9 @@ export default function addTaskReducer(state: any = initialState, action: any) {
         plannerDatas: {
           ...state.plannerDatas,
           todos: state.plannerDatas.todos.map((todo: any) => {
-            console.log(todo.id);
-            console.log(action.payload.id);
-            return todo.id === action.payload.id
+            console.log(todo.todo_PK);
+            console.log(action.payload.todo_PK);
+            return todo.todo_PK === action.payload.todo_PK
               ? { ...todo, checked: action.payload.checked }
               : todo;
           }),
@@ -178,7 +185,6 @@ export default function addTaskReducer(state: any = initialState, action: any) {
         },
       };
     case CHANGE_BACK_COLOR:
-      console.log("배경색상? :", action.payload);
       return {
         ...state,
         plannerDatas: {
@@ -244,11 +250,28 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           ...state.plannerDatas,
           todos: state.plannerDatas.todos.map((todo: any) => {
             console.log(todo);
-            return todo.id === action.payload.id
+            return todo.todo_PK === action.payload.todo_PK
               ? { ...action.payload, checked: false }
               : todo;
           }),
         },
+      };
+      case RESET_AFTER_UPLOAD:
+      return {
+        ...state,
+        subject: ["국어", "수학"],
+        tags : ["취준", "개발", "코딩"],
+        plannerDatas: {
+          ...state.plannerData,
+          date: today,
+          sticker: "",
+          memo: "오늘도 화이팅 : )",
+          comment: "",
+          hour:"",
+          selected_tags : [],
+          back_color: "#fff",
+          todos: [],   
+        }
       };
     default:
       return state;
