@@ -32,14 +32,12 @@ function MyPost({ postData }: MyPostProps) {
   const todos = postData.todos;
   const post = postData; // post 전체 데이터
 
-  console.log(postData);
   let count_checked = 0;
 
   const count_checked_handler = () => {
-    console.log("todocard", todos);
     for (let todo_card of todos) {
-      console.log("My Feed : todo card 체크여부", todo_card.checked);
       if (todo_card.checked !== false) {
+        console.log("체크값에 true가 있는 카드", todo_card);
         count_checked = count_checked + 1;
       }
     }
