@@ -10,6 +10,7 @@ import getExploreListReducer from "./ExplorePostListModule";
 import getRankingListReducer from "./ExploreRankingListModule";
 import getMyFeedListReducer from "./MyfeedPostListModule";
 import resetDataReducer from "./ResetState";
+import getSearchValueReducer from "./SearchModule";
 
 const persistConfig = {
   key: "root", // reducer 객체에서 데이터를 저장하는 지점 설정
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   getExploreListReducer,
   getRankingListReducer,
   getMyFeedListReducer,
-  resetDataReducer
+  resetDataReducer,
+  getSearchValueReducer,
 });
 export default persistReducer(persistConfig, rootReducer);
