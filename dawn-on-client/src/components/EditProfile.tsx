@@ -17,6 +17,8 @@ import $ from "jquery";
 function EditProfile() {
   const dispatch = useDispatch();
 
+  // const [fileUrl, setFileUrl] = useState<any>(null);
+
   const [MyInfo, setMyInfo] = useState({
     user_nickname: "",
     user_img: "",
@@ -169,8 +171,6 @@ function EditProfile() {
     getEditPageInfo();
   }, []);
 
-  const [fileUrl, setFileUrl] = useState<any>(null);
-
   return (
     <div id="EditProfile-container">
       <div id="EditCancel-btn-container">
@@ -191,10 +191,8 @@ function EditProfile() {
             {user_img === "" ? (
               <i className="fas fa-user-circle"></i>
             ) : (
-              // <img alt="프로필 사진" className="profile-img" src={user_img} />
-              <img alt="프로필 사진" className="profile-img" src={fileUrl} />
+              <img alt="프로필 사진" className="profile-img" src={user_img} />
             )}
-
             <button>업로드</button>
           </div>
           <div className="Editinfo-name-container">
@@ -259,7 +257,6 @@ function EditProfile() {
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
             )}
-            {/* <img alt="프로필 사진" className="profile-img" src={user_img} /> */}
           </div>
           <div className="Editinfo-name-container">
             <div className="Editinfo-title">Nickname</div>
