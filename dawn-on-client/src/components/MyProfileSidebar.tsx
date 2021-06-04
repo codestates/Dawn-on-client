@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useDispatch } from "react-redux";
 import { getEditProfileState } from "../module/EditProfileModule";
-import { useEffect } from "react";
 
 // 로그인,회원가입 모달창의 닫기버튼과 비슷하게 EditProfile 컴포넌트 상태값을 Redux에 boolean타입으로 저장하여
 // true,false로 열고 닫기를 수행한다
@@ -76,7 +75,7 @@ function MyProfileSidebar() {
           </div>
         </div>
       </div>
-      <div id="MyProfileSide-stars">획득한 별은 더미 데이터로 표현함</div>
+      <div id="MyProfileSide-stars"></div>
     </div>
   );
 }
