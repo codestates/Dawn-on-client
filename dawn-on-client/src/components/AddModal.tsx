@@ -166,9 +166,9 @@ function AddModal({ clickHandler }: Props) {
     const start = startHour * 60 + startMin;
     const end = endHour * 60 + endMin;
 
-    const totalHours = Math.floor((end - start) / 60);
-    if (totalHours > 0) {
-      setTotalHour(totalHours);
+    const learning_time = Math.floor((end - start) / 60);
+    if (learning_time > 0) {
+      setTotalHour(learning_time);
     } else {
       swal("시간을 다시 선택해주세요.", "", "error");
     }
@@ -183,7 +183,7 @@ function AddModal({ clickHandler }: Props) {
           selectedSub,
           todo,
           time.startTime,
-          totalHour,
+          learning_time,
           color
         )
       );
