@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { useDispatch } from "react-redux";
 import { getExploreList } from "../module/ExplorePostListModule";
+import swal from "sweetalert";
 
 //응원해요 랭킹, 별 랭킹 각각의 axios요청 2개를 각각 보내서 랜더링해준다
 //각 랭킹에 적힌 사용자의 아이디 클릭 시, 해당 사용자가 작성한 게시물들을 필터링하여 볼수 있다.
@@ -154,7 +155,91 @@ function ExploreSidebar() {
           </div>
         </div>
       </div>
-      <div id="ExploreSide-star-ranking">별 랭킹 (더미 데이터로 표현한다)</div>
+      <div id="ExploreSide-star-ranking">
+        <div id="star-title">Start Ranking</div>
+        <div id="star-ranking-container">
+          <div id="rank-title" className="rank">
+            <div className="rank-subtitle"> Rank </div>
+            <div className="rank-subname"> USER </div>
+            <i className="far fa-thumbs-up"> STAR </i>
+          </div>
+          <div id="rank-1st" className="rank">
+            <div className="rank-number"> 1 </div>
+            <div className="rank-name">
+              {/* {first_img === null ? (
+                <i className="fas fa-user-circle"></i>
+              ) : (
+                <img
+                  alt="프로필 사진"
+                  className="profile-img"
+                  src={first_img}
+                />
+              )} */}
+              <i className="fas fa-user-circle"></i>
+              <div
+                className="rank-nickname"
+                onClick={() => {
+                  // search_User_Handler(first_nickname);
+                  swal("Star 서비스 준비중입니다", "", "warning");
+                }}
+              >
+                정현웅
+              </div>
+            </div>
+            <div className="rank-likes">187</div>
+          </div>
+          <div id="rank-2nd" className="rank">
+            <div className="rank-number"> 2 </div>
+            <div className="rank-name">
+              {/* {second_img === null ? (
+                <i className="fas fa-user-circle"></i>
+              ) : (
+                <img
+                  alt="프로필 사진"
+                  className="profile-img"
+                  src={second_img}
+                />
+              )} */}
+              <i className="fas fa-user-circle"></i>
+              <div
+                className="rank-nickname"
+                onClick={() => {
+                  // search_User_Handler(second_nickname);
+                  swal("Star 서비스 준비중입니다", "", "warning");
+                }}
+              >
+                전팀장
+              </div>
+            </div>
+            <div className="rank-likes">179.99</div>
+          </div>
+          <div id="rank-3rd" className="rank">
+            <div className="rank-number"> 3 </div>
+            <div className="rank-name">
+              {/* {third_img === null ? (
+                <i className="fas fa-user-circle"></i>
+              ) : (
+                <img
+                  alt="프로필 사진"
+                  className="profile-img"
+                  src={third_img}
+                />
+              )} */}
+              <i className="fas fa-user-circle"></i>
+              <div
+                className="rank-nickname"
+                onClick={() => {
+                  // search_User_Handler(third_nickname);
+                  swal("Star 서비스 준비중입니다", "", "warning");
+                }}
+              >
+                한국이와 재혁이
+              </div>
+            </div>
+            <div className="rank-likes">27</div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
