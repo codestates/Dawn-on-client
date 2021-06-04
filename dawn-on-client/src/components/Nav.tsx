@@ -135,7 +135,7 @@ const Nav = () => {
           <div>
             <input
               id="main-nav-search"
-              placeholder="아이디 혹은 테그를 검색하세요"
+              placeholder="아이디 혹은 (#)테그를 검색하세요"
               onChange={(e) => setsearch(e.target.value)}
             />
             <button
