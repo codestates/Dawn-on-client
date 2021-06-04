@@ -92,13 +92,13 @@ function ExplorePost({ postData }: ExplorePostProps) {
           <div className="Tags-title">Tags</div>
           <div className="tags">
             <div className="tag">
-              #{tags[0].tag === null ? "" : tags[0].tag}
+              #{tags[0] === undefined ? "" : tags[0].tag}
             </div>
             <div className="tag">
-              #{tags[1].tag === null ? "" : tags[1].tag}
+              #{tags[1] === undefined ? "" : tags[1].tag}
             </div>
             <div className="tag">
-              #{tags[2].tag === null ? "" : tags[2].tag}
+              #{tags[2] === undefined ? "" : tags[2].tag}
             </div>
           </div>
         </div>

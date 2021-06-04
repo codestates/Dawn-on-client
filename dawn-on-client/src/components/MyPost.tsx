@@ -32,10 +32,13 @@ function MyPost({ postData }: MyPostProps) {
   const todos = postData.todos;
   const post = postData; // post 전체 데이터
 
+  console.log(postData);
   let count_checked = 0;
 
   const count_checked_handler = () => {
+    console.log("todocard", todos);
     for (let todo_card of todos) {
+      console.log("My Feed : todo card 체크여부", todo_card.checked);
       if (todo_card.checked !== false) {
         count_checked = count_checked + 1;
       }
@@ -126,13 +129,13 @@ function MyPost({ postData }: MyPostProps) {
           <div className="Tags-title">Tags</div>
           <div className="tags">
             <div className="tag">
-              #{tags[0].tag === null ? "" : tags[0].tag}
+              #{tags[0] === undefined ? "" : tags[0].tag}
             </div>
             <div className="tag">
-              #{tags[1].tag === null ? "" : tags[1].tag}
+              #{tags[1] === undefined ? "" : tags[1].tag}
             </div>
             <div className="tag">
-              #{tags[2].tag === null ? "" : tags[2].tag}
+              #{tags[2] === undefined ? "" : tags[2].tag}
             </div>
           </div>
         </div>

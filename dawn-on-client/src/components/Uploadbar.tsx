@@ -21,6 +21,7 @@ import {
   addCommentData,
   deleteAtag,
 } from "../module/addTaskModule";
+import { resetAfterUpload } from "../module/ResetState";
 import { RootState } from "../store/store";
 
 const CustomContainer = styled.div`
@@ -30,7 +31,7 @@ const CustomContainer = styled.div`
   grid-column: 6 / 7;
   grid-row: 2 / 7;
   display: grid;
-  grid-template-rows: 0.3fr 0.7fr 1fr 1fr 0.3fr;
+  grid-template-rows: 0.3fr 0.3sfr 1fr 1fr 0.3fr;
   padding: 10px 5px;
   background: #fff;
 `;
@@ -195,6 +196,7 @@ function CustomBar() {
       )
       .then((res) => {
         console.log(res);
+        dispatch(resetAfterUpload()); 
         swal("게시물 등록완료", "", "success");
         history.push("/myfeed");
       })
@@ -207,9 +209,8 @@ function CustomBar() {
   return (
     <CustomContainer>
       <h2>Custom Planner</h2>
-      <div className="">
-        <h4>Background color</h4>
         <div className="back-color-picker">
+        <h4>Background color</h4>
           <ColorPicker
             value={back_color}
             hideTextfield
@@ -217,13 +218,15 @@ function CustomBar() {
               handleChange(newValue);
             }}
           />
+        </div>
+        <div id="patterns-container">
           <span onClick={(e: any) => bgPatternHandler(e)}>
             {" "}
             <img
               id="pattern01"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern01}
             />{" "}
           </span>
@@ -233,7 +236,7 @@ function CustomBar() {
               id="pattern02"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern02}
             />{" "}
           </span>
@@ -243,7 +246,7 @@ function CustomBar() {
               id="pattern04"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern04}
             />{" "}
           </span>
@@ -253,7 +256,7 @@ function CustomBar() {
               id="pattern05"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern05}
             />{" "}
           </span>
@@ -263,7 +266,7 @@ function CustomBar() {
               id="pattern06"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern06}
             />{" "}
           </span>
@@ -273,7 +276,7 @@ function CustomBar() {
               id="pattern07"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern07}
             />{" "}
           </span>
@@ -283,12 +286,11 @@ function CustomBar() {
               id="pattern08"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="24px"
+              width="40px"
               src={pattern08}
             />{" "}
           </span>
-        </div>
-      </div>
+          </div>
       <div>
         <h3>Write a comment</h3>
         <textarea

@@ -5,6 +5,11 @@
   display: flex;
 }
 
+.right-img > .section01-img {
+  width: 1300px;
+  margin-top: -50px;
+}
+
 #section2 {
   grid-column: 1 / 8;
   grid-row: 3 / 4;
@@ -157,7 +162,7 @@
   }
   /* mobile  */
   #section1 {
-    display: block;
+    display: block;nav-down: auto;
   }
   
   #section2 {
