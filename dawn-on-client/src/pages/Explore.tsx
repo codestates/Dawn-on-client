@@ -129,9 +129,6 @@ function Explore() {
         dispatch(getExploreList(res.data.postings));
         dispatch(getClickExploreView(res.data.postings[0]));
       })
-      .then(() => {
-        // dispatch(getSearchValue(""));
-      })
       .catch((err) => {
         console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
@@ -157,9 +154,7 @@ function Explore() {
         dispatch(getExploreList(res.data.postDatas));
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
-      .then(() => {
-        // dispatch(getSearchValue(""));
-      })
+
       .catch((err) => {
         console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
