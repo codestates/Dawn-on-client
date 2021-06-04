@@ -25,7 +25,8 @@ function ExplorePostView() {
   });
 
   let click_PK: number;
-  click_PK = click_exploreview.id;
+  click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
+  // click_PK = click_exploreview.id || 0;
 
   const changeThumbsUpHandler = async function () {
     await axios

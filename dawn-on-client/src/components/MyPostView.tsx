@@ -20,7 +20,7 @@ function MyPostView() {
 
   //클릭한 게시물의 PK값
   let click_PK: number;
-  click_PK = click_postview.id;
+  click_postview ? click_PK = click_postview.id : click_PK = 0;
 
   //내 게시물의 좋아요 유무
   const isClickThumbsUp = useSelector((status: RootState) => {

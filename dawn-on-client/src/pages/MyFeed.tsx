@@ -70,11 +70,14 @@ function MyFeed() {
       });
   };
 
+  let click_PK: number;
+  click_postview ? click_PK = click_postview.id : click_PK = 0;
+
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
         "http://localhost:4000/posts/search-thumbsup",
-        { post_PK: click_postview.id },
+        { post_PK: click_PK },
         {
           headers: {
             "Content-Type": "application/json",
