@@ -12,6 +12,9 @@ import { useHistory } from "react-router-dom";
 import { getExploreList } from "../module/ExplorePostListModule";
 import { getClickPostView } from "../module/ClickPostViewModule";
 import { getClickExploreView } from "../module/ClickExploreViewModule";
+import { getMyFeedList } from "../module/MyfeedPostListModule";
+import { getEditProfileState } from "../module/EditProfileModule";
+import { getSearchValue } from "../module/SearchModule";
 
 // 검색 기능 로직 구현하기
 const Nav = () => {
@@ -47,54 +50,6 @@ const Nav = () => {
     setJoinModal(false);
   };
 
-  //아이디 검색 함수
-  const search_User_Handler = async function (nick_name: string) {
-    await axios
-      .post(
-        "http://localhost:4000/posts/search-user",
-        { user_nickname: nick_name },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log("아이디 검색 데이터", res);
-        console.log("검색한 아이디값", res.data.postDatas);
-        dispatch(getExploreList(res.data.postDatas));
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("검색하신 결과가 없습니다", "", "warning");
-      });
-  };
-
-  //태그 검색 함수
-  const search_Tag_Handler = async function (tag: string) {
-    await axios
-      .post(
-        "http://localhost:4000/posts/search-tag",
-        { tag: tag },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log("태그 검색 데이터", res);
-        console.log("검색한 태그값", res.data.postDatas);
-        dispatch(getExploreList(res.data.postDatas));
-      })
-      .catch((err) => {
-        console.log(err);
-        swal("검색하신 결과가 없습니다", "", "warning");
-      });
-  };
-
   // 로그아웃 함수 => 로컬 로그아웃은 성공돠나, 소셜 로그아웃은 실패됌
   const logoutRequestHandler = async function () {
     const accessToken = window.localStorage.getItem("accessToken");
@@ -113,8 +68,12 @@ const Nav = () => {
       )
       .then(() => {
         dispatch(getLoginState(false));
+        // 모아보기, 마이피드 상세 페이지 데이터 초기화
         dispatch(getClickPostView({}));
         dispatch(getClickExploreView({}));
+        // 모아보기, 마이피드 게시물 목록 데이터 초기화
+        dispatch(getMyFeedList([]));
+        dispatch(getExploreList([]));
       })
       .then(() => {
         swal("로그아웃되었습니다", "", "success");
@@ -129,25 +88,32 @@ const Nav = () => {
 
   return (
     <div id="nav-container">
-      <h1 id="nav-logo">Dawn-on</h1>
+      <h1
+        id="nav-logo"
+        onClick={() => {
+          history.push("/");
+          dispatch(getEditProfileState(false));
+        }}
+      >
+        Dawn-on
+      </h1>
       {isLogin ? (
         <div id="nav-main-btn-container">
           <div>
             <input
               id="main-nav-search"
-              placeholder="아이디 혹은 (#)테그를 검색하세요"
+              placeholder="닉네임 혹은 (#)태그를 검색하세요"
               onChange={(e) => setsearch(e.target.value)}
             />
             <button
               onClick={() => {
+                dispatch(getEditProfileState(false));
                 if (search === "") {
                   return swal("검색어를 입력해주세요", "", "warning");
-                }
-
-                if (search[0] === "#") {
-                  search_Tag_Handler(search.substring(1));
                 } else {
-                  search_User_Handler(search);
+                  dispatch(getSearchValue(search));
+                  // history.push("/explore");
+                  window.location.replace("/explore");
                 }
               }}
             >
@@ -160,15 +126,29 @@ const Nav = () => {
           >
             Make a Planner
           </button>
-          <button className="main-nav" onClick={() => history.push("/explore")}>
+          <button
+            className="main-nav"
+            onClick={() => {
+              // history.push("/explore");
+              window.location.replace("/explore");
+              dispatch(getEditProfileState(false));
+            }}
+          >
             Explore
           </button>
-          <button className="main-nav" onClick={() => history.push("/myfeed")}>
+          <button
+            className="main-nav"
+            onClick={() => {
+              // history.push("/myfeed");
+              window.location.replace("/myfeed");
+            }}
+          >
             My Feed
           </button>
           <button
             className="main-nav"
             onClick={() => {
+              dispatch(getEditProfileState(false));
               swal({
                 title: "로그아웃 하시겠습니까?",
                 icon: "warning",

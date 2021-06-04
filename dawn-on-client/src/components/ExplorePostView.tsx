@@ -19,13 +19,21 @@ function ExplorePostView() {
     return status.getExploreListReducer.ExploreList;
   });
 
+  console.log(ExploreList);
+
   //현재 모아보기 상세 페이지에서 보여지고 있는 게시물의 객체형 데이터
   const click_exploreview = useSelector((status: RootState) => {
     return status.getClickExploreViewReducer.click_exploreview;
   });
 
+  let date;
+  click_exploreview 
+  ? date = new Date(click_exploreview.date).toLocaleString()
+  : date = "2021-06-05"
+
   let click_PK: number;
-  click_PK = click_exploreview.id;
+  click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
+  // click_PK = click_exploreview.id || 0;
 
   const changeThumbsUpHandler = async function () {
     await axios
@@ -63,7 +71,7 @@ function ExplorePostView() {
       ) : (
         <>
           <div id="ExploreView-Render">
-            <div>게시물 작성날짜: {click_exploreview.date}</div>
+            <div>게시물 작성날짜: {date}</div>
             <div>게시물 메모: {click_exploreview.memo}</div>
             <div>게시물 코멘트: {click_exploreview.comment}</div>
             <div>게시물 PK: {click_PK}</div>

@@ -159,6 +159,7 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
           }}
           id="edit-start-time"
           label="Start time"
+          size="medium"
           type="time"
           value={startTime}
           inputProps={{

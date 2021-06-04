@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
 html,
 body {
   margin: 0;
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: "Nanum Gothic", sans-serif;
   padding: 0;
   width: 100%;
   height: 100%;
@@ -45,6 +45,7 @@ button {
   justify-self: left;
   margin-left: 100px;
   flex-basis: 50%;
+  cursor: pointer;
 }
 
 #nav-main-btn-container {
@@ -55,7 +56,7 @@ button {
 }
 
 #main-nav-search {
-  width: 160px;
+  width: 200px;
 }
 
 #nav-landing-btn-container {
