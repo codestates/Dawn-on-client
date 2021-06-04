@@ -107,6 +107,7 @@ td {
 .plnnerfrom-date > span {
   grid-row: 2 / 3;
   align-self: center;
+  font-size: 3rem;
 }
 
 #sticker-add-btn {
@@ -146,13 +147,17 @@ td {
   justify-self: center;
   align-self: center;
   grid-row: 1 / 3;
-  width: 4rem;
 }
 
 #each-sticker {
   margin: 5px;
   opacity: 0.8;
+  width: 50px;
   cursor: pointer;
+}
+
+#each-sticker > img {
+  width: 5rem;
 }
 
 #each-sticker:hover {
@@ -160,7 +165,7 @@ td {
 }
 
 #selected-sticker {
-  width: 7rem;
+  width: 13rem;
   opacity: 0.8;
   grid-column: 1 / 3;
   grid-row: 1 / 3;
@@ -183,10 +188,11 @@ td {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   align-self: center;
+  padding: 15px;
   text-align: center;
   background: #fff;
   border-radius: 5%;
-  border: 1px solid rgba(0, 0, 0, 0.212);
+  /* border: 1px solid rgba(0, 0, 0, 0.212); */
   box-shadow:
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
@@ -195,15 +201,18 @@ td {
 .plnnerfrom-memo > span {
   grid-row: 2 / 4;
   margin: 0px 10px;
-  font-size: 1.1rem;
-  /* align-self: center; */
+  font-size: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.212);
+  border-radius: 5px;
 }
 
 .plnnerfrom-memo > textarea {
   grid-row: 2 / 4;
   font-size: 1.1rem;
   padding: 5px 5px;
-  height: 70%;
+  font-size: 2rem;
+  border-radius: 5px;
+  height: 100%;
   align-self: flex-start;
   resize: none;
 }
@@ -228,6 +237,7 @@ td {
   grid-template-rows: 1fr 1fr;
   align-self: center;
   background: #fff;
+  padding: 15px;
   border: 1px solid rgba(0, 0, 0, 0.212);
   border-radius: 5%;
   box-shadow:
@@ -237,8 +247,14 @@ td {
 
 .plnnerfrom-hour > span {
   grid-row: 2 / 3;
-  font-size: 2rem;
+  font-size: 5rem;
   align-self: top;
+  margin-top: 0;
+}
+
+.plnnerfrom-hour > h5 {
+  font-size: 2rem;
+  align-self: flex-end;
 }
 
 #add-task-modal {
@@ -261,9 +277,20 @@ td {
 
 .back-color-picker {
   grid-row: 2 / 3;
-  display: flex;
+  /* display: flex; */
   margin-bottom: 20px;
   align-self: center;
+}
+#color-thumbnail {
+  box-shadow: 
+  0px 3px 1px -2px rgb(0 0 0 / 20%), 
+  0px 2px 2px 0px rgb(0 0 0 / 14%), 
+  0px 1px 5px 0px rgb(0 0 0 / 12%);
+  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  align-self: center;
+  justify-self: center;
 }
 
 .ColorPicker-makeStyles-root-3 {
@@ -281,21 +308,24 @@ td {
   justify-self: center;
 }
 
-.back-color-picker > span {
- align-self: center;
- justify-self: left;
- cursor: pointer;
- width: 24px;
- height: 24px;
- margin: 6px;
- box-shadow: 
-  0px 3px 1px -2px rgb(0 0 0 / 20%), 
-  0px 2px 2px 0px rgb(0 0 0 / 14%), 
-  0px 1px 5px 0px rgb(0 0 0 / 12%);
+.back-color-selection {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
-.back-color-picker > span > img {
+.back-color-selection > span {
+  margin: 5px 5px;
+  align-self: center;
+  justify-self: center;
+}
+
+.back-color-selection > span > img {
   margin: 0px 5px;
+  box-shadow: 
+    0px 3px 1px -2px rgb(0 0 0 / 20%), 
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 
+    0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
 
 .todobar-subject {
@@ -320,6 +350,17 @@ td {
   /* height: 120px; */
 }
 
+.back-color-selection > .react-colorful {
+  width: 15rem;
+  height: 15rem;
+  justify-self: center;
+  align-self: center;
+  position: absolute;
+  top: 22.5%;
+  right: 13%;
+  z-index: 10;
+}
+
 .subject-edit-btn{
   outline: none;
   background-color: #fff;
@@ -335,6 +376,12 @@ td {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+}
+
+#outlined-helperText {
+  width: 60px;
+  height: 1.5rem;
+  padding: 5px;
 }
 
 .hashtags-group {
@@ -396,8 +443,8 @@ td {
 }
 
 .writing-comment {
-  margin: 5px 10px;
-  width: 80%;
+  margin: 20px 15px;
+  width: 100%;
   height: 80px;
 }
 
@@ -463,7 +510,6 @@ td {
 
 .add-todo-btn {
   float: right;
-  margin-top: 12px;
   margin-right: 5px;
   width: 30px;
   height: 30px;
@@ -507,8 +553,9 @@ td {
   align-self: center;
 }
 
-.fa-plus {
-  font-size: 1.2rem;
+.fa-plus-circle {
+  font-size: 2rem;
+  margin-right: 15px;
 }
 
 .fa-stopwatch {
