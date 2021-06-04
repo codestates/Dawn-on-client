@@ -17,26 +17,19 @@ import { getRankingFirst } from "../module/ExploreRankingListModule";
 import { getRankingSecond } from "../module/ExploreRankingListModule";
 import { getRankingThird } from "../module/ExploreRankingListModule";
 import { RootState } from "../store/store";
+import { getSearchValue } from "../module/SearchModule";
 
 function Explore() {
   const history = useHistory();
   const dispatch = useDispatch();
 
+  const SearchValue = useSelector((status: RootState) => {
+    return status.getSearchValueReducer.SearchValue;
+  });
+
   const click_exploreview = useSelector((status: RootState) => {
     return status.getClickExploreViewReducer.click_exploreview;
   });
-
-  const exploreList = useSelector((status: RootState) => {
-    return status.getExploreListReducer.ExploreList;
-  });
-
-  //현재 클릭한 게시물이 없다면(로그인하고 첫 main에 들어간 상태라면)
-  //첫번째 게시물을 보여준다
-  // const isChecked = function (firstPost: object) {
-  //   if (Object.keys(click_exploreview).length === 0) {
-  //     dispatch(getClickExploreView(firstPost));
-  //   }
-  // };
 
   // 소셜 로그인 성공 후, explore 페이지로 리디랙션 된다.
   // 이후, 서버로부터 토큰을 받아온다
@@ -92,6 +85,7 @@ function Explore() {
       });
   };
 
+  // 좋아요 클릭 여부
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
@@ -115,13 +109,83 @@ function Explore() {
       });
   };
 
+  //아이디 검색 함수
+  const search_User_Handler = async function (nick_name: string) {
+    await axios
+      .post(
+        "http://localhost:4000/posts/search-user",
+        { user_nickname: nick_name },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res: any) => {
+        console.log("아이디 검색 데이터", res);
+        console.log("검색한 아이디값", res.data.postDatas);
+        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
+      })
+      .then(() => {
+        // dispatch(getSearchValue(""));
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("검색하신 결과가 없습니다", "", "warning");
+      });
+  };
+
+  //태그 검색 함수
+  const search_Tag_Handler = async function (tag: string) {
+    await axios
+      .post(
+        "http://localhost:4000/posts/search-tag",
+        { tag: tag },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log("태그 검색 데이터", res);
+        console.log("검색한 태그값", res.data.postDatas);
+        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
+      })
+      .then(() => {
+        // dispatch(getSearchValue(""));
+      })
+      .catch((err) => {
+        console.log(err);
+        swal("검색하신 결과가 없습니다", "", "warning");
+      });
+  };
+
+  const ExploreList_Handler = function () {
+    if (SearchValue[0] === "#") {
+      return search_Tag_Handler(SearchValue.substring(1));
+    } else {
+      return search_User_Handler(SearchValue);
+    }
+  };
+
   useEffect(() => {
     Social_Login_getToken();
-    get_MainFeed_Data();
-    window.setTimeout(() => {
-      // isChecked(exploreList[0]);
-      searchThumbsUpHandler();
-    }, 200);
+  }, []);
+  useEffect(() => {
+    searchThumbsUpHandler();
+  }, []);
+  useEffect(() => {
+    if (SearchValue.length > 0) {
+      ExploreList_Handler();
+      dispatch(getSearchValue(""));
+    } else {
+      get_MainFeed_Data();
+    }
   }, []);
 
   return (
