@@ -24,6 +24,8 @@ function ExplorePostView() {
     return status.getClickExploreViewReducer.click_exploreview;
   });
 
+  const date = new Date(click_exploreview.date).toLocaleString();
+
   let click_PK: number;
   click_PK = click_exploreview.id;
 
@@ -63,7 +65,7 @@ function ExplorePostView() {
       ) : (
         <>
           <div id="ExploreView-Render">
-            <div>게시물 작성날짜: {click_exploreview.date}</div>
+            <div>게시물 작성날짜: {date}</div>
             <div>게시물 메모: {click_exploreview.memo}</div>
             <div>게시물 코멘트: {click_exploreview.comment}</div>
             <div>게시물 PK: {click_PK}</div>
