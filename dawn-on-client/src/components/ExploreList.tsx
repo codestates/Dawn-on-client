@@ -16,8 +16,8 @@ import { useState } from "react";
 function ExploreList() {
   const dispatch = useDispatch();
 
-  const [SortBy, setSortBy] = useState<string>("");
-  const [Job, setJob] = useState<string>("");
+  const [SortBy, setSortBy] = useState<string>("최신순");
+  const [Job, setJob] = useState<string>("전체");
 
   const ExploreList = useSelector((status: RootState) => {
     return status.getExploreListReducer.ExploreList;

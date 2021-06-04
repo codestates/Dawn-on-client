@@ -251,12 +251,12 @@ function EditProfile() {
           Social Login
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 [불가능] */}
-            {/* {user_img === "" ? (
+            {user_img === null ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
-            )} */}
-            <img alt="프로필 사진" className="profile-img" src={user_img} />
+            )}
+            {/* <img alt="프로필 사진" className="profile-img" src={user_img} /> */}
           </div>
           <div className="Editinfo-name-container">
             <div className="Editinfo-title">Nickname</div>
