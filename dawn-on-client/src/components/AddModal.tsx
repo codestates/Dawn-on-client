@@ -52,18 +52,20 @@ type Props = {
 
 function AddModal({ clickHandler }: Props) {
   const dispatch = useDispatch();
-  const todos = useSelector(
+  const todolist = useSelector(
     (state: RootState) => state.addTaskReducer.plannerDatas.todos
   );
 
-  const [todoDatas, setTodoDatas] = useState(todos);
+  const [todoDatas, setTodoDatas] = useState(todolist);
   useEffect(() => {
-    setTodoDatas(todos);
-  }, [todos]);
+    setTodoDatas(todolist);
+  }, [todolist]);
 
-  todoDatas.sort(function (a:any, b:any) {
-    return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
-  })
+  if(todoDatas.length !== 0) {
+    todoDatas.sort(function (a:any, b:any) {
+      return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
+    })
+  }
 
   // 유저가 선택한 color
   const [color, setColor] = useState<string>("#fff");
@@ -102,7 +104,7 @@ function AddModal({ clickHandler }: Props) {
 
   // const [subjectAddBtn, setSubjectAddBtn] = useState(false);
   // todo 상태.
-  const [todo, setTodo] = useState<string>("");
+  const [todos, setTodo] = useState<string>("");
 
   // 선택한 과목 라벨 상태 변경 및 스타일 추가 함수.
   const selectHandler = function (e: any) {
@@ -174,14 +176,14 @@ function AddModal({ clickHandler }: Props) {
     }
     if (selectedSub === "") {
       swal("과목을 선택해주세요.", "", "error");
-    } else if (todo === "") {
+    } else if (todos === "") {
       swal("오늘 할 일을 입력해주세요.", "", "error");
     } else {
       dispatch(
         addToTimetable(
           myuuid,
           selectedSub,
-          todo,
+          todos,
           time.startTime,
           learning_time,
           color
@@ -272,7 +274,7 @@ function AddModal({ clickHandler }: Props) {
       </div>
       <textarea
         onChange={(e: any) => setTodo(e.target.value)}
-        value={todo}
+        value={todos}
         className="todobar-todo"
         placeholder="할 일을 입력해주세요."
       ></textarea>

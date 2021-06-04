@@ -34,42 +34,48 @@ const Container = styled.div`
   border-radius: 3px;
   flex-direction: column;
   overflow-y: scroll;
+  padding: 25px;
   transition: all 1s;
   box-shadow:
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
 `
 const TodoBox = styled.div`
-  background-color: #fff;
   display: flex;
   border-radius: 3px;
-  margin: 5px 5px;
-  animation: fadeIn ease 1;
-  font-size: 1.2rem;
-  // border: 1px solid rgba(0, 0, 0, 0.212);
+  margin: 10px 20px;
+  // animation: fadeIn ease 1;
+  font-size: 1.3rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.212);
   border-right: 1px solid rgba(0, 0, 0, 0.212);
+  transition: 0.5s;
+  background-size: 200% auto;
   box-shadow:
   -7px -7px 20px 0px #fff9,
   -4px -4px 5px 0px #fff9,
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
+  &:hover {
+    {
+      transition: 0.5s;
+      transform: scale(1.03);
+    }
+  }
 `
-const Subject =styled.span`
+const Subject = styled.span`
   margin-top: 5px;
 `;
 
 const TimeBar = styled.div`
   margin-top: 15px;
   width: 100%;
+  font-size: 1.3rem;
   margin-right: 10px;
   display: flex;
 `
 
-
 const StartTime =styled.span`
-  font-size: 1.1rem;
-  margin-left: 10px;
+  margin-left: 22px;
   align-self: center;
   flex-basis: 83%;
 `
@@ -90,21 +96,31 @@ function AddTodo () {
     const plannerDatas = useSelector((state:RootState) => state.addTaskReducer.plannerDatas);
     const todos = useSelector((state:RootState) => state.addTaskReducer.plannerDatas.todos);
 
-    const [todoDatas, setTodoDatas] = useState(todos);
+    let initialTodo;
+    todos.length !== 0 ? initialTodo = todos : initialTodo = [];
+    const [todoDatas, setTodoDatas] = useState(initialTodo);
+
     useEffect(() => {
-      setTodoDatas(todos)
+      setTodoDatas(todos);
     }, [todos]);
     
     // useSelector로 받아온 todos 목록을 시간대에 따라 정렬.
-    todoDatas.sort(function (a:any, b:any) {
-      return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
-    })
+    if(todoDatas.length !== 0) {
+      todoDatas.sort(function (a:any, b:any) {
+        return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
+      })  
+    }
 
     //todos의 hour의 합계를 구해 total running time 표시.
-    const runningTime = todoDatas.reduce((acc: any, todo: any) => {
-      return acc + todo.learning_time;
-    }, 0);
-    
+    let runningTime:number;
+    if(todoDatas) {
+        runningTime = todoDatas.reduce((acc: any, todo: any) => {
+        return acc + todo.learning_time;
+    }, 0);      
+    }
+    else {
+      runningTime = 0;
+    }
     // runningTime 바뀔 때 마다 total time 바뀌도록 dispatch 요청
     useEffect(() => {
       dispatch(changeTotalHour(`${runningTime}h`))}, [dispatch, runningTime]);
@@ -133,7 +149,7 @@ function AddTodo () {
     // Edit Drawer
     const [visible, setVisible] = useState<boolean>(false);
     const [editData, setEditData] = useState({
-      id: "",
+      todo_PK: "",
       suject: "",
       color: "",
       todo_commnet: "",
@@ -147,7 +163,7 @@ function AddTodo () {
     }
 
     const openEditModal = function (e:any) {
-        const editData = todoDatas.filter((el:any) => el.id === e.target.id);
+        const editData = todoDatas.filter((el:any) => el.todo_PK === e.target.id);
         setEditData(editData[0]);
         setVisible(true);
         e.stopPropagation()
@@ -248,7 +264,7 @@ function AddTodo () {
               {
                 stickers.map(ele => 
                 <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);;stickerHandler(e)}}>
-                    <img id={ele} width="40px" alt="sticker" src={ele}></img>
+                    <img id={ele} alt="sticker" src={ele}></img>
                 </span>
                 )
               }
@@ -269,21 +285,21 @@ function AddTodo () {
           : 
           todoDatas.map((task:any) => {
               return(
-                <div key={task.id} ref={divRef}>
+                <div key={task.todo_PK} ref={divRef}>
                   <TimeBar>
                     <StartTime>{task.start_time}</StartTime>
                     <Hours>{task.learning_time}hours</Hours>
                   </TimeBar>
                   
                   <TodoBox 
-                  id={task.id} 
+                  id={task.todo_PK} 
                   style={{height: `calc(${task.learning_time} * 43px)`}}>
-                    <div id={task.id} className="color-label" style={{backgroundColor: task.box_color}}></div>
-                    <div onClick={(e:any) => openEditModal(e)} id={task.id} className="todobox-content">
-                      <Subject id={task.id} >{task.subject}</Subject>
-                      <Todo id={task.id}>{task.todo_comment}</Todo>
+                    <div id={task.todo_PK} className="color-label" style={{backgroundColor: task.box_color}}></div>
+                    <div onClick={(e:any) => openEditModal(e)} id={task.todo_PK} className="todobox-content">
+                      <Subject id={task.todo_PK} >{task.subject}</Subject>
+                      <Todo id={task.todo_PK}>{task.todo_comment}</Todo>
                     </div>
-                    <Checkbox id={task.id} className="todo-checkbox" onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
+                    <Checkbox id={task.todo_PK} className="todo-checkbox" onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
                   </TodoBox>
                 </div>
                 )})
@@ -298,9 +314,9 @@ function AddTodo () {
           visible={visible}
         >
           <button onClick={(e:any) => deleteHandler(e)} 
-              id={editData.id} 
+              id={editData.todo_PK} 
               className="todo-delete-btn">
-            <i id={editData.id} className="far fa-trash-alt"></i>
+            <i id={editData.todo_PK} className="far fa-trash-alt"></i>
           </button>
         <EditTodoModal editData={editData} closeEditModal={closeEditModal} />
         </Drawer>

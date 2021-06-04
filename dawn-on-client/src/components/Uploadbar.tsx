@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import styled from "@emotion/styled";
@@ -13,15 +13,16 @@ import pattern06 from "../img/pattern06.png";
 import pattern07 from "../img/pattern07.png";
 import pattern08 from "../img/pattern08.png";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import { ColorPicker } from "material-ui-color";
+import TextField from '@material-ui/core/TextField';
+import { HexColorPicker } from "react-colorful";
 import {
   changeBackColor,
   addSelectedTags,
   addToTaglist,
   addCommentData,
   deleteAtag,
+  resetAfterUpload
 } from "../module/addTaskModule";
-import { resetAfterUpload } from "../module/ResetState";
 import { RootState } from "../store/store";
 
 const CustomContainer = styled.div`
@@ -31,7 +32,7 @@ const CustomContainer = styled.div`
   grid-column: 6 / 7;
   grid-row: 2 / 7;
   display: grid;
-  grid-template-rows: 0.3fr 0.3sfr 1fr 1fr 0.3fr;
+  grid-template-rows: 0.2fr 0.3fr 1fr 1fr 0.3fr;
   padding: 10px 5px;
   background: #fff;
 `;
@@ -101,14 +102,15 @@ function CustomBar() {
     }
   };
 
-  const [back_color, setBackColor] = useState("#fff");
+  // const [back_color, setBackColor] = useState("#fff");
 
-  const handleChange = (newValue: any) => {
-    setBackColor(`#${newValue.hex}`);
-    dispatch(changeBackColor(`#${newValue.hex}`));
-    const plannerview = document.getElementById("planner-view") as HTMLElement;
-    plannerview.style.background = `#${newValue.hex}`;
-  };
+  // const handleChange = (newValue: any) => {
+  //   setBackColor(`#${newValue.hex}`);
+  //   dispatch(changeBackColor(`#${newValue.hex}`));
+  //   const plannerview = document.getElementById("planner-view") as HTMLElement;
+  //   plannerview.style.background = `#${newValue.hex}`;
+  // };
+
 
   const bgPatternHandler = function (e: any) {
     dispatch(changeBackColor(e.target.id));
@@ -196,6 +198,7 @@ function CustomBar() {
       )
       .then((res) => {
         console.log(res);
+        console.log('보낸 데이터: ', data);
         dispatch(resetAfterUpload()); 
         swal("게시물 등록완료", "", "success");
         history.push("/myfeed");
@@ -206,108 +209,140 @@ function CustomBar() {
       });
   };
 
+  const [back_color, setBackColor] = useState("#fff");
+
+  const handleChange = (color:string) => {
+    setBackColor(color);
+    dispatch(changeBackColor(color));
+    const plannerview = document.getElementById("planner-view") as HTMLElement;
+    const thumbnail = document.getElementById("color-thumbnail") as HTMLElement;
+    plannerview.style.background = color;
+    thumbnail.style.background = color; 
+  };
+
+  const [colorClick, setColorClick] = useState(false);
+
+  const colorPickHandler = function () {
+    if(colorClick) {
+      setColorClick(false);
+    }
+    else {
+      setColorClick(true);
+    }
+  }
+  
+
   return (
     <CustomContainer>
       <h2>Custom Planner</h2>
         <div className="back-color-picker">
-        <h4>Background color</h4>
-          <ColorPicker
-            value={back_color}
-            hideTextfield
-            onChange={(newValue: any) => {
-              handleChange(newValue);
-            }}
-          />
-        </div>
-        <div id="patterns-container">
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern01"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern01}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern02"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern02}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern04"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern04}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern05"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern05}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern06"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern06}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern07"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern07}
-            />{" "}
-          </span>
-          <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
-            <img
-              id="pattern08"
-              style={{ borderRadius: "10%" }}
-              alt="pattern"
-              width="40px"
-              src={pattern08}
-            />{" "}
-          </span>
+          <h4>Background</h4>
+          <div className="back-color-selection">
+            <div id="color-thumbnail" onClick={() => colorPickHandler()}>
+            </div>
+              { colorClick && 
+                <HexColorPicker 
+                color={back_color} 
+                onChange={(color:string) => handleChange(color)}
+                />
+              }
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern01"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern01}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern02"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern02}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern04"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern04}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern05"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern05}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern06"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern06}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern07"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern07}
+              />{" "}
+            </span>
+            <span onClick={(e: any) => bgPatternHandler(e)}>
+              {" "}
+              <img
+                id="pattern08"
+                style={{ borderRadius: "10%" }}
+                alt="pattern"
+                width="60px"
+                src={pattern08}
+              />{" "}
+            </span>
           </div>
+        </div>
       <div>
         <h3>Write a comment</h3>
-        <textarea
+        <TextField
+          id="outlined-multiline-static"
+          className="writing-comment"
           onChange={(e: any) => {
             setComment(e.target.value);
             dispatch(addCommentData(e.target.value));
           }}
-          className="writing-comment"
+          multiline
+          rows={10}
           value={comment}
-          placeholder="코멘트를 작성해보세요."
-        ></textarea>
+          variant="outlined"
+        />
       </div>
       <div className="tag-container">
         <div>
           <h3>Add the hasgtags</h3>
           <div className="add-tag-container">
-            <input onChange={(e) => setTag(e.target.value)} value={tag}></input>
+            <TextField
+              id="outlined-helperText"
+              onChange={(e) => setTag(e.target.value)} 
+              value={tag}
+              variant="outlined"
+            />
             <button onClick={addToTagList}>
               <i className="fas fa-plus"></i>
             </button>
