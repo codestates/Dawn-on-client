@@ -136,11 +136,23 @@
   grid-row: 4;
 }
 
+/* 별 랭킹 */
 #ExploreSide-star-ranking {
   grid-row: 4 / 6;
   padding: 10px;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
 }
 
+#star-title {
+  grid-row: 1;
+}
+
+#star-ranking-container {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-row: 2/7;
+}
 /* 중앙: 모아보기 게시물 리스트 */
 #ExploreList-container {
   grid-column: 3;

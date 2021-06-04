@@ -104,12 +104,12 @@ function EditProfile() {
         // setMyfeedInfo를 이용하여 값을 저장한다
         setMyInfo({
           ...MyInfo,
-          user_nickname: res.data.user.user_nickname,
-          user_img: res.data.user.user_img,
+          user_nickname: res.data.user.user_nickname || "",
+          user_img: res.data.user.user_img || "",
           // user_password: res.data.user_password,
-          user_job: res.data.user.user_job,
-          profile_comment: res.data.user.profile_comment,
-          provider: res.data.user.provider,
+          user_job: res.data.user.user_job || "",
+          profile_comment: res.data.user.profile_comment || "",
+          provider: res.data.user.provider || "",
         });
       })
       .then(() => {
@@ -169,6 +169,8 @@ function EditProfile() {
     getEditPageInfo();
   }, []);
 
+  const [fileUrl, setFileUrl] = useState<any>(null);
+
   return (
     <div id="EditProfile-container">
       <div id="EditCancel-btn-container">
@@ -186,13 +188,14 @@ function EditProfile() {
           Local Login
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 가능 => 버튼 추가하기 */}
-            {user_img === null ? (
+            {user_img === "" ? (
               <i className="fas fa-user-circle"></i>
             ) : (
-              <img alt="프로필 사진" className="profile-img" src={user_img} />
+              // <img alt="프로필 사진" className="profile-img" src={user_img} />
+              <img alt="프로필 사진" className="profile-img" src={fileUrl} />
             )}
-            {/* React Multer 기능 이용하기 */}
-            <button id="Editinfo-img-btn">수정</button>
+
+            <button>업로드</button>
           </div>
           <div className="Editinfo-name-container">
             <div className="Editinfo-title">Nickname</div>
@@ -251,7 +254,7 @@ function EditProfile() {
           Social Login
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 [불가능] */}
-            {user_img === null ? (
+            {user_img === "" ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />

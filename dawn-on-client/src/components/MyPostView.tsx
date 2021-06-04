@@ -27,6 +27,8 @@ function MyPostView() {
     return status.getClickPostViewReducer.MyPostThumbsUp;
   });
 
+  const date = new Date(click_postview.date).toLocaleString();
+
   console.log(isClickThumbsUp);
 
   const changeThumbsUpHandler = async function () {
@@ -65,7 +67,7 @@ function MyPostView() {
       ) : (
         <>
           <div id="MyPostView-Render">
-            <div>게시물 작성날짜: {click_postview.date}</div>
+            <div>게시물 작성날짜: {date}</div>
             <div>게시물 메모: {click_postview.memo}</div>
             <div>게시물 코멘트: {click_postview.comment}</div>
             <div>게시물 PK: {click_PK}</div>
