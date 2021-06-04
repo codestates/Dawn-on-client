@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import styled from "@emotion/styled";
 import circle from "../img/circle.png";
-import section01 from "../img/section01.png";
+import landing from "../img/landing-animation.gif";
 import "../App.css";
 import "../css/landing.css";
 
@@ -74,14 +74,12 @@ function Landing() {
   return (
     <>
       <LandingSection id="section1">
-        {/* <img className="back-circle" src={circle} alt=""></img> */}
-        <div className="circle"></div>
         <div className="left-txt">
           <h3 className="title">Dawn-on</h3>
           <p className="description">Plan, Organize, Get Things Done</p>
         </div>
         <div className="right-img">
-          {/* <img className="section01-img" src={section01} alt="프로젝트 소개" /> */}
+          <img className="section01-img" src={landing} alt="프로젝트 소개" />
         </div>
       </LandingSection>
       <LandingSection id="section2">
