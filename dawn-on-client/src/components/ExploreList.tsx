@@ -36,7 +36,7 @@ function ExploreList() {
   };
 
   let data_Size = 0;
-  data_Size = ExploreList.length ? ExploreList.length : 0;
+  data_Size = ExploreList ? ExploreList : [];
 
   // 인기순 + 직업(전체 제외)
   const search_Popular_Handler = async function (job: string) {
@@ -170,7 +170,7 @@ function ExploreList() {
       </div>
       {data_Size !== 0 ? (
         <div id="ExploreList-posts">
-          {ExploreList.map((post: any) => (
+          {ExploreList && ExploreList.map((post: any) => (
             <ExplorePost key={post.id} postData={post} />
           ))}
         </div>

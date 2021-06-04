@@ -19,12 +19,17 @@ function ExplorePostView() {
     return status.getExploreListReducer.ExploreList;
   });
 
+  console.log(ExploreList);
+
   //현재 모아보기 상세 페이지에서 보여지고 있는 게시물의 객체형 데이터
   const click_exploreview = useSelector((status: RootState) => {
     return status.getClickExploreViewReducer.click_exploreview;
   });
 
-  const date = new Date(click_exploreview.date).toLocaleString();
+  let date;
+  click_exploreview 
+  ? date = new Date(click_exploreview.date).toLocaleString()
+  : date = "2021-06-05"
 
   let click_PK: number;
   click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
