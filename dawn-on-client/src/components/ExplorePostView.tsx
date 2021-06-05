@@ -27,18 +27,17 @@ function ExplorePostView() {
   });
 
   let date;
-  click_exploreview 
-  ? date = new Date(click_exploreview.date).toLocaleString()
-  : date = "2021-06-05"
+  click_exploreview
+    ? (date = new Date(click_exploreview.date).toLocaleString())
+    : (date = "");
 
   let click_PK: number;
-  click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
-  // click_PK = click_exploreview.id || 0;
+  click_exploreview ? (click_PK = click_exploreview.id) : (click_PK = 0);
 
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/change-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/change-thumbsup`,
         { post_PK: click_PK },
         {
           headers: {

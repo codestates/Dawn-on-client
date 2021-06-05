@@ -61,7 +61,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   // 로그인 성공 시, 서버로부터 token을 받아온다
   async function Local_Login_getToken() {
     await axios
-      .get("http://localhost:4000/auth/signin/check", {
+      .get(`${process.env.REACT_APP_URI}/auth/signin/check`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -88,13 +88,13 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
 
   //구글 로그인
   const googleLogins = () => {
-    window.open(`http://localhost:4000/auth/google`, "_self");
+    window.open(`${process.env.REACT_APP_URI}/auth/google`, "_self");
     closeLoginModal();
   };
 
   //카카오톡 로그인
   const kakakoLogins = () => {
-    window.open(`http://localhost:4000/auth/kakao`, "_self");
+    window.open(`${process.env.REACT_APP_URI}/auth/kakao`, "_self");
     closeLoginModal();
   };
 
@@ -103,7 +103,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
     console.log("로그인한 사용자 정보", form);
     await axios
       .post(
-        `http://localhost:4000/auth/signin`,
+        `${process.env.REACT_APP_URI}/auth/signin`,
         { user_id: user_id, user_password: user_password },
         {
           headers: { "Content-Type": "application/json" },
@@ -168,6 +168,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
           </div>
           <div id="login-btn-container">
             <button
+              id="google-btn"
               onClick={() => {
                 googleLogins();
               }}
@@ -175,6 +176,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
               구글 로그인
             </button>
             <button
+              id="kakao-btn"
               onClick={() => {
                 kakakoLogins();
               }}

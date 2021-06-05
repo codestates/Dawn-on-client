@@ -42,7 +42,7 @@ function ExploreList() {
   const search_Popular_Handler = async function (job: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-popular",
+        `${process.env.REACT_APP_URI}/posts/search-popular`,
         { user_job: job },
         {
           headers: {
@@ -64,7 +64,7 @@ function ExploreList() {
   const search_Popular_All_Handler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-popular",
+        `${process.env.REACT_APP_URI}/posts/search-popular`,
         {},
         {
           headers: {
@@ -90,7 +90,7 @@ function ExploreList() {
     } else {
       return await axios
         .post(
-          "http://localhost:4000/posts/search-job",
+          `${process.env.REACT_APP_URI}/posts/search-job`,
           { user_job: job },
           {
             headers: {
@@ -114,7 +114,7 @@ function ExploreList() {
   // main feed 데이터 받아오는 함수
   const get_MainFeed_Data = async function () {
     await axios
-      .get("http://localhost:4000/posts/mainfeed", {
+      .get(`${process.env.REACT_APP_URI}/posts/mainfeed`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -170,9 +170,10 @@ function ExploreList() {
       </div>
       {data_Size !== 0 ? (
         <div id="ExploreList-posts">
-          {ExploreList && ExploreList.map((post: any) => (
-            <ExplorePost key={post.id} postData={post} />
-          ))}
+          {ExploreList &&
+            ExploreList.map((post: any) => (
+              <ExplorePost key={post.id} postData={post} />
+            ))}
         </div>
       ) : (
         <div id="postDatas-empty">

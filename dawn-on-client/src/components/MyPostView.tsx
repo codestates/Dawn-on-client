@@ -20,7 +20,7 @@ function MyPostView() {
 
   //클릭한 게시물의 PK값
   let click_PK: number;
-  click_postview ? click_PK = click_postview.id : click_PK = 0;
+  click_postview ? (click_PK = click_postview.id) : (click_PK = 0);
 
   //내 게시물의 좋아요 유무
   const isClickThumbsUp = useSelector((status: RootState) => {
@@ -34,7 +34,7 @@ function MyPostView() {
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/change-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/change-thumbsup`,
         { post_PK: click_PK },
         {
           headers: {

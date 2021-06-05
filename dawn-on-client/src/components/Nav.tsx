@@ -56,7 +56,7 @@ const Nav = () => {
 
     await axios
       .post(
-        `http://localhost:4000/auth/signout`,
+        `${process.env.REACT_APP_URI}/auth/signout`,
         {},
         {
           headers: {

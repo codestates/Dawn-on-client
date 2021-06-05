@@ -4,16 +4,7 @@ import { RootState } from "../store/store";
 import { useDispatch } from "react-redux";
 import { getExploreList } from "../module/ExplorePostListModule";
 import swal from "sweetalert";
-
-//응원해요 랭킹, 별 랭킹 각각의 axios요청 2개를 각각 보내서 랜더링해준다
-//각 랭킹에 적힌 사용자의 아이디 클릭 시, 해당 사용자가 작성한 게시물들을 필터링하여 볼수 있다.
-// 검색 기능과 마찬가지로 axios요청을 보내 데이터들을 받아와 Redux에 저장시킨다.
-
-// type Rankingchild = {
-//   user_img: string;
-//   user_nickname: string;
-//   total_thumbsup: number;
-// };
+import { getClickExploreView } from "../module/ClickExploreViewModule";
 
 function ExploreSidebar() {
   const dispatch = useDispatch();
@@ -22,39 +13,30 @@ function ExploreSidebar() {
     return status.getRankingListReducer.ranking_first;
   });
 
-  let first_img = "";
-  first_img = First.user_img;
-  let first_nickname = "";
-  first_nickname = First.user_nickname;
-  let first_thumbsup = 0;
-  first_thumbsup = First.total_thumbsup;
+  let first_img = First.user_img;
+  let first_nickname = First.user_nickname;
+  let first_thumbsup = First.total_thumbsup;
 
   const Second = useSelector((status: RootState) => {
     return status.getRankingListReducer.ranking_second;
   });
 
-  let second_img = "";
-  second_img = Second.user_img;
-  let second_nickname = "";
-  second_nickname = Second.user_nickname;
-  let second_thumbsup = 0;
-  second_thumbsup = Second.total_thumbsup;
+  let second_img = Second.user_img;
+  let second_nickname = Second.user_nickname;
+  let second_thumbsup = Second.total_thumbsup;
 
   const Third = useSelector((status: RootState) => {
     return status.getRankingListReducer.ranking_third;
   });
 
-  let third_img = "";
-  third_img = Third.user_img;
-  let third_nickname = "";
-  third_nickname = Third.user_nickname;
-  let third_thumbsup = 0;
-  third_thumbsup = Third.total_thumbsup;
+  let third_img = Third.user_img;
+  let third_nickname = Third.user_nickname;
+  let third_thumbsup = Third.total_thumbsup;
 
   const search_User_Handler = async function (nick_name: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-user",
+        `${process.env.REACT_APP_URI}/posts/search-user`,
         { user_nickname: nick_name },
         {
           headers: {
@@ -67,6 +49,7 @@ function ExploreSidebar() {
         console.log("아이디 클릭 데이터", res);
         console.log("클릭한 아이디값", res.data.postDatas);
         dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +70,7 @@ function ExploreSidebar() {
           <div id="rank-1st" className="rank">
             <div className="rank-number"> 1 </div>
             <div className="rank-name">
-              {first_img === null ? (
+              {first_img === undefined || first_img === null ? (
                 <i className="fas fa-user-circle"></i>
               ) : (
                 <img
@@ -110,7 +93,7 @@ function ExploreSidebar() {
           <div id="rank-2nd" className="rank">
             <div className="rank-number"> 2 </div>
             <div className="rank-name">
-              {second_img === null ? (
+              {second_img === undefined || second_img === null ? (
                 <i className="fas fa-user-circle"></i>
               ) : (
                 <img
@@ -133,7 +116,7 @@ function ExploreSidebar() {
           <div id="rank-3rd" className="rank">
             <div className="rank-number"> 3 </div>
             <div className="rank-name">
-              {third_img === null ? (
+              {third_img === undefined || third_img === null ? (
                 <i className="fas fa-user-circle"></i>
               ) : (
                 <img

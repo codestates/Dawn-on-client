@@ -45,7 +45,7 @@ function ExplorePost({ postData }: ExplorePostProps) {
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: post_PK },
         {
           headers: {
