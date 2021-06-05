@@ -65,7 +65,7 @@ function ExplorePostView() {
 
   return (
     <div id="ExplorePostView-container">
-      {ExploreList.length === 0 ? (
+      {ExploreList && ExploreList.length === 0 ? (
         <div>게시물 없음</div>
       ) : (
         <>

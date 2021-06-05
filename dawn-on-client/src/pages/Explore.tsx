@@ -177,7 +177,7 @@ function Explore() {
   }, []);
   useEffect(() => {
     console.log("SearchValue: ", SearchValue);
-    if (SearchValue.length > 0) {
+    if (SearchValue) {
       ExploreList_Handler();
       dispatch(getSearchValue(""));
     } else {
