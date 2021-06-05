@@ -299,7 +299,7 @@ function AddTodo () {
                       <Subject id={task.todo_PK} >{task.subject}</Subject>
                       <Todo id={task.todo_PK}>{task.todo_comment}</Todo>
                     </div>
-                    <Checkbox id={task.todo_PK} className="todo-checkbox" onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
+                    <Checkbox id={task.todo_PK} className="todo-checkbox" disabled onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
                   </TodoBox>
                 </div>
                 )})

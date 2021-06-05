@@ -33,7 +33,8 @@ const CustomContainer = styled.div`
   grid-row: 2 / 7;
   display: grid;
   grid-template-rows: 0.2fr 0.3fr 1fr 1fr 0.3fr;
-  padding: 10px 5px;
+  row-gap: 15px;
+  padding: 20px 15px;
   background: #fff;
 `;
 
@@ -234,7 +235,10 @@ function CustomBar() {
 
   return (
     <CustomContainer>
-      <h2>Custom Planner</h2>
+      <div className="custom-title-container">
+        <i className="fas fa-magic"></i>
+        <h2 className="custom-planner-title">Custom Planner</h2>
+      </div>
         <div className="back-color-picker">
           <h4>Background</h4>
           <div className="back-color-selection">
@@ -319,7 +323,7 @@ function CustomBar() {
           </div>
         </div>
       <div>
-        <h3>Write a comment</h3>
+        <h3 className="write-a-comment">Write a comment</h3>
         <TextField
           id="outlined-multiline-static"
           className="writing-comment"
