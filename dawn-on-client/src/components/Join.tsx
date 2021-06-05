@@ -102,7 +102,7 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     console.log("회원가입 데이터", form);
     await axios
       .post(
-        `http://localhost:4000/auth/signup`,
+        `${process.env.REACT_APP_URI}/auth/signup`,
         {
           userdto: {
             user_id: user_id,
@@ -191,14 +191,26 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             onChange={onChange}
           />
         </div>
-        <button
-          className="join-signup-btn"
-          onClick={() => {
-            checkInputDataHandler();
-          }}
-        >
-          SIGN UP
-        </button>
+        <div id="join-btn">
+          <button
+            id="join-to-login"
+            onClick={() => {
+              closeJoinModal();
+              openLoginModal();
+              clearformData();
+            }}
+          >
+            혹시 계정이 있으신가요?
+          </button>
+          <button
+            className="join-signup-btn"
+            onClick={() => {
+              checkInputDataHandler();
+            }}
+          >
+            SIGN UP
+          </button>
+        </div>
       </JoinContainer>
     </>
   );

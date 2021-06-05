@@ -46,7 +46,7 @@ function MyPost({ postData }: MyPostProps) {
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: post_PK },
         {
           headers: {
@@ -75,7 +75,7 @@ function MyPost({ postData }: MyPostProps) {
 
   const deletePost = async function () {
     await axios
-      .delete("http://localhost:4000/posts/myfeed", {
+      .delete(`${process.env.REACT_APP_URI}/posts/myfeed`, {
         data: { post_PK: post_PK }, //post_PK를 넣어서 보내준다
         headers: {
           "Content-Type": "application/json",

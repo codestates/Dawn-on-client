@@ -35,7 +35,7 @@ function Explore() {
   // 이후, 서버로부터 토큰을 받아온다
   const Social_Login_getToken = async function () {
     await axios
-      .get("http://localhost:4000/auth/signin/check", {
+      .get(`${process.env.REACT_APP_URI}/auth/signin/check`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -60,7 +60,7 @@ function Explore() {
   // main feed 데이터 받아오는 함수
   const get_MainFeed_Data = async function () {
     await axios
-      .get("http://localhost:4000/posts/mainfeed", {
+      .get(`${process.env.REACT_APP_URI}/posts/mainfeed`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -86,11 +86,11 @@ function Explore() {
   };
 
   let click_PK: number;
-  click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
+  click_exploreview ? (click_PK = click_exploreview.id) : (click_PK = 0);
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: click_PK },
         {
           headers: {
@@ -114,7 +114,7 @@ function Explore() {
   const search_User_Handler = async function (nick_name: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-user",
+        `${process.env.REACT_APP_URI}/posts/search-user`,
         { user_nickname: nick_name },
         {
           headers: {
@@ -139,7 +139,7 @@ function Explore() {
   const search_Tag_Handler = async function (tag: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-tag",
+        `${process.env.REACT_APP_URI}/posts/search-tag`,
         { tag: tag },
         {
           headers: {
@@ -176,8 +176,8 @@ function Explore() {
     searchThumbsUpHandler();
   }, []);
   useEffect(() => {
-    console.log('SearchValue: ' ,SearchValue);
-    if (SearchValue) {
+    console.log("SearchValue: ", SearchValue);
+    if (SearchValue.length > 0) {
       ExploreList_Handler();
       dispatch(getSearchValue(""));
     } else {

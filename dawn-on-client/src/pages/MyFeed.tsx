@@ -30,7 +30,7 @@ function MyFeed() {
 
   const getMyfeedInfo = async function () {
     await axios
-      .get(`http://localhost:4000/posts/myfeed`, {
+      .get(`${process.env.REACT_APP_URI}/posts/myfeed`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -58,12 +58,12 @@ function MyFeed() {
   };
 
   let click_PK: number;
-  click_postview ? click_PK = click_postview.id : click_PK = 0;
+  click_postview ? (click_PK = click_postview.id) : (click_PK = 0);
 
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: click_PK },
         {
           headers: {
