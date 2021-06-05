@@ -47,9 +47,9 @@ function ExploreSidebar() {
       )
       .then((res) => {
         console.log("아이디 클릭 데이터", res);
-        console.log("클릭한 아이디값", res.data.postings);
-        dispatch(getExploreList(res.data.postings));
-        dispatch(getClickExploreView(res.data.postings[0]));
+        console.log("클릭한 아이디값", res.data.postDatas);
+        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
         console.log(err);

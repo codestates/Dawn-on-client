@@ -125,9 +125,9 @@ function Explore() {
       )
       .then((res: any) => {
         console.log("아이디 검색 데이터", res);
-        console.log("검색한 아이디값", res.data.postings);
-        dispatch(getExploreList(res.data.postings));
-        dispatch(getClickExploreView(res.data.postings[0]));
+        console.log("검색한 아이디값", res.data.postDatas);
+        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
         console.log(err);
