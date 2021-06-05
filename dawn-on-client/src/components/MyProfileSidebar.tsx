@@ -22,18 +22,12 @@ function MyProfileSidebar() {
     return status.getMyFeedListReducer.MyFeedinfo;
   });
 
-  let user_nickname = "";
-  user_nickname = MyFeedInfo.user_nickname;
-  let user_img = "";
-  user_img = MyFeedInfo.user_img;
-  let user_job = "";
-  user_job = MyFeedInfo.user_job;
-  let profile_comment = "";
-  profile_comment = MyFeedInfo.profile_comment;
-  let total_learning_time = 0;
-  total_learning_time = MyFeedInfo.total_learning_time;
-  let total_posting = 0;
-  total_posting = MyFeedInfo.total_posting;
+  let user_nickname = MyFeedInfo.user_nickname;
+  let user_img = MyFeedInfo.user_img;
+  let user_job = MyFeedInfo.user_job;
+  let profile_comment = MyFeedInfo.profile_comment;
+  let total_learning_time = MyFeedInfo.total_learning_time;
+  let total_posting = MyFeedInfo.total_posting;
 
   return (
     <div id="MyProfileSidebar-container">
