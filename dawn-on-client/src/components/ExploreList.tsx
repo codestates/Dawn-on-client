@@ -7,13 +7,15 @@ import axios from "axios";
 import { getExploreList } from "../module/ExplorePostListModule";
 import { getClickExploreView } from "../module/ClickExploreViewModule";
 import swal from "sweetalert";
-import $ from "jquery";
 import { useState } from "react";
+import { Select } from "antd";
+import "antd/dist/antd.css";
 // 첫 화면 로딩 시, 게시물 목록을 axios 요청을 보낸 후  map을 사용하여 <ExplorePost/> 를 랜더링해준다
 // 검색어 요청 시, Redux에 저장한 데이터를 useSelector로 가져와서 랜더링한다.
 // useEffect를 사용하여 useSelector로 가져온 데이터의 값이 변경될 때 마다 해당 함수를 실행하게 하면 될 것 같다
 // async await를 사용하여 비동기 처리를 해야함. 로딩하고 있는 gif를 추가해야할듯
 function ExploreList() {
+  const { Option } = Select;
   const dispatch = useDispatch();
 
   const [SortBy, setSortBy] = useState<string>("최신순");
@@ -24,15 +26,15 @@ function ExploreList() {
   });
 
   // 셀렉트 박스 직업 value값 가져오기
-  const getSelectJobValue = () => {
-    const value = $("#select-job option:selected").text();
-    setJob(value);
+  const getSelectJobValue = (Job: string) => {
+    // const value = $("#select-job option:selected").text();
+    setJob(Job);
   };
 
   // 셀렉트 박스 정렬순 value값 가져오기
-  const getSelectSortValue = () => {
-    const value = $("#select-sort option:selected").text();
-    setSortBy(value);
+  const getSelectSortValue = (SortBy: string) => {
+    // const value = $("#select-sort option:selected").text();
+    setSortBy(SortBy);
   };
 
   let data_Size = 0;
@@ -136,25 +138,31 @@ function ExploreList() {
         swal("데이터 가져오기 실패", "", "error");
       });
   };
-
-  //Redux에 저장된 모아보기 페이지 게시물 데이터를 select box의 value값을 가져온다
-  // ex) ExploreList[0].users.user_job => 게시물 작성자의 직업
   return (
     <div id="ExploreList-container">
       <div id="ExploreList-filter">
-        <select id="select-sort" onChange={getSelectSortValue}>
-          <option value="최신순">최신순</option>
-          <option value="인기순">인기순</option>
-        </select>
-        <select id="select-job" onChange={getSelectJobValue}>
-          <option value="전체">전체</option>
-          <option value="수험생">수험생</option>
-          <option value="공시생">공시생</option>
-          <option value="고시생">고시생</option>
-          <option value="대학생">대학생</option>
-          <option value="기타">기타</option>
-        </select>
-        <button
+        <Select
+          defaultValue="최신순"
+          style={{ width: 120 }}
+          onChange={getSelectSortValue}
+        >
+          <Option value="최신순">최신순</Option>
+          <Option value="인기순">인기순</Option>
+        </Select>
+        <Select
+          defaultValue="전체"
+          style={{ width: 120 }}
+          onChange={getSelectJobValue}
+        >
+          <Option value="전체">전체</Option>
+          <Option value="수험생">수험생</Option>
+          <Option value="공시생">공시생</Option>
+          <Option value="고시생">고시생</Option>
+          <Option value="대학생">대학생</Option>
+          <Option value="기타">기타</Option>
+        </Select>
+        <div
+          id="sort-btn"
           onClick={() => {
             if (SortBy === "인기순" && Job !== "전체") {
               search_Popular_Handler(Job);
@@ -165,8 +173,8 @@ function ExploreList() {
             }
           }}
         >
-          정렬하기
-        </button>
+          SORT
+        </div>
       </div>
       {data_Size !== 0 ? (
         <div id="ExploreList-posts">
