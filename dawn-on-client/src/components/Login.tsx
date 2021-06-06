@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import swal from "sweetalert";
 import "../css/login.css";
 import "../App.css";
@@ -7,6 +7,16 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getLoginState } from "../module/isLogin";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+`;
 
 type LoginProps = {
   closeLoginModal: Function;
@@ -17,20 +27,26 @@ const LoginContainer = styled.div`
   display: grid;
   grid-template-columns: 0.3fr 1fr 0.3fr;
   grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 0.2fr;
-  background-color: #faee9d;
-  border-radius: 5px;
+  background-color: #f5eded;
+  background-image: linear-gradient(217deg, #f5eded 0%, #ffffff 100%);
+  opacity: 0.96;
+  border-radius: 20px;
   width: 500px;
-  height: 350px;
-  margin: -175px 0 0 -250px;
+  height: 450px;
+  margin: -225px 0 0 -225px;
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 100;
+  animation-duration: 0.47s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 const CloseButton = styled.button`
   outline: none;
   border: none;
-  background-color: #faee9d;
+  background:none
   justify-self: right;
   font-size: 1.5rem;
   margin-top: 10px;
@@ -121,33 +137,51 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
       .catch((err) => {
         console.log(err);
         swal("ID와 Password가 일치하지 않습니다", "", "error");
+        /*         Swal.fire({
+          title: "ID와 Password가 일치하지 않습니다",
+          width: 600,
+          padding: "3em",
+          background: "",
+          backdrop: `
+            rgba(0,0,123,0.4)
+            url("/images/nyan-cat.gif")
+            left top
+            no-repeat
+          `,
+        }); */
       });
   };
 
   return (
     <>
       <div>
-        <LoginContainer>
+        <LoginContainer id="a">
           <CloseButton className="close-btn" onClick={() => closeLoginModal()}>
             <i className="far fa-times-circle"></i>
           </CloseButton>
           <div id="login-title">LOG IN</div>
           <div id="login-input-container">
+            <span id="login-input">ID</span>
+
             <input
               className="login-input-id"
               name="user_id"
               value={user_id}
-              placeholder="ID"
+              placeholder="your ID"
               onChange={onChange}
             />
+            <span id="login-input">PASSWORD</span>
+
             <input
               className="login-input-pw"
               name="user_password"
+              placeholder="your password"
               value={user_password}
-              placeholder="비밀번호"
               type="password"
               onChange={onChange}
             />
+          </div>
+          <div id="login-join">
             <button
               id="login-to-join"
               onClick={() => {
@@ -155,8 +189,9 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
                 closeLoginModal();
               }}
             >
-              아직 계정이 없으신가요?
+              아직 회원이 아니신가요?
             </button>
+
             <button
               id="login-btn"
               onClick={() => {
@@ -173,7 +208,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
                 googleLogins();
               }}
             >
-              구글 로그인
+              google 로그인
             </button>
             <button
               id="kakao-btn"
@@ -181,7 +216,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
                 kakakoLogins();
               }}
             >
-              카카오톡 로그인
+              kakao 로그인
             </button>
           </div>
         </LoginContainer>
