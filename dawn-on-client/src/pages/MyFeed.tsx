@@ -28,6 +28,14 @@ function MyFeed() {
     return status.getClickPostViewReducer.click_postview;
   });
 
+  // 현재 클릭한 게시물이 없다면(로그인하고 첫 myfeed에 들어간 상태라면)
+  // 첫번째 게시물을 보여준다
+  const isChecked = function (firstPost: object) {
+    if (Object.keys(click_postview).length === 0) {
+      dispatch(getClickPostView(firstPost));
+    }
+  };
+
   const getMyfeedInfo = async function () {
     await axios
       .get(`${process.env.REACT_APP_URI}/posts/myfeed`, {
@@ -46,10 +54,14 @@ function MyFeed() {
         // 게시물 데이터 저장
         dispatch(getMyFeedList(postDatas.reverse() || []));
 
-        console.log("사용자의 게시물 목록 데이터", postDatas);
-        console.log("사용자의 개인정보 데이터", userDatas);
+        console.log("나의 게시물 목록", postDatas);
+        console.log("사용자 개인정보", userDatas);
 
         console.log("현재보여지는 데이터", click_postview);
+        return res;
+      })
+      .then((res) => {
+        isChecked(res.data.postDatas[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -77,6 +89,7 @@ function MyFeed() {
         dispatch(MyPostThumbsUp(res.data));
         dispatch(getClickPostView(click_postview));
         console.log("myfeed 가리키는 페이지", click_postview);
+        console.log("현재 보이는 게시물에 대한 좋아요 클릭 여부", res.data);
       })
       .catch((err) => {
         console.log(err);

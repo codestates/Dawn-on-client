@@ -233,7 +233,6 @@ function ExplorePostView() {
     return status.getClickExploreViewReducer.ExploreThumbsUp;
   });
 
-  console.log(isExploreThumbsUp);
   //모아보기 피드 전체 리스트
   const ExploreList = useSelector((status: RootState) => {
     return status.getExploreListReducer.ExploreList;
@@ -463,7 +462,7 @@ function ExplorePostView() {
             <div>
               {isExploreThumbsUp ? (
                 <i
-                  className="fas fa-heart"
+                  className="fas fa-thumbs-up"
                   id="Explore-full-heart"
                   onClick={() => {
                     changeThumbsUpHandler();
@@ -471,7 +470,7 @@ function ExplorePostView() {
                 ></i>
               ) : (
                 <i
-                  className="far fa-heart"
+                  className="far fa-thumbs-up"
                   id="Explore-empty-heart"
                   onClick={() => {
                     changeThumbsUpHandler();

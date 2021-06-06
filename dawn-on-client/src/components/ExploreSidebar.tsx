@@ -58,14 +58,14 @@ function ExploreSidebar() {
 
   return (
     <div id="ExploreSidebar-container">
-      <div id="ExploreSide-main-title">모아보기</div>
+      <div id="ExploreSide-main-title">EXPLORE</div>
       <div id="ExploreSide-like-ranking">
         <div id="like-explore-title">POPULAR</div>
         <div id="like-rank-container">
           <div id="rank-title" className="rank">
             <div className="rank-subtitle"> Rank </div>
             <div className="rank-subname"> USER </div>
-            <i className="far fa-thumbs-up">LIKE</i>
+            <i className="far fa-thumbs-up"> LIKE </i>
           </div>
           <div id="rank-1st" className="rank">
             <div className="rank-number"> 1 </div>
@@ -139,7 +139,7 @@ function ExploreSidebar() {
         </div>
       </div>
       <div id="ExploreSide-star-ranking">
-        <div id="star-title">Start Ranking</div>
+        <div id="star-title">Star Ranking</div>
         <div id="star-ranking-container">
           <div id="rank-title" className="rank">
             <div className="rank-subtitle"> Rank </div>
@@ -216,7 +216,7 @@ function ExploreSidebar() {
                   swal("Star 서비스 준비중입니다", "", "warning");
                 }}
               >
-                한국이와 재혁이
+                코드스테이츠
               </div>
             </div>
             <div className="rank-likes">27</div>

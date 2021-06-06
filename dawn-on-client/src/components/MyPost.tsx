@@ -142,7 +142,10 @@ function MyPost({ postData }: MyPostProps) {
             <CircularProgressbar
               value={percentage}
               text={`${percentage}%`}
-              styles={buildStyles({})}
+              styles={buildStyles({
+                textColor: `#2e4c8c`,
+                pathColor: `#2e4c8c`,
+              })}
             />
           </div>
         </div>

@@ -1,10 +1,29 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import swal from "sweetalert";
 import "../App.css";
 import "../css/join.css";
 import axios from "axios";
 import $ from "jquery";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1
+  }
+  to {
+    opacity: 0
+  }
+`;
 
 type JoinProps = {
   closeJoinModal: Function;
@@ -14,28 +33,36 @@ type JoinProps = {
 const JoinContainer = styled.div`
   display: grid;
   grid-template-columns: 0.3fr 1fr 0.3fr;
-  grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 0.2fr;
-  background-color: #faee9d;
-  border-radius: 5px;
+  grid-template-rows: 0.2fr 0.65fr 1fr 1fr 1fr 0.2fr;
+  background-color: #ccd0e2;
+  font-family: 'Montserrat-Thin', sans-serif;
+  src:url("../fonts/Montserrat-ThinItalic.ttf") format("truetype")
+  opacity: 0.96;
+  border-radius: 20px;
   width: 500px;
-  height: 350px;
-  margin: -175px 0 0 -250px;
+  height: 630px;
+  margin: -225px 0 0 -225px;
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 100;
+  animation-duration: 0.47s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards; 
+  
 `;
 
 const CloseButton = styled.button`
   outline: none;
   border: none;
-  background-color: #faee9d;
   justify-self: right;
   font-size: 1.5rem;
   margin-top: 10px;
   color: #2b3390;
-  grid-column: 6 / 7;
+  grid-column: 3 / 4;
   grid-row: 1 / 2;
+  margin-right: 33.5px;
 `;
 
 function Join({ closeJoinModal, openLoginModal }: JoinProps) {
@@ -142,16 +169,9 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
         >
           <i className="far fa-times-circle"></i>
         </CloseButton>
-        <div id="join-title">Join</div>
+        <div id="join-title">JOIN</div>
         <div className="join-input-container">
-          <input
-            className="join-input"
-            id="login-input-nickname"
-            name="user_nickname"
-            value={user_nickname}
-            placeholder="닉네임"
-            onChange={onChange}
-          />
+          <span id="join-value">아이디</span>
           <input
             className="join-input"
             id="login-input-id"
@@ -160,6 +180,16 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             placeholder="아이디"
             onChange={onChange}
           />
+          <span id="join-value">닉네임</span>
+          <input
+            className="join-input"
+            id="login-input-nickname"
+            name="user_nickname"
+            value={user_nickname}
+            placeholder="닉네임"
+            onChange={onChange}
+          />
+          <span id="join-value">직업</span>
           <select
             className="join-input"
             id="join-selectbox"
@@ -172,6 +202,7 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             <option value="대학생">대학생</option>
             <option value="기타">기타</option>
           </select>
+          <span id="join-value">패스워드</span>
           <input
             className="join-input"
             id="login-input-password"
@@ -181,8 +212,9 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             placeholder="비밀번호"
             onChange={onChange}
           />
+          <span id="join-value">패스워드 확인</span>
           <input
-            className="join-input-passwordcheck"
+            className="join-input"
             id="login-input-id"
             name="user_passwordcheck"
             value={user_passwordcheck}

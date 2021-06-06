@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getEditProfileState } from "../module/EditProfileModule";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import axios from "axios";
 import swal from "sweetalert";
 import $ from "jquery";
@@ -177,7 +175,7 @@ function EditProfile() {
     <div id="EditProfile-container">
       <div id="EditCancel-btn-container">
         <button
-          id="EditCancel-btn"
+          className="EditCancel-btn edit-action"
           onClick={() => {
             checkCancelAlert();
           }}
@@ -185,12 +183,12 @@ function EditProfile() {
           수정 취소
         </button>
       </div>
-      {provider === "local" ? (
+      {provider && provider === "local" ? (
         <div id="localLogin-container">
-          Local Login
+          {/* Local Login */}
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 가능 => 버튼 추가하기 */}
-            {user_img === "" ? (
+            {user_img === "" || user_img === null ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
@@ -211,7 +209,7 @@ function EditProfile() {
             <div className="Editinfo-title">Comment</div>
             <input
               type="text"
-              className="userinfo-input comment"
+              className="userinfo-input-comment"
               name="profile_comment"
               value={profile_comment}
               onChange={onChange}
@@ -251,10 +249,10 @@ function EditProfile() {
         </div>
       ) : (
         <div id="socialLogin-container">
-          Social Login
+          {/* Social Login */}
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 [불가능] */}
-            {user_img === "" ? (
+            {user_img === "" || user_img === null ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
@@ -274,7 +272,7 @@ function EditProfile() {
             <div className="Editinfo-title">Comment</div>
             <input
               type="text"
-              className="userinfo-input comment"
+              className="userinfo-input-comment"
               name="profile_comment"
               value={profile_comment}
               onChange={onChange}
@@ -296,7 +294,7 @@ function EditProfile() {
       )}
       <div className="EditSave-btn-container">
         <button
-          className="EditSave-btn"
+          className="EditSave-btn edit-action"
           onClick={() => {
             checkEditinfo();
           }}

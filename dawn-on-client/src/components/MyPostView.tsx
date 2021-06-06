@@ -343,8 +343,6 @@ function MyPostView() {
 
   // const date = new Date(click_postview.date).toLocaleString();
 
-  console.log(isClickThumbsUp);
-
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
@@ -519,7 +517,7 @@ function MyPostView() {
             <div>
               {isClickThumbsUp ? (
                 <i
-                  className="fas fa-heart"
+                  className="fas fa-thumbs-up"
                   id="MyFeed-full-heart"
                   onClick={() => {
                     changeThumbsUpHandler();
@@ -527,7 +525,7 @@ function MyPostView() {
                 ></i>
               ) : (
                 <i
-                  className="far fa-heart"
+                  className="far fa-thumbs-up"
                   id="MyFeed-empty-heart"
                   onClick={() => {
                     changeThumbsUpHandler();
