@@ -279,5 +279,6 @@
 #ExploreView-Footer {
   grid-row: 2;
   display: grid;
+  margin: 1.8rem;
   grid-template-rows: 0.3fr 0.7fr;
 }

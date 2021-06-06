@@ -122,7 +122,6 @@ td {
   font-size: 2rem;
   background: #fff;
   border-radius: 5%;
-  border: 1px solid rgba(0, 0, 0, 0.212);
   box-shadow:
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
@@ -155,7 +154,6 @@ td {
   align-self: center;
   background: #fff;
   border-radius: 5%;
-  border: 1px solid rgba(0, 0, 0, 0.212);
   box-shadow:
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
@@ -258,11 +256,11 @@ td {
   grid-column: 1 / 2;
   grid-row: 3 / 4;
   display: grid;
+  width: 100%;
   grid-template-rows: 1fr 1fr;
   align-self: center;
   background: #fff;
   padding: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.212);
   border-radius: 5%;
   box-shadow:
   7px 7px 20px 0px #0002,
@@ -271,7 +269,7 @@ td {
 
 .plnnerfrom-hour > span {
   grid-row: 2 / 3;
-  font-size: 5rem;
+  font-size: 3rem;
   align-self: top;
   margin-top: 0;
 }
