@@ -1,4 +1,5 @@
-import initialState from "./initialState";import moment from "moment";
+import initialState from "./initialState";
+import moment from "moment";
 const today = moment().format('YYYY-MM-DD');
 
 
@@ -153,20 +154,20 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           todos: [...without],
         },
       };
-    case CHANGE_CHECKED_STATE:
-      return {
-        ...state,
-        plannerDatas: {
-          ...state.plannerDatas,
-          todos: state.plannerDatas.todos.map((todo: any) => {
-            console.log(todo.todo_PK);
-            console.log(action.payload.todo_PK);
-            return todo.todo_PK === action.payload.todo_PK
-              ? { ...todo, checked: action.payload.checked }
-              : todo;
-          }),
-        },
-      };
+    // case CHANGE_CHECKED_STATE:
+    //   return {
+    //     ...state,
+    //     plannerDatas: {
+    //       ...state.plannerDatas,
+    //       todos: state.plannerDatas.todos.map((todo: any) => {
+    //         console.log(todo.todo_PK);
+    //         console.log(action.payload.todo_PK);
+    //         return todo.todo_PK === action.payload.todo_PK
+    //           ? { ...todo, checked: action.payload.checked }
+    //           : todo;
+    //       }),
+    //     },
+    //   };
     case ADD_MEMO_DATA:
       return {
         ...state,
