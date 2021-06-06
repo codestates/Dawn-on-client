@@ -103,18 +103,10 @@ function CustomBar() {
     }
   };
 
-  // const [back_color, setBackColor] = useState("#fff");
-
-  // const handleChange = (newValue: any) => {
-  //   setBackColor(`#${newValue.hex}`);
-  //   dispatch(changeBackColor(`#${newValue.hex}`));
-  //   const plannerview = document.getElementById("planner-view") as HTMLElement;
-  //   plannerview.style.background = `#${newValue.hex}`;
-  // };
-
   const bgPatternHandler = function (e: any) {
     dispatch(changeBackColor(e.target.id));
     const plannerView = document.querySelector("#planner-view") as HTMLElement;
+    plannerView.style.transition = "all 1s";
     if (e.target.id === "pattern01") {
       plannerView.style.backgroundImage = `url(${pattern01})`;
     }
@@ -246,74 +238,67 @@ function CustomBar() {
             />
           )}
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern01"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern01}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern02"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern02}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern04"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern04}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern05"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern05}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern06"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern06}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern07"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern07}
-            />{" "}
+            />
           </span>
           <span onClick={(e: any) => bgPatternHandler(e)}>
-            {" "}
             <img
               id="pattern08"
               style={{ borderRadius: "10%" }}
               alt="pattern"
               width="60px"
               src={pattern08}
-            />{" "}
+            />
           </span>
         </div>
       </div>

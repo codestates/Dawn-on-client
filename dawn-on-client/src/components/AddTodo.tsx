@@ -204,7 +204,8 @@ function AddTodo () {
     ]
 
     const stickerHandler = function (e:any) {
-      dispatch(addTheSticker(e.target.id));
+      console.log(e.target.id.split('/')[3].split('.')[1]);
+      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
     }
 
 
@@ -263,7 +264,7 @@ function AddTodo () {
               <div className="sticker-selector">
               {
                 stickers.map(ele => 
-                <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);;stickerHandler(e)}}>
+                <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);stickerHandler(e)}}>
                     <img id={ele} alt="sticker" src={ele}></img>
                 </span>
                 )

@@ -4,12 +4,13 @@ import styled from "@emotion/styled";
 import TextField from "@material-ui/core/TextField";
 import swal from "sweetalert";
 import {
-  editTodoData,
   addNewSubject,
   deleteSubject,
-} from "../module/addTaskModule";
+  editTodoData,
+} from "../module/ClickPostViewModule";
 import { ColorPicker } from "material-ui-color";
 import { RootState } from "../store/store";
+import axios from "axios";
 
 const LabelContainer = styled.div`
   margin-top: 5px;
@@ -37,9 +38,12 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
   const subjectLabel = useSelector(
     (state: RootState) => state.addTaskReducer.subject
   );
+  const click_postview = useSelector((status: RootState) => {
+    return status.getClickPostViewReducer.click_postview;
+  });
 
   const [newData, setNewData] = useState(editData);
-
+  console.log(newData);
   useEffect(() => {
     // console.log(editData);
     setNewData(editData);
@@ -138,15 +142,19 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
     } else if (totalHours <= 0) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
-      dispatch(
-        editTodoData({
-          ...newData,
-          start_time: startTime,
-          learning_time: totalHours,
-        })
-      );
+      // editDataPatch();
+      click_postview.todos.map((todo:any) => {
+        if(todo.todo_PK === editData.todo_PK) {
+          todo = newData;
+        }
+      })
+      click_postview.start_time = startTime;
+      click_postview.learning_time = totalHours;
+      dispatch(editTodoData(newData));
+      // editDataPatch();
       document.querySelector(".selected")?.classList.remove("selected");
       closeEditModal();
+      window.location.replace("/myfeed");
     }
   };
 
@@ -227,7 +235,7 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
         placeholder="할 일을 입력해주세요."
       ></textarea>
       <div className="modal-btn-container">
-        <button onClick={() => editSave()} className="todobar-save-btn">
+        <button onClick={() => {editSave();}} className="todobar-save-btn">
           EDIT
         </button>
       </div>
