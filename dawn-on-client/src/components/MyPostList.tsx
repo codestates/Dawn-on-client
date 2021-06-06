@@ -17,7 +17,7 @@ function MyPostList() {
 
   return (
     <div id="MyPostList-container">
-      <div id="MyPostList-subtitle">내 게시물 목록</div>
+      <div id="MyPostList-subtitle">MY POST LIST</div>
       {data_Size !== 0 ? (
         <div id="MyPostList-posts">
           {MyFeedList.map((post: any) => (
