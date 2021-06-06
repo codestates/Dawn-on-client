@@ -90,7 +90,7 @@ function ExplorePost({ postData }: ExplorePostProps) {
           <i className="far fa-thumbs-up">{thumbs_up}</i>
         </div>
         <div className="Thumbnail-info-2">
-          <div className="Tags-title">Tags</div>
+          <div className="Tags-title"> Tags </div>
           <div className="tags">
             <div className="tag">
               #{tags[0] === undefined ? "" : tags[0].tag}
@@ -108,7 +108,10 @@ function ExplorePost({ postData }: ExplorePostProps) {
             <CircularProgressbar
               value={percentage}
               text={`${percentage}%`}
-              styles={buildStyles({})}
+              styles={buildStyles({
+                textColor: `#2e4c8c`,
+                pathColor: `#2e4c8c`,
+              })}
             />
           </div>
         </div>
