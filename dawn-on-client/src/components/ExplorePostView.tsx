@@ -136,7 +136,6 @@ function ExplorePostView() {
 
     // todo 삭제 버튼
     const deleteHandler = function (e:any) {
-      console.log('삭제아이디: ', e.target.id);
       dispatch(deleteTodo(e.target.id));
       closeEditModal();
     }
@@ -247,18 +246,14 @@ function ExplorePostView() {
       }
     }, [click_exploreview]);
 
-  console.log('현재 뷰어: ', click_exploreview);
-
   useEffect(() => {
     let backColor:string;
     Object.keys(click_exploreview).length === 0 ? backColor = "#B9B3D1" : backColor = click_exploreview.back_color;
-    console.log(backColor);
     const backElement = document.querySelector("#planner-view-container") as HTMLElement;
     if(backElement) {
       backElement.style.transition = "all 0.6s ease"
 
     if(backColor.indexOf("#") !== -1) {
-      console.log("색상: ", backColor)
       backElement.style.background = click_exploreview.back_color;
     }else {
       if (backColor === "pattern01") {
@@ -323,8 +318,6 @@ function ExplorePostView() {
       stickerElement.src = sticker09;
     }      
   }
-  console.log('스티커 창: ', stickerElement); 
-  console.log('sticker: ', stickerName); 
   }, [click_exploreview]); 
 
 
@@ -346,10 +339,8 @@ function ExplorePostView() {
       .then((res) => {
         if (res.data === "up") {
           dispatch(ExploreThumbsUp(true));
-          console.log("좋아요 클릭");
         } else if (res.data === "down") {
           dispatch(ExploreThumbsUp(false));
-          console.log("좋아요 취소");
         }
       })
       .then(() => {
@@ -394,7 +385,6 @@ function ExplorePostView() {
             ?  <div className="empty-list-message">Make your todo list</div>
             : 
             click_exploreview.todos.map((task:any) => {
-              console.log('task: ', task);
                 return(
                   <div key={task.todo_PK} ref={divRef}>
                     <TimeBar>

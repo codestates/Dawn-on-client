@@ -15,6 +15,7 @@ import pattern08 from "../img/pattern08.png";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { HexColorPicker } from "react-colorful";
+import { Popover } from 'antd';
 import {
   changeBackColor,
   addSelectedTags,
@@ -30,9 +31,8 @@ const CustomContainer = styled.div`
   border-radius: 5px;
   grid-column: 6 / 7;
   grid-row: 2 / 7;
+  height: 100%;
   display: grid;
-  grid-template-rows: 0.2fr 0.3fr 1fr 1fr 0.3fr;
-  row-gap: 15px;
   padding: 20px 15px;
   background: #fff;
   box-shadow:
@@ -42,7 +42,7 @@ const CustomContainer = styled.div`
 
 const UploadButton = styled.button`
   flex: 1 1 auto;
-  padding: 10px 15px;
+  padding: 3px 15px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.3s;
@@ -51,8 +51,8 @@ const UploadButton = styled.button`
   background-color: #335296;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
+  margin-top: 6rem;
   border: none;
-  height: 60%;
   flex-basis: 30%;
   justify-self: right;
   margin-left: 40px;
@@ -109,14 +109,17 @@ function CustomBar() {
     }
     if (!tag) {
       swal("태그를 입력해주세요", "", "error");
+      setSelectedTag([]);
     }
     if (state.tags.indexOf(tag) !== -1) {
       swal("이미 존재하는 태그 입니다.", "", "error");
       setTag("");
+      setSelectedTag([]);
     }
     if (state.tags.length > 7) {
       swal("태그는 8 개 이상 만들 수 없습니다", "", "error");
       setTag("");
+      setSelectedTag([]);
     }
   };
 
@@ -177,7 +180,7 @@ function CustomBar() {
     if (state.plannerDatas.selected_tags.indexOf(e.target.id)) {
       const deleteTag = state.plannerDatas.selected_tags.filter(
         (el: string) => el !== e.target.id
-      );
+    );
       dispatch(addSelectedTags([...deleteTag]));
       dispatch(deleteAtag(e.target.id));
     }
@@ -185,7 +188,6 @@ function CustomBar() {
   };
 
   const uploadHandler = function (e: any) {
-    console.log(data);
     axios
       .post(
         `${process.env.REACT_APP_URI}/posts/posting`,
@@ -205,8 +207,6 @@ function CustomBar() {
         }
       )
       .then((res) => {
-        console.log(res);
-        console.log("보낸 데이터: ", data);
         dispatch(resetAfterUpload());
         swal("게시물 등록완료", "", "success");
         history.push("/myfeed");
@@ -238,6 +238,13 @@ function CustomBar() {
     }
   };
 
+  const content = (
+    <HexColorPicker
+      color={back_color}
+      onChange={(color: string) => handleChange(color)}
+    />
+  );
+
   return (
     <CustomContainer id="custom-bar">
       <div className="custom-title-container">
@@ -247,13 +254,9 @@ function CustomBar() {
       <div className="back-color-picker">
         <h4>Background</h4>
         <div className="back-color-selection">
+          <Popover content={content} title="BackgroundColor" trigger="click">
           <div id="color-thumbnail" onClick={() => colorPickHandler()}></div>
-          {colorClick && (
-            <HexColorPicker
-              color={back_color}
-              onChange={(color: string) => handleChange(color)}
-            />
-          )}
+          </Popover>
           <span onClick={(e: any) => bgPatternHandler(e)}>
             <img
               id="pattern01"
@@ -329,7 +332,7 @@ function CustomBar() {
             dispatch(addCommentData(e.target.value));
           }}
           multiline
-          rows={10}
+          rows={6}
           value={comment}
           variant="outlined"
         />

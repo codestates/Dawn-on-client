@@ -122,19 +122,15 @@ function MyPostView() {
     const click_postview = useSelector((status: RootState) => {
       return status.getClickPostViewReducer.click_postview;
     });
-  
-    console.log('전체: ', click_postview);
 
     useEffect(() => {
       let backColor:string;
       Object.keys(click_postview).length === 0 ? backColor = "#B9B3D1" : backColor = click_postview.back_color;
-      console.log(backColor);
       const backElement = document.querySelector("#planner-view-container") as HTMLElement;
       if(backElement) {
         backElement.style.transition = "all 0.6s ease"
   
       if(backColor.indexOf("#") !== -1) {
-        console.log("색상: ", backColor)
         backElement.style.background = click_postview.back_color;
       }else {
         if (backColor === "pattern01") {
@@ -177,7 +173,6 @@ function MyPostView() {
 
     // todo 삭제 버튼
     const deleteHandler = function (e:any) {
-      console.log('삭제아이디: ', e.target.id);
       dispatch(deleteTodo(e.target.id));
       closeEditModal();
     }
@@ -269,7 +264,6 @@ function MyPostView() {
           post.checked = e.target.checked;
         }
       })
-      console.log("chekced: ", e.target.id, e.target.checked);
       await editDataPatch();
       dispatch(changeCheckedState(e.target.id, e.target.checked));
       window.location.replace("/myfeed");
@@ -371,10 +365,8 @@ function MyPostView() {
       .then((res) => {
         if (res.data === "up") {
           dispatch(MyPostThumbsUp(true));
-          console.log("좋아요 클릭");
         } else if (res.data === "down") {
           dispatch(MyPostThumbsUp(false));
-          console.log("좋아요 취소");
         }
       })
       .then(() => {
@@ -386,7 +378,6 @@ function MyPostView() {
   };
 
   const editDataPatch = async function () {
-    console.log('보낸 comment: ', click_postview.comment);
     await axios
       .patch(
         `${process.env.REACT_APP_URI}/posts/myfeed`,
@@ -399,7 +390,6 @@ function MyPostView() {
         }
       )
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
