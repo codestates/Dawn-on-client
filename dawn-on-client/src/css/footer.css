@@ -1,8 +1,12 @@
+#footer {
+  height: 200px;
+}
 .github-link {
   background: -webkit-linear-gradient(#8ec5fc, #e0c3fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   cursor: url(../img/cursor/account.cur), auto;
+  color: #fff;
 }
 
 #Dawn-on {
