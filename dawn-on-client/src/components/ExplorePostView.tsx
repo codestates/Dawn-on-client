@@ -7,8 +7,7 @@ import { ExploreThumbsUp } from "../module/ClickExploreViewModule";
 import styled from "@emotion/styled"; 
 import {deleteTodo, 
         addMemoData, 
-        changeCheckedState, 
-        addTheSticker} from "../module/addTaskModule";
+        changeCheckedState, } from "../module/addTaskModule";
 import AddModal from "./AddModal";
 import moment from "moment";
 import pattern01 from "../img/pattern01.png";
@@ -30,14 +29,12 @@ import sticker08 from "../img/sticker/sticker08.png";
 import sticker09 from "../img/sticker/sticker09.png";
 import 'antd/dist/antd.css';
 import Popover from '@material-ui/core/Popover';
-import { Drawer } from 'antd';
 import { Checkbox } from 'antd';
 const Container = styled.div`
   font-family: "KoHo", sans-serif;
   font-size: 1rem;
   border: 1px solid rgba(94, 94, 94, 0.212);
   background-color: #fff;
-  grid-row: 1 / 3;
   border-radius: 3px;
   margin-left: 10px;
   overflow-y: scroll;
@@ -81,12 +78,6 @@ const TodoBox = styled.div`
   -4px -4px 5px 0px #fff9,
   7px 7px 20px 0px #0002,
   4px 4px 5px 0px #0001;
-  &:hover {
-    {
-      transition: 0.5s;
-      transform: scale(1.03);
-    }
-  }
 `
 const Subject = styled.span`
   margin-top: 5px;
@@ -218,9 +209,9 @@ function ExplorePostView() {
       sticker09,
     ]
 
-    const stickerHandler = function (e:any) {
-      dispatch(addTheSticker(e.target.id));
-    }
+    // const stickerHandler = function (e:any) {
+    //   dispatch(addTheSticker(e.target.id));
+    // }
 
 
     const checkedHandler = function(e:any) {
@@ -242,6 +233,19 @@ function ExplorePostView() {
   const click_exploreview = useSelector((status: RootState) => {
     return status.getClickExploreViewReducer.click_exploreview;
   });
+
+    // 총 공부시간 계산
+    const [runningTime, setRunningTime] = useState<number >(0); 
+    useEffect(() => {
+      if(click_exploreview.todos) {
+        setRunningTime(click_exploreview.todos.reduce((acc: any, todo: any) => {
+        return acc + todo.learning_time;
+        }, 0));      
+      }
+      else {
+        setRunningTime(0);
+      }
+    }, [click_exploreview]);
 
   console.log('현재 뷰어: ', click_exploreview);
 
@@ -365,71 +369,26 @@ function ExplorePostView() {
         <div id="planner-view-container">
           <div id="left-side-container">
             <Date>
-              <div>게시물 PK: {click_PK}</div>
               <span>{today}</span>
             </Date>
             <div className="plnnerfrom-memo">
-            {memoEdit
-              ? 
-              <button className="memo-edit-btn" onClick={() => memoHandler()}>
-                <i className="fas fa-check"></i>
-              </button> 
-              :          
-              <button className="memo-edit-btn" onClick={() => memoHandler()}>
-                <i className="fas fa-pencil-alt"></i>
-              </button>
-            }
-              { memoEdit
-                ? <textarea className="memo-edit-input" value={click_exploreview.memo} onChange={(e:any) => setMemo(e.target.value)} />
-                : <span>{click_exploreview.memo}</span>
-              }
+              <span>{click_exploreview.memo}</span>
             </div>
 
             <div className="plnnerfrom-hour">
             <h5>Total study time</h5>
               <span><i className="fas fa-stopwatch"></i>
-              {click_exploreview.today_learning_time}h
+              {runningTime}h
               </span>
             </div>
 
             <div className="plnnerfrom-sticker">
-            <button id="sticker-add-btn" aria-describedby={id} onClick={handleClick}>
-              <i className="fas fa-palette"></i>
-            </button>
-                <Popover
-                  id={id}
-                  open={opened}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                  }}
-                >
-                <div className="sticker-selector">
-                {
-                  stickers.map(ele => 
-                  <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);;stickerHandler(e)}}>
-                      <img id={ele} alt="sticker" src={ele}></img>
-                  </span>
-                  )
-                }
-                </div>
-              </Popover>
               { click_exploreview.sticker && 
                   <img id="view-selected-sticker" alt="selected-sticker" src={selectedIcon}></img>
               }
             </div>
           </div>
             <Container id="todo-veiw-container">
-            <button onClick={() => clickHandler()} className="add-todo-btn"><i className="fas fa-plus-circle"></i></button>
-            {isClick && 
-              <AddModal clickHandler={clickHandler} />
-            }
             <h3 className="todobar-title">Time Table</h3>
             {!click_exploreview.todos
             ?  <div className="empty-list-message">Make your todo list</div>
@@ -457,8 +416,7 @@ function ExplorePostView() {
                   )})
               }
             </Container>
-          </div>
-          <div id="ExploreView-Footer">
+            <div id="ExploreView-Footer">
             <div>
               {isExploreThumbsUp ? (
                 <i
@@ -482,6 +440,7 @@ function ExplorePostView() {
               <div>Comment</div>
               <div>{click_exploreview.comment}</div>
             </div>
+          </div>
           </div>
         </>
       )}

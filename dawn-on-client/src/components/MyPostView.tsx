@@ -4,10 +4,8 @@ import { useState, createRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "@emotion/styled"; 
 import {deleteTodo, 
-        // addMemoData, 
+        addMyfeedMemoData,
         addTheSticker} from "../module/ClickPostViewModule";
-import AddModal from "./AddModal";
-import moment from "moment";
 import MyPostEditModal from "./MyPostEditModal";
 import pattern01 from "../img/pattern01.png";
 import pattern02 from "../img/pattern02.png";
@@ -38,7 +36,7 @@ const Container = styled.div`
   font-size: 1rem;
   border: 1px solid rgba(94, 94, 94, 0.212);
   background-color: #fff;
-  grid-row: 1 / 3;
+  grid-row: 1 / 2;
   border-radius: 3px;
   margin-left: 10px;
   overflow-y: scroll;
@@ -51,7 +49,7 @@ const Container = styled.div`
 
 const Date = styled.div`
   grid-column: 1 / 2;
-  grid-row: 1 / 2;
+  grid-row: 2 / 3;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
@@ -166,15 +164,6 @@ function MyPostView() {
       }
       }
     }, [click_postview]) 
-  
-
-    // let initialTodo;
-    // todos.length !== 0 ? initialTodo = todos : initialTodo = [];
-    // const [todoDatas, setTodoDatas] = useState(initialTodo);
-
-    // useEffect(() => {
-    //   setTodoDatas(todos);
-    // }, [todos]);
     
     // useSelector로 받아온 todos 목록을 시간대에 따라 정렬.
     if(Object.keys(click_postview).length !== 0) {
@@ -183,7 +172,7 @@ function MyPostView() {
       })  
     }
 
-    const today = moment().format('YYYY-MM-DD');
+    // const today = moment().format('YYYY-MM-DD');
 
 
     // todo 삭제 버튼
@@ -199,9 +188,9 @@ function MyPostView() {
     const memoHandler = async function () {
       if(memoEdit) {
         click_postview.memo = memo;
+        dispatch(addMyfeedMemoData(memo));
         setMemoEdit(false); 
         await editDataPatch();
-        // dispatch(addMemoData(memo));
         window.location.replace("/myfeed");
       }else {
         setMemoEdit(true);
@@ -266,9 +255,11 @@ function MyPostView() {
     ]
 
     const stickerHandler = function (e:any) {
-      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
+      // dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
       click_postview.sticker = e.target.id.split('/')[3].split('.')[0];
+      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
       editDataPatch();
+      window.location.replace("/myfeed");
     }
 
     const checkedHandler = async function(e:any) {
@@ -320,12 +311,6 @@ function MyPostView() {
       }
     }, [click_postview]); 
 
-
-    //-----
-
-  
-
-
   // 게시물이 있으면 제일 최상단의 게시물을 디폴트값으로 보여준다
   // 현재 게시물 목록의 가장 첫번째 게시물의 데이터를 myfeed get요청 시, Redux로 저장시켜 값을 가져온다
 
@@ -343,8 +328,34 @@ function MyPostView() {
     return status.getClickPostViewReducer.MyPostThumbsUp;
   });
 
-  // const date = new Date(click_postview.date).toLocaleString();
+  const [comment, setComment] = useState(click_postview.comment);
+  const [commentEidt, setCommentEdit] = useState(false);
 
+  useEffect(() => {
+    setComment(click_postview.comment);
+  }, [click_postview])
+
+  const commentEditHandler = function () {
+    if(commentEidt) {
+      click_postview.comment = comment;
+      editDataPatch();
+      setCommentEdit(false);
+      window.location.replace("/myfeed");
+    }else {
+      setCommentEdit(true);
+    }
+  }
+
+  let runningTime:number;
+    if(click_postview.todos) {
+        runningTime = click_postview.todos.reduce((acc: any, todo: any) => {
+        return acc + todo.learning_time;
+    }, 0);      
+    }
+    else {
+      runningTime = 0;
+    }
+    
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
@@ -375,7 +386,7 @@ function MyPostView() {
   };
 
   const editDataPatch = async function () {
-    console.log('보낸 todos: ', click_postview.todos);
+    console.log('보낸 comment: ', click_postview.comment);
     await axios
       .patch(
         `${process.env.REACT_APP_URI}/posts/myfeed`,
@@ -405,9 +416,8 @@ function MyPostView() {
         <>
         <div id="planner-view-container">
           <div id="left-side-container">
-            <Date>
-              <div>게시물 PK: {click_PK}</div>
-              <span>{today}</span>
+            <Date id="MyPostView-date">
+              <span>{click_postview.date.slice(0, 10)}</span>
             </Date>
             <div className="plnnerfrom-memo">
             {memoEdit
@@ -431,7 +441,7 @@ function MyPostView() {
             <div className="plnnerfrom-viewer-hour">
             <h5>Total study time</h5>
               <span><i className="fas fa-stopwatch"></i>
-              {click_postview.today_learning_time}h
+              {runningTime}h
               </span>
             </div>
 
@@ -464,15 +474,11 @@ function MyPostView() {
                 </div>
               </Popover>
               { click_postview.sticker && 
-                  <img id="view-selected-sticker" alt="selected-sticker" src={selectedIcon}></img>
+                  <img id="view-selected-sticker" alt="selected-sticker" src={click_postview.sticker}></img>
               }
             </div>
           </div>
             <Container id="todo-veiw-container">
-            <button onClick={() => clickHandler()} className="add-todo-btn"><i className="fas fa-plus-circle"></i></button>
-            {isClick && 
-              <AddModal clickHandler={clickHandler} />
-            }
             <h3 className="todobar-title">Time Table</h3>
             {!click_postview.todos
             ?  <div className="empty-list-message">Make your todo list</div>
@@ -487,7 +493,7 @@ function MyPostView() {
                     
                     <TodoBox 
                     id={task.todo_PK} 
-                    style={{height: `calc(${task.learning_time} * 43px)`}}>
+                    style={{height: `calc(${task.learning_time} * 60px)`}}>
                       <div id={task.todo_PK} className="color-label" style={{backgroundColor: task.box_color}}></div>
                       <div onClick={(e:any) => openEditModal(e)} id={task.todo_PK} className="todobox-content">
                         <Subject id={task.todo_PK} >{task.subject}</Subject>
@@ -509,9 +515,9 @@ function MyPostView() {
             >
             <MyPostEditModal editData={editData} closeEditModal={closeEditModal} />
             </Drawer>
-          </div>
-          <div id="MyPostView-Footer">
-            <div>
+            <div id="MyPostView-Footer">
+            <div className="MyPostView-Footer-title">
+              <p>Comment</p>
               {isClickThumbsUp ? (
                 <i
                   className="fas fa-thumbs-up"
@@ -529,12 +535,18 @@ function MyPostView() {
                   }}
                 ></i>
               )}
-              <button id="EditPost-btn">Edit</button>
+              {commentEidt
+                ? <button id="EditPost-btn" onClick={commentEditHandler}>SAVE</button>
+                : <button id="EditPost-btn" onClick={commentEditHandler}>Edit</button>
+              }
             </div>
-            <div>
-              <div>Comment</div>
-              <div>{click_postview.comment}</div>
+            <div id="MyPostView-comment-area">
+              {commentEidt
+                ? <textarea className="MyPostView-comment-edit" value={comment} onChange={(e:any) => setComment(e.target.value)}></textarea>
+                : <div>{click_postview.comment}</div>
+              }
             </div>
+          </div>
           </div>
         </>
       )}
