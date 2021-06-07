@@ -37,8 +37,7 @@ function ExploreList() {
     setSortBy(SortBy);
   };
 
-  let data_Size = 0;
-  data_Size = ExploreList ? ExploreList : [];
+  const data_Size = ExploreList.length ? ExploreList.length : 0;
 
   // 인기순 + 직업(전체 제외)
   const search_Popular_Handler = async function (job: string) {
@@ -206,7 +205,7 @@ function ExploreList() {
       ) : (
         <div id="postDatas-empty">
           <img alt="empty_img" src={empty_folder} />
-          <div id="postDatas-empty-comment">목록이 비어있습니다</div>
+          <div id="postDatas-empty-comment">List is empty</div>
         </div>
       )}
     </div>
