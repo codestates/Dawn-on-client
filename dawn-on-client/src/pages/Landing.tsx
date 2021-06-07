@@ -8,10 +8,9 @@ import "../css/landing.css";
 import icon1 from "../img/to-do-list.png";
 import icon2 from "../img/color-palette.png";
 import icon3 from "../img/sharing.png";
-import icon4 from "../img/sunrise.png"
+import icon4 from "../img/sunrise.png";
 import mainGif from "../img/man01.gif";
-import example01 from "../img/example.png"
-
+import example01 from "../img/example.png";
 
 const LandingSection = styled.div`
   height: 100%;
@@ -69,7 +68,7 @@ function Landing() {
     const inside = document.querySelectorAll<HTMLElement>(".inside");
     inside.forEach((elem) => {
       if (isElementUnderBottom(elem, -20)) {
-        elem.style.animationName = "stretch"
+        elem.style.animationName = "stretch";
         elem.style.opacity = "0";
         elem.style.marginTop = "0%";
         elem.style.transform = " scale(0) rotate(13deg)";
@@ -109,20 +108,19 @@ function Landing() {
       id: 3,
       text: "See how other earlybirds are studying and get motivated.You can also search by tag and username.",
       src: example01,
-    }
-  ]
+    },
+  ];
 
-  const [clickID, setClickID] = useState<number>(1); 
+  const [clickID, setClickID] = useState<number>(1);
   console.log(clickID);
-  const clickHandler = (e:any ) => {
+  const clickHandler = (e: any) => {
     console.log(e.target.id);
-    if(clickID === (content.length)) {
+    if (clickID === content.length) {
       setClickID(1);
-    }
-    else{
+    } else {
       setClickID(Number(e.target.id) + 1);
     }
-  }
+  };
 
   return (
     <>
@@ -136,64 +134,71 @@ function Landing() {
         </div>
       </LandingSection>
       <LandingSection id="section2">
-      <div className="title left">Are you struggling with how to start your day?<br></br>
-        Create and share your own study planner!</div>
-      <div className="section02-left-upper">
-        <img src={icon1} className="inside"  alt="todo"/>
-        <h4 className="txt-01-title up-on-scroll">TODO LIST</h4>
-        <div className="description">
-        Manage tasks by time Manage them smartly according to the time you write. Label colors for each task for easier viewing.
+        <div className="title left">
+          Are you struggling with how to start your day?<br></br>
+          Create and share your own study planner!
         </div>
-      </div>
-      <div className="section02-left-lower">
-        <img src={icon2} className="inside" alt="custom"/>
-        <h4 className="txt-01-title up-on-scroll">CUSTOM PLANNER</h4>
-        <div className="description">
-        You can create your own planner with colors, patterns, and stickers of your own choosing.
+        <div className="section02-left-upper">
+          <img src={icon1} className="inside" alt="todo" />
+          <h4 className="txt-01-title up-on-scroll">TODO LIST</h4>
+          <div className="description">
+            Manage tasks by time Manage them smartly according to the time you
+            write. Label colors for each task for easier viewing.
+          </div>
         </div>
-      </div>
+        <div className="section02-left-lower">
+          <img src={icon2} className="inside" alt="custom" />
+          <h4 className="txt-01-title up-on-scroll">CUSTOM PLANNER</h4>
+          <div className="description">
+            You can create your own planner with colors, patterns, and stickers
+            of your own choosing.
+          </div>
+        </div>
         <img src={mainGif} alt="타겟 소개" />
         <div className="section02-right-txt">
           <img className="inside" src={icon3} alt="icon3"></img>
           <h4 className="txt-01-title up-on-scroll">SHARE YOUR PLAN</h4>
           <div className="description">
-          Create your own planner by selecting colors and patterns, and attach stickers to complete your own planner.
+            Create your own planner by selecting colors and patterns, and attach
+            stickers to complete your own planner.
           </div>
         </div>
       </LandingSection>
       <LandingSection id="section3">
         <div className="section03-title left just-opacity">
-        A special planner <br></br> for early birds
-        <img className="just-opacity" src={icon4} alt="icon4"></img>
+          A special planner <br></br> for early birds
+          <img className="just-opacity" src={icon4} alt="icon4"></img>
         </div>
-          {clickID === 1 &&
-          (<div id="1" className="slide-container">
+        {clickID === 1 && (
+          <div id="1" className="slide-container">
             <div className="slide-txt">{content[0].text}</div>
             <img alt="slide-img" width="50%" src={content[0].src}></img>
-          </div>)
-          }
-          {clickID === 2 &&
-          (<div id="1" className="slide-container">
-            <div className="slide-txt">{content[1].text}</div>  
+          </div>
+        )}
+        {clickID === 2 && (
+          <div id="1" className="slide-container">
+            <div className="slide-txt">{content[1].text}</div>
             <img alt="slide-img" width="50%" src={content[1].src}></img>
-          </div>)
-          }
-          {clickID === 3 &&
-          (<div id="1" className="slide-container">
+          </div>
+        )}
+        {clickID === 3 && (
+          <div id="1" className="slide-container">
             <div className="slide-txt">{content[2].text}</div>
             <img alt="slide-img" width="50%" src={content[2].src}></img>
-          </div>)
-          }
-        <button id={clickID.toString()} className="slide-next-btn" 
-        onClick={(e:any) => clickHandler(e)}>next</button>
+          </div>
+        )}
+        <button
+          id={clickID.toString()}
+          className="slide-next-btn"
+          onClick={(e: any) => clickHandler(e)}
+        >
+          next
+        </button>
       </LandingSection>
       <LandingSection id="section4">
-        <div>
-
-        </div>
+        <div></div>
       </LandingSection>
-      <LandingSection id="section5">
-      </LandingSection>
+      <LandingSection id="section5"></LandingSection>
       <Button
         id="landing-btn"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
