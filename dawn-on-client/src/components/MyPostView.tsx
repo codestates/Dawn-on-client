@@ -24,11 +24,13 @@ import sticker06 from "../img/sticker/sticker06.png";
 import sticker07 from "../img/sticker/sticker07.png";
 import sticker08 from "../img/sticker/sticker08.png";
 import sticker09 from "../img/sticker/sticker09.png";
+import box from "../img/box.png";
 import 'antd/dist/antd.css';
 import { RootState } from "../store/store";
 import Popover from '@material-ui/core/Popover';
 import { Drawer } from 'antd';
 import { Checkbox } from 'antd';
+import moment from "moment";
 
 
 const Container = styled.div`
@@ -400,14 +402,20 @@ function MyPostView() {
   // 만약, 게시물이 없으면 게시물 목록 조건부랜더링처럼 없다고 표시해준다
   return (
     <div id="MyPostView-container">
-      {!MyFeedList && MyFeedList.length === 0 ? (
-        <div className="empty-list-message">Make your todo list</div>
+      {MyFeedList && MyFeedList.length === 0 ? (
+        <div>
+          <img className="empty-box-img" src={box} alt="emtpy-box" />
+          <div className="empty-list-message">Make your todo list!</div>
+       </div>
       ) : (
         <>
         <div id="planner-view-container">
           <div id="left-side-container">
             <Date id="MyPostView-date">
-              <span>{click_postview.date.slice(0, 10)}</span>
+              {click_postview.date 
+                ? <span>{click_postview.date.slice(0, 10)}</span>
+                : <span>{moment().format("YY MM DD")}</span>
+              }
             </Date>
             <div className="plnnerfrom-memo">
             {memoEdit
