@@ -21,7 +21,7 @@ td {
 }
 
 .side-txt {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   grid-column: 2 / 3;
   grid-row: 2 / 7;
   font-size: 2rem;
@@ -42,7 +42,7 @@ td {
 }
 
 .custom-planner-title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
   font-size: 2.5rem;
   flex-basis: 90%;
@@ -51,7 +51,6 @@ td {
   align-self: center;
   font-weight: 500;
 }
-
 
 #todo-container {
   border: 1px solid black;
@@ -124,16 +123,14 @@ td {
   grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
   text-align: center;
   align-self: center;
   font-size: 2rem;
   background: #fff;
   border-radius: 5%;
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .plnnerfrom-date > span {
@@ -163,9 +160,7 @@ td {
   align-self: center;
   background: #fff;
   border-radius: 5%;
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .sticker-selector {
@@ -218,7 +213,7 @@ td {
   width: 100%;
   height: 100%;
   font-size: 1.2rem;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
   font-weight: 300;
   grid-column: 1 / 2;
   grid-row: 2 / 3;
@@ -229,9 +224,7 @@ td {
   text-align: center;
   background: #fff;
   border-radius: 5%;
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .plnnerfrom-memo > span {
@@ -270,7 +263,7 @@ td {
 
 .plnnerfrom-hour {
   height: 100%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
   font-size: 1.5rem;
   text-align: center;
@@ -283,9 +276,7 @@ td {
   background: #fff;
   padding: 15px;
   border-radius: 5%;
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
 }
 
 .plnnerfrom-hour > span {
@@ -327,12 +318,12 @@ td {
 
 .write-a-comment {
   font-size: 1.8rem;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 .back-color-picker > h4 {
   font-size: 1.5rem;
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 #upload-comment-container > .writing-comment {
@@ -344,10 +335,8 @@ td {
 }
 
 #color-thumbnail {
-  box-shadow: 
-  0px 3px 1px -2px rgb(0 0 0 / 20%), 
-  0px 2px 2px 0px rgb(0 0 0 / 14%), 
-  0px 1px 5px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   border-radius: 5px;
   width: 60px;
   height: 60px;
@@ -356,10 +345,8 @@ td {
 }
 
 #color-thumbnail-modal {
-  box-shadow: 
-  0px 3px 1px -2px rgb(0 0 0 / 20%), 
-  0px 2px 2px 0px rgb(0 0 0 / 14%), 
-  0px 1px 5px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
   border-radius: 5px;
   width: 40px;
   height: 40px;
@@ -397,10 +384,8 @@ td {
 
 .back-color-selection > span > img {
   margin: 0px 5px;
-  box-shadow: 
-    0px 3px 1px -2px rgb(0 0 0 / 20%), 
-    0px 2px 2px 0px rgb(0 0 0 / 14%), 
-    0px 1px 5px 0px rgb(0 0 0 / 12%);
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+    0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
 }
 
 .todobar-subject {
@@ -419,9 +404,7 @@ td {
 .select-subject {
   padding: 8px;
   border-radius: 10px;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 }
 
 .todobar-title-modal {
@@ -457,7 +440,7 @@ td {
   z-index: 10;
 }
 
-.subject-edit-btn{
+.subject-edit-btn {
   outline: none;
   background-color: #fff;
   border: 1px solid black;
@@ -591,7 +574,7 @@ td {
   margin: 5px 5px;
 }
 
-#color-pick-container{
+#color-pick-container {
   display: flex;
 }
 
@@ -606,9 +589,7 @@ td {
   width: 100%;
   padding: 3rem 3rem;
   border-radius: 10px;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 }
 
 #end-time {
@@ -692,7 +673,7 @@ td {
   float: right;
   background: none;
   outline: none;
-  border:none;
+  border: none;
   width: 20px;
   height: 20px;
   opacity: 0.7;
@@ -713,7 +694,7 @@ td {
 
 #start-time-label {
   font-size: 1.5rem;
-} 
+}
 
 #end-time {
   font-size: 1.5rem;
@@ -721,7 +702,7 @@ td {
 
 #end-time-label {
   font-size: 1.5rem;
-} 
+}
 
 .todo-edit-btn {
   width: 20px;
@@ -736,8 +717,13 @@ td {
 .empty-list-message {
   font-size: 2rem;
   text-align: center;
-  margin-top: 45%;
-  animation: fadeInMessage 1s;
+}
+
+.empty-box-img {
+  margin-top: 22%;
+  width: 150px;
+  height: 150px;
+  margin-left: 40%;
 }
 
 .todo-checkbox {
@@ -754,7 +740,7 @@ td {
   margin-right: 10px;
   padding: 0;
   outline: none;
-  border: 1px solid rgba(0, 0, 0, 0.247);;
+  border: 1px solid rgba(0, 0, 0, 0.247);
 }
 
 .memo-edit-btn:hover {
@@ -783,9 +769,7 @@ td {
   margin-top: 3rem;
   border: none;
   outline: none;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 }
 
 .writing-comment > textarea {
@@ -808,17 +792,16 @@ td {
 
 .selected {
   background: #335296;
-  border:none;
+  border: none;
   color: #fff;
   font-size: 1.5rem;
   padding: 3px 5px;
   margin-right: 5px;
   transition: all 1s ease-in-out;
-  
 }
 
 .selected-tag {
-  background-color:  #2b3390;
+  background-color: #2b3390;
   transition: all 0.6s;
   color: #fff;
 }
@@ -827,7 +810,6 @@ td {
   border-radius: 50%;
   transition: all 0.5s;
 }
-
 
 /* animation */
 @keyframes fadeIn {
@@ -863,7 +845,7 @@ td {
   }
 }
 
-@media all and (max-width:1500px) {
+@media all and (max-width: 1500px) {
   html {
     font-size: 10px;
   }
@@ -897,7 +879,7 @@ td {
   }
 }
 
-@media all and (max-width:1023px) {
+@media all and (max-width: 1023px) {
   html {
     font-size: 10px;
   }
@@ -911,10 +893,9 @@ td {
   #custom-bar {
     display: none;
   }
-  
 }
 
-@media all and (max-width:767px) {
+@media all and (max-width: 767px) {
   html {
     font-size: 8px;
   }
@@ -934,7 +915,4 @@ td {
     grid-column: 1 / 4;
     grid-row: 3 / 4;
   }
-  
 }
-
-
