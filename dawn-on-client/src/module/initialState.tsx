@@ -44,8 +44,6 @@ const initialState = {
   },
   MyPostThumbsUp: Boolean,
   ExploreThumbsUp: Boolean,
-  MyPostThumbsUpCount: Number,
-  ExploreThumbsUpCount: Number,
   SearchValue: String,
 };
 
