@@ -118,9 +118,7 @@ function Landing() {
   ];
 
   const [clickID, setClickID] = useState<number>(1);
-  console.log(clickID);
   const clickHandler = (e: any) => {
-    console.log(e.target.id);
     if (clickID === content.length) {
       setClickID(1);
     } else {
