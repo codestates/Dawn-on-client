@@ -50,8 +50,10 @@ function MyProfileSidebar() {
               )}
             </div>
             <div id="info-subcontainer-2">
-              <div id="user_nickname">Nickname {user_nickname}</div>
-              <div id="user_job">Job {user_job}</div>
+              <div>Nickname</div>
+              <div id="user_nickname">{user_nickname}</div>
+              <div>Job</div>
+              <div id="user_job">{user_job}</div>
             </div>
           </div>
 
@@ -63,10 +65,10 @@ function MyProfileSidebar() {
 
         {/* 경계선 */}
         <div id="info-2">
-          <div id="total_posting">TOTAL POSTING : {total_posting}</div>
-          <div id="total_learning_time">
-            TOTAL RUNNING TIME : {total_learning_time}
-          </div>
+          <div id="total_posting">TOTAL POSTING COUNT</div>
+          <div id="total_posting_num"> {total_posting}</div>
+          <div id="total_learning_time">TOTAL RUNNING TIME </div>
+          <div id="total_learning_time_num"> {total_learning_time}</div>
         </div>
       </div>
       <div id="MyProfileSide-stars"></div>
