@@ -15,6 +15,9 @@ import achievement from "../img/achievement.png";
 import mainGif from "../img/man01.gif";
 import example01 from "../img/example.png";
 import section4 from "../img/section4.png";
+import Explore from "../img/Explorepage.png";
+import mypage from "../img/mypage.png";
+import explore from "../img/explore.png";
 
 const LandingSection = styled.div`
   height: 100%;
@@ -68,7 +71,7 @@ function Landing() {
         elem.style.transform = "translateX(-15%)";
       } else {
         elem.style.opacity = "1";
-        elem.style.transform = "translateY(0%)";
+        elem.style.transform = "translateX(0%)";
       }
     });
 
@@ -82,6 +85,15 @@ function Landing() {
       } else {
         elem.style.opacity = "1";
         elem.style.transform = "scale(1) rotate(0deg)";
+      }
+    });
+
+    const image = document.querySelectorAll<HTMLElement>(".image");
+    image.forEach((elem) => {
+      if (isElementUnderBottom(elem, -20)) {
+        elem.style.opacity = "0";
+      } else {
+        elem.style.opacity = "0.7";
       }
     });
 
@@ -109,12 +121,12 @@ function Landing() {
     {
       id: 2,
       text: "You can see the planner I created in my feed. You can view your planner more easily by providing it as a list.",
-      src: example01,
+      src: mypage,
     },
     {
       id: 3,
       text: "See how other earlybirds are studying and get motivated.You can also search by tag and username.",
-      src: example01,
+      src: explore,
     },
   ];
 
@@ -193,19 +205,19 @@ function Landing() {
         {clickID === 1 && (
           <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[0].text}</div>
-            <img alt="slide-img" src={content[0].src}></img>
+            <img alt="slide-img" className="image" src={content[0].src}></img>
           </div>
         )}
         {clickID === 2 && (
           <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[1].text}</div>
-            <img alt="slide-img" src={content[1].src}></img>
+            <img alt="slide-img image" className="image" src={content[1].src}></img>
           </div>
         )}
         {clickID === 3 && (
           <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[2].text}</div>
-            <img alt="slide-img" src={content[2].src}></img>
+            <img alt="slide-img" className="image" src={content[2].src}></img>
           </div>
         )}
         <button

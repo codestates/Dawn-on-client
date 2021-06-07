@@ -129,7 +129,7 @@ function MyPostView() {
       let backColor:string;
       Object.keys(click_postview).length === 0 ? backColor = "#B9B3D1" : backColor = click_postview.back_color;
       const backElement = document.querySelector("#planner-view-container") as HTMLElement;
-      if(backElement) {
+      if(backElement && MyFeedList.length !== 0) {
         backElement.style.transition = "all 0.6s ease"
   
       if(backColor.indexOf("#") !== -1) {

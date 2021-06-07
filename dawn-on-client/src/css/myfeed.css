@@ -325,7 +325,7 @@
 }
 
 #view-selected-sticker {
-  width: 50%;
+  width: 40%;
 }
 
 .plnnerfrom-viewer-hour {
@@ -346,6 +346,7 @@
 
 .plnnerfrom-viewer-hour > h5 {
   font-size: 2rem;
+  font-weight: 300;
   align-self: flex-end;
 }
 
@@ -406,7 +407,7 @@
 
 /* 프로필 수정하는 컴포넌트 */
 #EditProfile-container {
-  grid-column: 3 / 6;
+  grid-column: 3 / 7;
   grid-row: 1 / 6;
   background-color: white;
   z-index: 1;
