@@ -2,7 +2,6 @@
 ![](https://img.shields.io/badge/Team-Done:up-blue?style=for-the-badge)
 # Dawn:on
 
-
 <img src="https://user-images.githubusercontent.com/75114956/120579352-52355c80-c462-11eb-9837-6164ccdee041.jpeg?raw=true"  width="850" height="500">
 
 
@@ -43,9 +42,12 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
 ******
 
 ## 📌 Roles
+
+
 <br />
 
 **토글을 클릭해주세요!**
+
 
 <details>
 <summary>전영호</summary>
@@ -160,7 +162,6 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
 - 
 </details>
    
-
 *************
    
 ## 💻 Stack
@@ -187,7 +188,7 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
  <br/>
  <br/>
    
-![Screen Shot 2021-06-02 at 6 21 22 PM](https://user-images.githubusercontent.com/75114956/120455148-75fb9280-c3cf-11eb-9e3e-b054e6e9a41d.png)
+![Untitled (1)](https://user-images.githubusercontent.com/75114956/120962801-64cdcf80-c79b-11eb-9115-9b133b92bb0e.jpg)
 
  *************
  ## ⛏ Client Side Flow chart
@@ -199,8 +200,10 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
    
  ## ⛏ Server Side Flow chart
    
-
 ![Untitled (3)](https://user-images.githubusercontent.com/75114956/120624269-7e210400-c49b-11eb-8cd1-2f9175e0eb99.jpg)
+
+
+
 
 
 
