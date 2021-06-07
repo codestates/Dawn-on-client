@@ -140,7 +140,7 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   const handleChange = (newValue: any) => {
     setNewData({ ...newData, box_color: newValue });
   };
-  
+
   // 라벨 삭제
   const deleteLabel = function (e: any) {
     dispatch(deleteSubject(e.target.id));
@@ -215,7 +215,7 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
 
   return (
     <>
-    <AddTodoBar>
+    <AddTodoBar id="edit-modal-container">
       <div id="todo-modal-upper">
         <h3 className="todobar-title-modal">Edit Each Todo</h3>
       </div>
