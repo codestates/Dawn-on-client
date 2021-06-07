@@ -8,9 +8,20 @@ import {
   deleteSubject,
   editTodoData,
 } from "../module/ClickPostViewModule";
-import { ColorPicker } from "material-ui-color";
+import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
 import axios from "axios";
+
+const AddTodoBar = styled.div`
+  font-family: 'KoHo', sans-serif;
+  display: grid;
+  background-color: #fff;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  flex-direction: column;
+`;
 
 const LabelContainer = styled.div`
   margin-top: 5px;
@@ -45,9 +56,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   const [newData, setNewData] = useState(editData);
   console.log(newData);
   useEffect(() => {
-    // console.log(editData);
-    setNewData(editData);
-  }, [editData]);
+    dispatch(editTodoData(newData));
+  }, [dispatch, newData]);
+
 
   const makeInitial = function (startTime: string) {
     const startHour = startTime.split(":")[0];
@@ -102,6 +113,16 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
     }
   };
 
+  const [colorClick, setColorClick] = useState(false);
+
+  const colorPickHandler = function () {
+    if (colorClick) {
+      setColorClick(false);
+    } else {
+      setColorClick(true);
+    }
+  };
+
   // 선택한 과목 라벨 상태 변경 및 스타일 추가 함수.
   const selectHandler = function (e: any) {
     const selectStatus = document.querySelector(".selected");
@@ -117,36 +138,25 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   };
 
   const handleChange = (newValue: any) => {
-    setNewData({ ...newData, box_color: `#${newValue.hex}` });
+    setNewData({ ...newData, box_color: newValue });
   };
-
+  
   // 라벨 삭제
   const deleteLabel = function (e: any) {
     dispatch(deleteSubject(e.target.id));
   };
 
 
-  const editDataPatch = async function () {
-    await axios
-      .patch(
-        `${process.env.REACT_APP_URI}/posts/myfeed`,
-        { postdatas: click_postview},
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        console.log(res);
-        console.log(click_postview);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  
+  useState(() => {
+    click_postview.todos.map((todo:any) => {
+      if(todo.todo_PK === newData.todo_PK) {
+        todo = newData;
+        console.log(todo);
+      }
+    })
+    click_postview.start_time = startTime;
+    console.log(click_postview);
+  })
 
   // dispatch로 변경해줘야 할 데이터 : 시작시간, 라벨(과목, 컬러), 할 일 내용
   const editSave = async function () {
@@ -165,31 +175,57 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
     } else if (totalHours <= 0) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
-      // editDataPatch();
       click_postview.todos.map((todo:any) => {
-        if(todo.todo_PK === editData.todo_PK) {
+        console.log('originPK: ', todo.todo_PK);
+        
+        if(todo.todo_PK === newData.todo_PK) {
           todo = newData;
         }
       })
       click_postview.start_time = startTime;
       click_postview.learning_time = totalHours;
-      dispatch(editTodoData(newData));
       editDataPatch();
       document.querySelector(".selected")?.classList.remove("selected");
       closeEditModal();
+      window.location.replace("/myfeed");
     }
   };
 
+  const editDataPatch = async function () {
+    console.log(click_postview);
+    await axios
+      .patch(
+        `${process.env.REACT_APP_URI}/posts/myfeed`,
+        { postdatas: click_postview},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
+
   return (
     <>
-      <form>
+    <AddTodoBar>
+      <div id="todo-modal-upper">
+        <h3 className="todobar-title-modal">Edit Each Todo</h3>
+      </div>
+      <form noValidate>
         <TextField
           onChange={async (e: any) => {
             setStartTime(e.target.value);
           }}
-          id="edit-start-time"
-          label="Start time"
-          size="medium"
+          id="start-time"
+          label="Start Time"
           type="time"
           value={startTime}
           inputProps={{
@@ -200,7 +236,7 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
           onChange={async (e: any) => {
             setEndTime(e.target.value);
           }}
-          id="edit-end-time"
+          id="end-time"
           label="End Time"
           type="time"
           value={endTime}
@@ -210,13 +246,19 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
         />
       </form>
       <div className="select-subject">
-        <span>Pick label color: </span>
-        <ColorPicker
-          value={newData.box_color}
-          onChange={(newValue: any) => {
-            handleChange(newValue);
-          }}
-        />
+        <div id="color-pick-container">
+          <span>Pick label color</span>
+          <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
+          {colorClick && 
+              <HexColorPicker
+                color={newData.box_color}
+                onChange={(newValue: any) => {
+                  handleChange(newValue);
+                }}
+              />
+          }
+        </div>
+        <span>Pick Subject Label: </span>
         <div className="make-new-label">
           <input
             onChange={(e: any) => setNewSubject(e.target.value)}
@@ -241,26 +283,35 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
                 className="todobar-subject"
               >
                 {ele}
-                <DeleteBtn onClick={(e: any) => deleteLabel(e)} id={ele}>
+                <DeleteBtn
+                  key={ele.subject}
+                  onClick={(e: any) => deleteLabel(e)}
+                  id={ele}
+                >
                   x
                 </DeleteBtn>
               </div>
             ))}
         </LabelContainer>
       </div>
-      <textarea
-        onChange={(e: any) =>
-          setNewData({ ...newData, todo_comment: e.target.value })
-        }
-        value={newData.todo_comment}
-        className="todobar-todo"
-        placeholder="할 일을 입력해주세요."
-      ></textarea>
+      <TextField
+          id="outlined-multiline-static"
+          className="writing-comment"
+          onChange={(e: any) =>
+            setNewData({ ...newData, todo_comment: e.target.value })
+          }
+          multiline
+          rows={5}
+          value={newData.todo_comment}
+          placeholder="할 일을 입력해주세요."
+          variant="outlined"
+      />
       <div className="modal-btn-container">
-        <button onClick={() => {editSave();editDataPatch();}} className="todobar-save-btn">
+        <button onClick={() => {editSave();}} className="todobar-save-btn">
           EDIT
         </button>
       </div>
+    </AddTodoBar>
     </>
   );
 }

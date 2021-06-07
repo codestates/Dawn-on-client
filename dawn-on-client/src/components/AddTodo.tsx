@@ -44,11 +44,12 @@ const TodoBox = styled.div`
   display: flex;
   border-radius: 3px;
   margin: 10px 20px;
-  // animation: fadeIn ease 1;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.212);
   border-right: 1px solid rgba(0, 0, 0, 0.212);
   transition: 0.5s;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 300;
   background-size: 200% auto;
   box-shadow:
   -7px -7px 20px 0px #fff9,
@@ -63,13 +64,14 @@ const TodoBox = styled.div`
   }
 `
 const Subject = styled.span`
+  font-weight: 400;
   margin-top: 5px;
 `;
 
 const TimeBar = styled.div`
   margin-top: 15px;
   width: 100%;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-right: 10px;
   display: flex;
 `
@@ -78,16 +80,18 @@ const StartTime =styled.span`
   margin-left: 22px;
   align-self: center;
   flex-basis: 83%;
+  font-size: 1.5rem;
 `
 
 const Hours =styled.span`
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   align-self: center;
   justify-self: right;
 `
 
 const Todo = styled.div`
   margin-top: 5px;
+  font-size: 1.5rem;
 `;
 
 function AddTodo () {
@@ -170,6 +174,7 @@ function AddTodo () {
     }
     // add todo card button 이벤트
     const [isClick, setIsClick] = useState(false);
+  
     const clickHandler = function () {
       if(isClick) {
         setIsClick(false);
@@ -278,7 +283,15 @@ function AddTodo () {
         <Container id="todo-veiw-container">
           <button onClick={() => clickHandler()} className="add-todo-btn"><i className="fas fa-plus-circle"></i></button>
           {isClick && 
+            <Drawer
+            placement="right"
+            closable={false}
+            width={480}
+            onClose={clickHandler}
+            visible={isClick}
+          >
             <AddModal clickHandler={clickHandler} />
+          </Drawer>
           }
           <h3 className="todobar-title">Time Table</h3>
           {todoDatas.length === 0
@@ -294,7 +307,7 @@ function AddTodo () {
                   
                   <TodoBox 
                   id={task.todo_PK} 
-                  style={{height: `calc(${task.learning_time} * 43px)`}}>
+                  style={{height: `calc(${task.learning_time} * 70px)`}}>
                     <div id={task.todo_PK} className="color-label" style={{backgroundColor: task.box_color}}></div>
                     <div onClick={(e:any) => openEditModal(e)} id={task.todo_PK} className="todobox-content">
                       <Subject id={task.todo_PK} >{task.subject}</Subject>
@@ -307,18 +320,17 @@ function AddTodo () {
             }
         </Container>
         <Drawer
-          title="Edit Todo"
           placement="right"
           closable={false}
-          width={300}
+          width={480}
           onClose={closeEditModal}
           visible={visible}
         >
           <button onClick={(e:any) => deleteHandler(e)} 
               id={editData.todo_PK} 
               className="todo-delete-btn">
-            <i id={editData.todo_PK} className="far fa-trash-alt"></i>
-          </button>
+          <i id={editData.todo_PK} className="far fa-trash-alt"></i>
+        </button>
         <EditTodoModal editData={editData} closeEditModal={closeEditModal} />
         </Drawer>
       </>

@@ -5,7 +5,7 @@ import { getClickPostView } from "../module/ClickPostViewModule";
 import { MyPostThumbsUp } from "../module/ClickPostViewModule";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // 클릭 이벤트로, 박스 하나 클릭하면 해당 박스의 데이터를 Redux로 저장하여 useSelector로 불러온 후 View에 랜더링 한다
 // 추가적으로, 내가 이 게시물에 대해서 좋아요를 눌렀는지 유저의 고유 아이디값과 포스트의 고유 아이디값을 가지고 요쳥을 보낸다

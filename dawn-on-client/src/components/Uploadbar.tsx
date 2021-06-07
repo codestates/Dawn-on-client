@@ -27,7 +27,6 @@ import { RootState } from "../store/store";
 
 const CustomContainer = styled.div`
   font-family: "KoHo", sans-serif;
-  border: 1px solid black;
   border-radius: 5px;
   grid-column: 6 / 7;
   grid-row: 2 / 7;
@@ -36,17 +35,35 @@ const CustomContainer = styled.div`
   row-gap: 15px;
   padding: 20px 15px;
   background: #fff;
+  box-shadow:
+  7px 7px 20px 0px #35405825,
+  4px 4px 10px 0px #446ec91c;
 `;
 
 const UploadButton = styled.button`
-  font-family: "KoHo", sans-serif;
-  border: 1px solid black;
-  background: none;
-  border-radius: 5px;
-  padding: 5px 5px;
-  margin-right: 5px;
-  float: right;
+  flex: 1 1 auto;
+  padding: 10px 15px;
   text-align: center;
+  text-transform: uppercase;
+  transition: 0.3s;
+  background-size: 200% auto;
+  color: #fff;
+  background-color: #335296;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  border: none;
+  height: 60%;
+  flex-basis: 30%;
+  justify-self: right;
+  margin-left: 40px;
+  letter-spacing: 3px;
+  &:hover {
+    {
+      color: #335296;
+      background-color: #e1e2e2;
+      opacity: 1;
+    }
+  }
 `;
 
 const DeleteBtn = styled.button`
@@ -222,7 +239,7 @@ function CustomBar() {
   };
 
   return (
-    <CustomContainer>
+    <CustomContainer id="custom-bar">
       <div className="custom-title-container">
         <i className="fas fa-magic"></i>
         <h2 className="custom-planner-title">Custom Planner</h2>
@@ -302,7 +319,7 @@ function CustomBar() {
           </span>
         </div>
       </div>
-      <div>
+      <div id="upload-comment-container">
         <h3 className="write-a-comment">Write a comment</h3>
         <TextField
           id="outlined-multiline-static"
@@ -354,7 +371,7 @@ function CustomBar() {
             ))}
         </div>
       </div>
-      <UploadButton onClick={(e: any) => uploadHandler(e)}>Upload</UploadButton>
+      <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>Upload</UploadButton>
     </CustomContainer>
   );
 }

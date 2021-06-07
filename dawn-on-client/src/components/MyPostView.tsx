@@ -266,7 +266,9 @@ function MyPostView() {
     ]
 
     const stickerHandler = function (e:any) {
-      dispatch(addTheSticker(e.target.id));
+      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
+      click_postview.sticker = e.target.id.split('/')[3].split('.')[0];
+      editDataPatch();
     }
 
     const checkedHandler = async function(e:any) {
@@ -501,15 +503,10 @@ function MyPostView() {
               title="Edit Todo"
               placement="right"
               closable={false}
-              width={300}
+              width={480}
               onClose={closeEditModal}
               visible={visible}
             >
-              <button onClick={(e:any) => deleteHandler(e)} 
-                  id={editData.todo_PK} 
-                  className="todo-delete-btn">
-                <i id={editData.todo_PK} className="far fa-trash-alt"></i>
-              </button>
             <MyPostEditModal editData={editData} closeEditModal={closeEditModal} />
             </Drawer>
           </div>

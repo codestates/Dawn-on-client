@@ -8,9 +8,20 @@ import {
   deleteSubject,
   editTodoData,
 } from "../module/ClickPostViewModule";
-import { ColorPicker } from "material-ui-color";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
-import axios from "axios";
+
+const AddTodoBar = styled.div`
+  font-family: 'KoHo', sans-serif;
+  display: grid;
+  background-color: #fff;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  flex-direction: column;
+`;
 
 const LabelContainer = styled.div`
   margin-top: 5px;
@@ -33,8 +44,25 @@ type Props = {
   closeEditModal: any;
 };
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 100,
+      fontSize: 20,
+    },
+  }),
+);
+
 function EditTodoModal({ editData, closeEditModal }: Props) {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   const subjectLabel = useSelector(
     (state: RootState) => state.addTaskReducer.subject
   );
@@ -102,6 +130,16 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
     }
   };
 
+  const [colorClick, setColorClick] = useState(false);
+
+  const colorPickHandler = function () {
+    if (colorClick) {
+      setColorClick(false);
+    } else {
+      setColorClick(true);
+    }
+  };
+
   // 선택한 과목 라벨 상태 변경 및 스타일 추가 함수.
   const selectHandler = function (e: any) {
     const selectStatus = document.querySelector(".selected");
@@ -117,7 +155,7 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
   };
 
   const handleChange = (newValue: any) => {
-    setNewData({ ...newData, box_color: `#${newValue.hex}` });
+    setNewData({ ...newData, box_color: newValue });
   };
 
   // 라벨 삭제
@@ -154,20 +192,23 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
       // editDataPatch();
       document.querySelector(".selected")?.classList.remove("selected");
       closeEditModal();
-      window.location.replace("/myfeed");
+      // window.location.replace("/myfeed");
     }
   };
 
   return (
     <>
-      <form>
+     <AddTodoBar>
+      <div id="todo-modal-upper">
+        <h3 className="todobar-title-modal">Edit Each Todo</h3>
+      </div>
+      <form noValidate>
         <TextField
           onChange={async (e: any) => {
             setStartTime(e.target.value);
           }}
-          id="edit-start-time"
-          label="Start time"
-          size="medium"
+          id="start-time"
+          label="Start Time"
           type="time"
           value={startTime}
           inputProps={{
@@ -178,7 +219,7 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
           onChange={async (e: any) => {
             setEndTime(e.target.value);
           }}
-          id="edit-end-time"
+          id="end-time"
           label="End Time"
           type="time"
           value={endTime}
@@ -188,13 +229,19 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
         />
       </form>
       <div className="select-subject">
-        <span>Pick label color: </span>
-        <ColorPicker
-          value={newData.box_color}
-          onChange={(newValue: any) => {
-            handleChange(newValue);
-          }}
-        />
+        <div id="color-pick-container">
+          <span>Pick label color</span>
+          <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
+          {colorClick && 
+              <HexColorPicker
+                color={newData.box_color}
+                onChange={(newValue: any) => {
+                  handleChange(newValue);
+                }}
+              />
+          }
+        </div>
+        <span>Pick Subject Label: </span>
         <div className="make-new-label">
           <input
             onChange={(e: any) => setNewSubject(e.target.value)}
@@ -219,26 +266,35 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
                 className="todobar-subject"
               >
                 {ele}
-                <DeleteBtn onClick={(e: any) => deleteLabel(e)} id={ele}>
+                <DeleteBtn
+                  key={ele.subject}
+                  onClick={(e: any) => deleteLabel(e)}
+                  id={ele}
+                >
                   x
                 </DeleteBtn>
               </div>
             ))}
         </LabelContainer>
       </div>
-      <textarea
-        onChange={(e: any) =>
-          setNewData({ ...newData, todo_comment: e.target.value })
-        }
-        value={newData.todo_comment}
-        className="todobar-todo"
-        placeholder="할 일을 입력해주세요."
-      ></textarea>
+      <TextField
+          id="outlined-multiline-static"
+          className="writing-comment"
+          onChange={(e: any) =>
+            setNewData({ ...newData, todo_comment: e.target.value })
+          }
+          multiline
+          rows={5}
+          value={newData.todo_comment}
+          placeholder="할 일을 입력해주세요."
+          variant="outlined"
+      />
       <div className="modal-btn-container">
         <button onClick={() => {editSave();}} className="todobar-save-btn">
           EDIT
         </button>
       </div>
+    </AddTodoBar>
     </>
   );
 }
