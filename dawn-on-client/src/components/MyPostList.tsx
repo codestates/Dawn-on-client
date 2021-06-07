@@ -12,8 +12,23 @@ function MyPostList() {
     return status.getMyFeedListReducer.MyFeedList;
   });
 
-  let data_Size = 0;
-  data_Size = MyFeedList.length ? MyFeedList.length : 0;
+  const data_Size = MyFeedList.length ? MyFeedList.length : 0;
+
+  const count_checked_handler = (todos: Array<any>) => {
+    let count_checked = 0;
+    let percentage = 0;
+    console.log("체크 함수 실행");
+    for (let todo_card of todos) {
+      if (todo_card.checked === true) {
+        console.log("체크값에 true가 있는 카드", todo_card);
+        count_checked = count_checked + 1;
+      }
+    }
+    console.log("체크된 카드 갯수", count_checked);
+    percentage = Math.floor((count_checked / todos.length) * 100);
+    console.log("percentage", percentage);
+    return percentage;
+  };
 
   return (
     <div id="MyPostList-container">
@@ -21,7 +36,11 @@ function MyPostList() {
       {data_Size !== 0 ? (
         <div id="MyPostList-posts">
           {MyFeedList.map((post: any) => (
-            <MyPost key={post.id} postData={post} />
+            <MyPost
+              key={post.id}
+              postData={post}
+              percentage={count_checked_handler(post.todos)}
+            />
           ))}
         </div>
       ) : (

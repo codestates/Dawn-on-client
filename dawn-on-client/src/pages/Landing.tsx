@@ -32,10 +32,11 @@ const Button = styled.button`
   outline: none;
   border: none;
   text-align: center;
-  width: 40px;
+  width: 60px;
+  height: 40px;
   background-color: #b9b3d1;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   padding: 5px 10px;
 `;
 
@@ -73,7 +74,7 @@ function Landing() {
     const inside = document.querySelectorAll<HTMLElement>(".inside");
     inside.forEach((elem) => {
       if (isElementUnderBottom(elem, -20)) {
-        elem.style.animationName = "stretch"
+        elem.style.animationName = "stretch";
         elem.style.opacity = "0";
         elem.style.marginTop = "0%";
         elem.style.transform = " scale(0) rotate(13deg)";
@@ -113,20 +114,19 @@ function Landing() {
       id: 3,
       text: "See how other earlybirds are studying and get motivated.You can also search by tag and username.",
       src: example01,
-    }
-  ]
+    },
+  ];
 
-  const [clickID, setClickID] = useState<number>(1); 
+  const [clickID, setClickID] = useState<number>(1);
   console.log(clickID);
-  const clickHandler = (e:any ) => {
+  const clickHandler = (e: any) => {
     console.log(e.target.id);
-    if(clickID === (content.length)) {
+    if (clickID === content.length) {
       setClickID(1);
-    }
-    else{
+    } else {
       setClickID(Number(e.target.id) + 1);
     }
-  }
+  };
 
   return (
     <>
@@ -149,28 +149,33 @@ function Landing() {
         </div>
       </LandingSection>
       <LandingSection id="section2">
-      <div className="title left">Are you struggling with how to start your day?<br></br>
-        Create and share your own study planner!</div>
-      <div className="section02-left-upper">
-        <img src={icon1} className="inside"  alt="todo"/>
-        <h4 className="txt-01-title up-on-scroll">TODO LIST</h4>
-        <div className="description">
-        Manage tasks by time Manage them smartly according to the time you write. Label colors for each task for easier viewing.
+        <div className="title left">
+          Are you struggling with how to start your day?<br></br>
+          Create and share your own study planner!
         </div>
-      </div>
-      <div className="section02-left-lower">
-        <img src={icon2} className="inside" alt="custom"/>
-        <h4 className="txt-01-title up-on-scroll">CUSTOM PLANNER</h4>
-        <div className="description">
-        You can create your own planner with colors, patterns, and stickers of your own choosing.
+        <div className="section02-left-upper">
+          <img src={icon1} className="inside" alt="todo" />
+          <h4 className="txt-01-title up-on-scroll">TODO LIST</h4>
+          <div className="description">
+            Manage tasks by time Manage them smartly according to the time you
+            write. Label colors for each task for easier viewing.
+          </div>
         </div>
-      </div>
+        <div className="section02-left-lower">
+          <img src={icon2} className="inside" alt="custom" />
+          <h4 className="txt-01-title up-on-scroll">CUSTOM PLANNER</h4>
+          <div className="description">
+            You can create your own planner with colors, patterns, and stickers
+            of your own choosing.
+          </div>
+        </div>
         <img src={mainGif} alt="타겟 소개" />
         <div className="section02-right-txt">
           <img className="inside" src={icon3} alt="icon3"></img>
           <h4 className="txt-01-title up-on-scroll">SHARE YOUR PLAN</h4>
           <div className="description">
-          Create your own planner by selecting colors and patterns, and attach stickers to complete your own planner.
+            Create your own planner by selecting colors and patterns, and attach
+            stickers to complete your own planner.
           </div>
         </div>
       </LandingSection>

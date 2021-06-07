@@ -113,6 +113,22 @@ function ExploreList() {
     }
   };
 
+  const count_checked_handler = (todos: Array<any>) => {
+    let count_checked = 0;
+    let percentage = 0;
+    console.log("체크 함수 실행");
+    for (let todo_card of todos) {
+      if (todo_card.checked === true) {
+        console.log("체크값에 true가 있는 카드", todo_card);
+        count_checked = count_checked + 1;
+      }
+    }
+    console.log("체크된 카드 갯수", count_checked);
+    percentage = Math.floor((count_checked / todos.length) * 100);
+    console.log("percentage", percentage);
+    return percentage;
+  };
+
   // main feed 데이터 받아오는 함수
   const get_MainFeed_Data = async function () {
     await axios
@@ -180,7 +196,11 @@ function ExploreList() {
         <div id="ExploreList-posts">
           {ExploreList &&
             ExploreList.map((post: any) => (
-              <ExplorePost key={post.id} postData={post} />
+              <ExplorePost
+                key={post.id}
+                postData={post}
+                percentage={count_checked_handler(post.todos)}
+              />
             ))}
         </div>
       ) : (

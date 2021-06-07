@@ -503,7 +503,7 @@ function MyPostView() {
               title="Edit Todo"
               placement="right"
               closable={false}
-              width={480}
+              width={300}
               onClose={closeEditModal}
               visible={visible}
             >

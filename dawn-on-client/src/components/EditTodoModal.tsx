@@ -81,13 +81,13 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
     const startHour = startTime.split(":")[0];
     const startMin = startTime.split(":")[1];
     let endTimeValue;
-    if(Number(startHour) < 9) {
-      endTimeValue = `0${Number(startHour) + 1}:${startMin}` 
-    }else {
+    if (Number(startHour) < 9) {
+      endTimeValue = `0${Number(startHour) + 1}:${startMin}`;
+    } else {
       endTimeValue = `${Number(startHour) + 1}:${startMin}`;
     }
     return endTimeValue;
-  }
+  };
   // 시작시간, 종료시간 상태.
   const [startTime, setStartTime] = useState(newData.start_time);
   const [endTime, setEndTime] = useState(makeInitial(newData.start_time));
@@ -181,11 +181,11 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
       // editDataPatch();
-      click_postview.todos.map((todo:any) => {
-        if(todo.todo_PK === editData.todo_PK) {
+      click_postview.todos.map((todo: any) => {
+        if (todo.todo_PK === editData.todo_PK) {
           todo = newData;
         }
-      })
+      });
       click_postview.start_time = startTime;
       click_postview.learning_time = totalHours;
       dispatch(editTodoData(newData));
@@ -198,7 +198,7 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
 
   return (
     <>
-     <AddTodoBar>
+     <AddTodoBar id="edit-modal-container">
       <div id="todo-modal-upper">
         <h3 className="todobar-title-modal">Edit Each Todo</h3>
       </div>
@@ -290,7 +290,12 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
           variant="outlined"
       />
       <div className="modal-btn-container">
-        <button onClick={() => {editSave();}} className="todobar-save-btn">
+        <button
+          onClick={() => {
+            editSave();
+          }}
+          className="todobar-save-btn"
+        >
           EDIT
         </button>
       </div>

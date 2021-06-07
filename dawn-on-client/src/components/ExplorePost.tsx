@@ -17,10 +17,11 @@ type ExplorePostProps = {
     tags: Array<any>;
     todos: Array<any>;
   };
+  percentage: number;
 };
 
 // 클릭 이벤트로, 박스 하나 클릭하면 해당 박스의 데이터를 Redux로 저장하여 useSelector로 불러온 후 View에 랜더링 한다
-function ExplorePost({ postData }: ExplorePostProps) {
+function ExplorePost({ postData, percentage }: ExplorePostProps) {
   const dispatch = useDispatch();
 
   const post_PK = postData.id; // 수정할때도 필요하다
@@ -68,9 +69,6 @@ function ExplorePost({ postData }: ExplorePostProps) {
   useEffect(() => {
     count_checked_handler();
   }, [todos]);
-
-  let percentage = (count_checked / todos.length) * 100;
-  percentage = Math.floor(percentage);
 
   return (
     <div

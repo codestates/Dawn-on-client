@@ -601,7 +601,7 @@ td {
   margin-right: 2rem;
 }
 
-form {
+#edit-modal-container > form {
   align-self: center;
   width: 100%;
   padding: 3rem 3rem;
