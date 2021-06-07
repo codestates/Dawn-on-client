@@ -9,8 +9,12 @@ import icon1 from "../img/to-do-list.png";
 import icon2 from "../img/color-palette.png";
 import icon3 from "../img/sharing.png";
 import icon4 from "../img/sunrise.png"
+import award from "../img/award.png";
+import study from "../img/study.png";
+import achievement from "../img/achievement.png";
 import mainGif from "../img/man01.gif";
-import example01 from "../img/example.png"
+import example01 from "../img/example.png";
+import section4 from "../img/section4.png";
 
 
 const LandingSection = styled.div`
@@ -97,7 +101,7 @@ function Landing() {
   const content = [
     {
       id: 1,
-      text: "오늘 할 일을 작성하고 라벨 컬러를 지정하여 한 눈에 확인해보세요. 할 일을 작성한 후에 커스텀하여 플래너를 꾸밀 수 있습니다.",
+      text: "Write today's to-dos and color your labels to see them at a glance.",
       src: example01,
     },
     {
@@ -128,8 +132,17 @@ function Landing() {
     <>
       <LandingSection id="section1">
         <div className="left-txt">
-          <h3 className="title">Dawn : on</h3>
-          <p className="description">Plan, Organize, Get Things Done</p>
+          <h3 className="title">Dawn:on</h3>
+          <p className="upper-description">Plan, Organize, Get Things Done</p>
+          <p className="description">
+            {/* We fill your day <br></br>preparing for a new start. */}
+            <br></br>
+            To prepare for a new beginning.
+            <br></br>
+            Preparing for a new challenge.
+            <br></br>
+            We'll fill your day. Dawn:on
+          </p>
         </div>
         <div className="right-img">
           <img className="section01-img" src={landing} alt="프로젝트 소개" />
@@ -161,38 +174,51 @@ function Landing() {
           </div>
         </div>
       </LandingSection>
-      <LandingSection id="section3">
-        <div className="section03-title left just-opacity">
+      <LandingSection id="section3" className="font-color">
+        <div className="section03-title up-on-scroll">
         A special planner <br></br> for early birds
-        <img className="just-opacity" src={icon4} alt="icon4"></img>
+        <img className="inside" src={icon4} alt="icon4"></img>
         </div>
           {clickID === 1 &&
           (<div id="1" className="slide-container">
-            <div className="slide-txt">{content[0].text}</div>
-            <img alt="slide-img" width="50%" src={content[0].src}></img>
+            <div className="slide-txt up-on-scroll">{content[0].text}</div>
+            <img alt="slide-img" src={content[0].src}></img>
           </div>)
           }
           {clickID === 2 &&
           (<div id="1" className="slide-container">
-            <div className="slide-txt">{content[1].text}</div>  
-            <img alt="slide-img" width="50%" src={content[1].src}></img>
+            <div className="slide-txt up-on-scroll">{content[1].text}</div>  
+            <img alt="slide-img" src={content[1].src}></img>
           </div>)
           }
           {clickID === 3 &&
           (<div id="1" className="slide-container">
-            <div className="slide-txt">{content[2].text}</div>
-            <img alt="slide-img" width="50%" src={content[2].src}></img>
+            <div className="slide-txt up-on-scroll">{content[2].text}</div>
+            <img alt="slide-img" src={content[2].src}></img>
           </div>)
           }
-        <button id={clickID.toString()} className="slide-next-btn" 
-        onClick={(e:any) => clickHandler(e)}>next</button>
+          <button id={clickID.toString()} className="slide-next-btn" 
+            onClick={(e:any) => clickHandler(e)}>
+          <i id={clickID.toString()} className="fas fa-chevron-right"></i>
+        </button>
       </LandingSection>
       <LandingSection id="section4">
-        <div>
-
+        <img alt ="section4" src={section4}></img>
+        <div className="section4-title">Benefits</div>
+        <div id="section04-container">
+          <div className="advantages left">
+            <img alt="icon1" src={award}></img>
+            <div>Looking at the time I have studied so far and the list of planners I have made</div>
+          </div>
+          <div className="advantages left">
+            <img alt="icon2" src={achievement}></img>
+            <div>Get Motivated by Watching Early Birds Day</div>
+          </div>
+          <div className="advantages left">
+            <img alt="icon3" src={study}></img>
+            <div>You can form a study habit by constantly recording a planner</div>
+          </div>
         </div>
-      </LandingSection>
-      <LandingSection id="section5">
       </LandingSection>
       <Button
         id="landing-btn"
