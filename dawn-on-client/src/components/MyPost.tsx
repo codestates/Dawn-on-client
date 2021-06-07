@@ -5,6 +5,7 @@ import { getClickPostView } from "../module/ClickPostViewModule";
 import { MyPostThumbsUp } from "../module/ClickPostViewModule";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useEventCallback } from "@material-ui/core";
 import { useEffect } from "react";
 
 // 클릭 이벤트로, 박스 하나 클릭하면 해당 박스의 데이터를 Redux로 저장하여 useSelector로 불러온 후 View에 랜더링 한다
@@ -19,9 +20,10 @@ type MyPostProps = {
     tags: Array<any>;
     todos: Array<any>;
   };
+  percentage: number;
 };
 
-function MyPost({ postData }: MyPostProps) {
+function MyPost({ postData, percentage }: MyPostProps) {
   const dispatch = useDispatch();
 
   const post_PK = postData.id; // 수정할때도 필요하다
@@ -29,19 +31,9 @@ function MyPost({ postData }: MyPostProps) {
   const today_learning_time = postData.today_learning_time;
   const thumbs_up = postData.thumbs_up;
   const tags = postData.tags;
-  const todos = postData.todos;
   const post = postData; // post 전체 데이터
 
-  let count_checked = 0;
-
-  const count_checked_handler = () => {
-    for (let todo_card of todos) {
-      if (todo_card.checked !== false) {
-        console.log("체크값에 true가 있는 카드", todo_card);
-        count_checked = count_checked + 1;
-      }
-    }
-  };
+  console.log(percentage);
 
   const searchThumbsUpHandler = async function () {
     await axios
@@ -65,13 +57,6 @@ function MyPost({ postData }: MyPostProps) {
         console.log(err);
       });
   };
-
-  useEffect(() => {
-    count_checked_handler();
-  }, [todos]);
-
-  let percentage = (count_checked / todos.length) * 100;
-  percentage = Math.floor(percentage);
 
   const deletePost = async function () {
     await axios
