@@ -16,7 +16,7 @@ const ADD_TO_TAGLIST = "ADD_TO_TAGLIST";
 const ADD_SELECTED_TAGS = "ADD_SELECTED_TAGS";
 const DELETE_A_TAG = "DELETE_A_TAG";
 const ADD_COMMENT_DATA = "ADD_COMMENT_DATA";
-const EDIT_TODO_DATA = "EDIT_TODO_DATA";
+// const EDIT_TODO_DATA = "EDIT_TODO_DATA";
 const RESET_AFTER_UPLOAD = "RESET_AFTER_UPLOAD";
 
 export const addNewSubject = (subject: String) => ({
@@ -119,10 +119,10 @@ export const addCommentData = (comment: string) => ({
 });
 
 // edit data patch
-export const editTodoData = (editData: any) => ({
-  type: EDIT_TODO_DATA,
-  payload: editData,
-});
+// export const editTodoData = (editData: any) => ({
+//   type: EDIT_TODO_DATA,
+//   payload: editData,
+// });
 
 export const resetAfterUpload = () => ({
   type: RESET_AFTER_UPLOAD,
@@ -243,20 +243,20 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           comment: action.payload,
         },
       };
-    case EDIT_TODO_DATA:
-      console.log("넘어온 데이터: ", action.payload);
-      return {
-        ...state,
-        plannerDatas: {
-          ...state.plannerDatas,
-          todos: state.plannerDatas.todos.map((todo: any) => {
-            console.log(todo);
-            return todo.todo_PK === action.payload.todo_PK
-              ? { ...action.payload, checked: false }
-              : todo;
-          }),
-        },
-      };
+    // case EDIT_TODO_DATA:
+    //   console.log("넘어온 데이터: ", action.payload);
+    //   return {
+    //     ...state,
+    //     plannerDatas: {
+    //       ...state.plannerDatas,
+    //       todos: state.plannerDatas.todos.map((todo: any) => {
+    //         console.log(todo);
+    //         return todo.todo_PK === action.payload.todo_PK
+    //           ? { ...action.payload, checked: false }
+    //           : todo;
+    //       }),
+    //     },
+    //   };
       case RESET_AFTER_UPLOAD:
       return {
         ...state,
