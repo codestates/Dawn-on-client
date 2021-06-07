@@ -180,7 +180,7 @@ function EditProfile() {
             checkCancelAlert();
           }}
         >
-          수정 취소
+          Cancel
         </button>
       </div>
       {provider && provider === "local" ? (
@@ -299,7 +299,7 @@ function EditProfile() {
             checkEditinfo();
           }}
         >
-          수정완료
+          Save Changes
         </button>
       </div>
     </div>
