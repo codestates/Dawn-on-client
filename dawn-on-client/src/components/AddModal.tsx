@@ -127,7 +127,6 @@ function AddModal({ clickHandler }: Props) {
       (subjectLabel &&
         subjectLabel.filter((sub: string) => sub === newSubject)) ||
       [];
-    console.log(check);
     if (newSubject !== "" && check.length === 0) {
       dispatch(addNewSubject(newSubject));
     }

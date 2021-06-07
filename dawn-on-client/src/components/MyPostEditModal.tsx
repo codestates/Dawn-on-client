@@ -55,7 +55,6 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   });
 
   const [newData, setNewData] = useState(editData);
-  console.log(newData);
   useEffect(() => {
     dispatch(editTodoData(newData));
   }, [dispatch, newData]);
@@ -77,11 +76,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   const [endTime, setEndTime] = useState(makeInitial(newData.start_time));
 
   useEffect(() => {
-    console.log("시작시간: ", startTime);
   }, [startTime]);
 
   useEffect(() => {
-    console.log("종료시간: ", endTime);
   }, [endTime]);
 
   // 선택한 과목 저장.
@@ -152,11 +149,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
     click_postview.todos.map((todo:any) => {
       if(todo.todo_PK === newData.todo_PK) {
         todo = newData;
-        console.log(todo);
       }
     })
     click_postview.start_time = startTime;
-    console.log(click_postview);
   })
 
   // dispatch로 변경해줘야 할 데이터 : 시작시간, 라벨(과목, 컬러), 할 일 내용
@@ -195,7 +190,6 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   };
 
   const editDataPatch = async function () {
-    console.log(click_postview);
     await axios
       .patch(
         `${process.env.REACT_APP_URI}/posts/myfeed`,
@@ -208,7 +202,6 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
         }
       )
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);

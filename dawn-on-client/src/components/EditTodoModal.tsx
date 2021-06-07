@@ -93,11 +93,9 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
   const [endTime, setEndTime] = useState(makeInitial(newData.start_time));
 
   useEffect(() => {
-    console.log("시작시간: ", startTime);
   }, [startTime]);
 
   useEffect(() => {
-    console.log("종료시간: ", endTime);
   }, [endTime]);
 
   // 선택한 과목 저장.
@@ -193,7 +191,6 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
   const [colorClick, setColorClick] = useState(false);
 
   const colorPickHandler = function () {
-    console.log(colorClick);
     if (colorClick) {
       setColorClick(false);
     } else {
