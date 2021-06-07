@@ -1,11 +1,16 @@
 import axios from "axios";
-import { MyPostThumbsUp, changeCheckedState } from "../module/ClickPostViewModule";
+import {
+  MyPostThumbsUp,
+  changeCheckedState,
+} from "../module/ClickPostViewModule";
 import { useState, createRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "@emotion/styled"; 
-import {deleteTodo, 
-        addMyfeedMemoData,
-        addTheSticker} from "../module/ClickPostViewModule";
+import styled from "@emotion/styled";
+import {
+  deleteTodo,
+  addMyfeedMemoData,
+  addTheSticker,
+} from "../module/ClickPostViewModule";
 import MyPostEditModal from "./MyPostEditModal";
 import pattern01 from "../img/pattern01.png";
 import pattern02 from "../img/pattern02.png";
@@ -25,13 +30,12 @@ import sticker07 from "../img/sticker/sticker07.png";
 import sticker08 from "../img/sticker/sticker08.png";
 import sticker09 from "../img/sticker/sticker09.png";
 import box from "../img/box.png";
-import 'antd/dist/antd.css';
+import "antd/dist/antd.css";
 import { RootState } from "../store/store";
-import Popover from '@material-ui/core/Popover';
-import { Drawer } from 'antd';
-import { Checkbox } from 'antd';
+import Popover from "@material-ui/core/Popover";
+import { Drawer } from "antd";
+import { Checkbox } from "antd";
 import moment from "moment";
-
 
 const Container = styled.div`
   font-family: "KoHo", sans-serif;
@@ -44,10 +48,8 @@ const Container = styled.div`
   overflow-y: scroll;
   padding: 25px;
   transition: all 1s;
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
-`
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+`;
 
 const Date = styled.div`
   grid-column: 1 / 2;
@@ -62,10 +64,8 @@ const Date = styled.div`
   background: #fff;
   border-radius: 5%;
   border: 1px solid rgba(0, 0, 0, 0.212);
-  box-shadow:
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
-`
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+`;
 
 const TodoBox = styled.div`
   display: flex;
@@ -77,18 +77,15 @@ const TodoBox = styled.div`
   border-right: 1px solid rgba(0, 0, 0, 0.212);
   transition: 0.5s;
   background-size: 200% auto;
-  box-shadow:
-  -7px -7px 20px 0px #fff9,
-  -4px -4px 5px 0px #fff9,
-  7px 7px 20px 0px #0002,
-  4px 4px 5px 0px #0001;
+  box-shadow: -7px -7px 20px 0px #fff9, -4px -4px 5px 0px #fff9,
+    7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
   &:hover {
-    {
+     {
       transition: 0.5s;
       transform: scale(1.03);
     }
   }
-`
+`;
 const Subject = styled.span`
   margin-top: 5px;
 `;
@@ -99,19 +96,19 @@ const TimeBar = styled.div`
   font-size: 1.3rem;
   margin-right: 10px;
   display: flex;
-`
+`;
 
-const StartTime =styled.span`
+const StartTime = styled.span`
   margin-left: 22px;
   align-self: center;
   flex-basis: 83%;
-`
+`;
 
-const Hours =styled.span`
+const Hours = styled.span`
   font-size: 1.1rem;
   align-self: center;
   justify-self: right;
-`
+`;
 
 const Todo = styled.div`
   margin-top: 5px;
@@ -119,22 +116,26 @@ const Todo = styled.div`
 
 function MyPostView() {
   const dispatch = useDispatch();
-    const divRef = createRef<HTMLDivElement>();
+  const divRef = createRef<HTMLDivElement>();
 
-    const click_postview = useSelector((status: RootState) => {
-      return status.getClickPostViewReducer.click_postview;
-    });
+  const click_postview = useSelector((status: RootState) => {
+    return status.getClickPostViewReducer.click_postview;
+  });
 
-    useEffect(() => {
-      let backColor:string;
-      Object.keys(click_postview).length === 0 ? backColor = "#B9B3D1" : backColor = click_postview.back_color;
-      const backElement = document.querySelector("#planner-view-container") as HTMLElement;
-      if(backElement) {
-        backElement.style.transition = "all 0.6s ease"
-  
-      if(backColor.indexOf("#") !== -1) {
+  useEffect(() => {
+    let backColor: string;
+    Object.keys(click_postview).length === 0
+      ? (backColor = "#B9B3D1")
+      : (backColor = click_postview.back_color);
+    const backElement = document.querySelector(
+      "#planner-view-container"
+    ) as HTMLElement;
+    if (backElement) {
+      backElement.style.transition = "all 0.6s ease";
+
+      if (backColor.indexOf("#") !== -1) {
         backElement.style.background = click_postview.back_color;
-      }else {
+      } else {
         if (backColor === "pattern01") {
           backElement.style.backgroundImage = `url(${pattern01})`;
         }
@@ -160,152 +161,159 @@ function MyPostView() {
           backElement.style.backgroundImage = `url(${pattern08})`;
         }
       }
-      }
-    }, [click_postview]) 
-    
-    // useSelector로 받아온 todos 목록을 시간대에 따라 정렬.
-    if(Object.keys(click_postview).length !== 0) {
-      click_postview.todos.sort(function (a:any, b:any) {
-        return a.start_time.split(":")[0] -  b.start_time.split(":")[0]
-      })  
     }
+  }, [click_postview]);
 
-    // const today = moment().format('YYYY-MM-DD');
-
-
-    // todo 삭제 버튼
-    const deleteHandler = function (e:any) {
-      dispatch(deleteTodo(e.target.id));
-      closeEditModal();
+  // useSelector로 받아온 todos 목록을 시간대에 따라 정렬.
+  if (Object.keys(click_postview).length !== 0) {
+    if (click_postview.todos !== undefined) {
+      click_postview.todos.sort(function (a: any, b: any) {
+        return a.start_time.split(":")[0] - b.start_time.split(":")[0];
+      });
     }
+  }
 
-    const [memo, setMemo] = useState<string>("");
-    const [memoEdit, setMemoEdit] = useState<boolean>(false);
+  // const today = moment().format('YYYY-MM-DD');
 
-    const memoHandler = async function () {
-      if(memoEdit) {
-        click_postview.memo = memo;
-        dispatch(addMyfeedMemoData(memo));
-        setMemoEdit(false); 
-        await editDataPatch();
-        window.location.replace("/myfeed");
-      }else {
-        setMemoEdit(true);
-      }
-    }
+  // todo 삭제 버튼
+  const deleteHandler = function (e: any) {
+    dispatch(deleteTodo(e.target.id));
+    closeEditModal();
+  };
 
-    // Edit Drawer
-    const [visible, setVisible] = useState<boolean>(false);
-    const [editData, setEditData] = useState({
-      todo_PK: "",
-      suject: "",
-      color: "",
-      todo_commnet: "",
-      start_time: "",
-      end_time: "",
-      learning_time: 0,
-    })
+  const [memo, setMemo] = useState<string>("");
+  const [memoEdit, setMemoEdit] = useState<boolean>(false);
 
-    const closeEditModal = function () {
-      setVisible(false);
-    }
-
-    const openEditModal = function (e:any) {
-        const editData = click_postview.todos.filter((el:any) => el.todo_PK === e.target.id);
-        setEditData(editData[0]);
-        setVisible(true);
-        e.stopPropagation()
-    }
-    // add todo card button 이벤트
-    const [isClick, setIsClick] = useState(false);
-    const clickHandler = function () {
-      if(isClick) {
-        setIsClick(false);
-      }else {
-        // const rootEle = document.getElementById("root") as HTMLElement;
-        setIsClick(true);
-      }
-    }
-    // pop over 라이브러리 
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-    const opened = Boolean(anchorEl);
-    const id = opened ? 'simple-popover' : undefined;
-
-    const [selectedIcon, setSelectedIcon] = useState("");
-    // 스티커 선택지
-    const stickers = [
-      sticker01,
-      sticker02,
-      sticker03,
-      sticker04,
-      sticker05,
-      sticker06,
-      sticker07,
-      sticker08,
-      sticker09,
-    ]
-
-    const stickerHandler = function (e:any) {
-      // dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
-      click_postview.sticker = e.target.id.split('/')[3].split('.')[0];
-      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
-      editDataPatch();
-      window.location.replace("/myfeed");
-    }
-
-    const checkedHandler = async function(e:any) {
-      // await dispatch(changeCheckedState(e.target.id, e.target.checked));
-      click_postview.todos.map((post:any) => {
-        if(post.todo_PK === e.target.id) {
-          post.checked = e.target.checked;
-        }
-      })
+  const memoHandler = async function () {
+    if (memoEdit) {
+      click_postview.memo = memo;
+      dispatch(addMyfeedMemoData(memo));
+      setMemoEdit(false);
       await editDataPatch();
-      dispatch(changeCheckedState(e.target.id, e.target.checked));
       window.location.replace("/myfeed");
+    } else {
+      setMemoEdit(true);
     }
+  };
 
-    useEffect(() => {
-      let stickerName;
-      const stickerElement = document.querySelector("#view-selected-sticker") as HTMLImageElement;
-      Object.keys(click_postview).length === 0 ? stickerName = "" : stickerName = click_postview.sticker;
-      if(stickerElement) {
-        stickerElement.style.transition = "all 0.6s ease";
-      if(stickerName === "sticker01") {
-        stickerElement.src = sticker01
+  // Edit Drawer
+  const [visible, setVisible] = useState<boolean>(false);
+  const [editData, setEditData] = useState({
+    todo_PK: "",
+    suject: "",
+    color: "",
+    todo_commnet: "",
+    start_time: "",
+    end_time: "",
+    learning_time: 0,
+  });
+
+  const closeEditModal = function () {
+    setVisible(false);
+  };
+
+  const openEditModal = function (e: any) {
+    const editData = click_postview.todos.filter(
+      (el: any) => el.todo_PK === e.target.id
+    );
+    setEditData(editData[0]);
+    setVisible(true);
+    e.stopPropagation();
+  };
+  // add todo card button 이벤트
+  const [isClick, setIsClick] = useState(false);
+  const clickHandler = function () {
+    if (isClick) {
+      setIsClick(false);
+    } else {
+      // const rootEle = document.getElementById("root") as HTMLElement;
+      setIsClick(true);
+    }
+  };
+  // pop over 라이브러리
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const opened = Boolean(anchorEl);
+  const id = opened ? "simple-popover" : undefined;
+
+  const [selectedIcon, setSelectedIcon] = useState("");
+  // 스티커 선택지
+  const stickers = [
+    sticker01,
+    sticker02,
+    sticker03,
+    sticker04,
+    sticker05,
+    sticker06,
+    sticker07,
+    sticker08,
+    sticker09,
+  ];
+
+  const stickerHandler = function (e: any) {
+    // dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
+    click_postview.sticker = e.target.id.split("/")[3].split(".")[0];
+    dispatch(addTheSticker(e.target.id.split("/")[3].split(".")[0]));
+    editDataPatch();
+    window.location.replace("/myfeed");
+  };
+
+  const checkedHandler = async function (e: any) {
+    // await dispatch(changeCheckedState(e.target.id, e.target.checked));
+    click_postview.todos.map((post: any) => {
+      if (post.todo_PK === e.target.id) {
+        post.checked = e.target.checked;
       }
-      if(stickerName === "sticker02") {
-        stickerElement.src = sticker02
+    });
+    await editDataPatch();
+    dispatch(changeCheckedState(e.target.id, e.target.checked));
+    window.location.replace("/myfeed");
+  };
+
+  useEffect(() => {
+    let stickerName;
+    const stickerElement = document.querySelector(
+      "#view-selected-sticker"
+    ) as HTMLImageElement;
+    Object.keys(click_postview).length === 0
+      ? (stickerName = "")
+      : (stickerName = click_postview.sticker);
+    if (stickerElement) {
+      stickerElement.style.transition = "all 0.6s ease";
+      if (stickerName === "sticker01") {
+        stickerElement.src = sticker01;
       }
-      if(stickerName === "sticker03") {
+      if (stickerName === "sticker02") {
+        stickerElement.src = sticker02;
+      }
+      if (stickerName === "sticker03") {
         stickerElement.src = sticker03;
       }
-      if(stickerName === "sticker04") {
+      if (stickerName === "sticker04") {
         stickerElement.src = sticker04;
       }
-      if(stickerName === "sticker05") {
+      if (stickerName === "sticker05") {
         stickerElement.src = sticker05;
       }
-      if(stickerName === "sticker06") {
+      if (stickerName === "sticker06") {
         stickerElement.src = sticker06;
       }
-      if(stickerName === "sticker07") {
+      if (stickerName === "sticker07") {
         stickerElement.src = sticker07;
       }
-      if(stickerName === "sticker08") {
+      if (stickerName === "sticker08") {
         stickerElement.src = sticker08;
       }
-      if(stickerName === "sticker09") {
+      if (stickerName === "sticker09") {
         stickerElement.src = sticker09;
-      }      
       }
-    }, [click_postview]); 
+    }
+  }, [click_postview]);
 
   // 게시물이 있으면 제일 최상단의 게시물을 디폴트값으로 보여준다
   // 현재 게시물 목록의 가장 첫번째 게시물의 데이터를 myfeed get요청 시, Redux로 저장시켜 값을 가져온다
@@ -318,7 +326,6 @@ function MyPostView() {
   let click_PK: number;
   click_postview ? (click_PK = click_postview.id) : (click_PK = 0);
 
-
   //내 게시물의 좋아요 유무
   const isClickThumbsUp = useSelector((status: RootState) => {
     return status.getClickPostViewReducer.MyPostThumbsUp;
@@ -329,29 +336,28 @@ function MyPostView() {
 
   useEffect(() => {
     setComment(click_postview.comment);
-  }, [click_postview])
+  }, [click_postview]);
 
   const commentEditHandler = function () {
-    if(commentEidt) {
+    if (commentEidt) {
       click_postview.comment = comment;
       editDataPatch();
       setCommentEdit(false);
       window.location.replace("/myfeed");
-    }else {
+    } else {
       setCommentEdit(true);
     }
+  };
+
+  let runningTime: number;
+  if (click_postview.todos) {
+    runningTime = click_postview.todos.reduce((acc: any, todo: any) => {
+      return acc + todo.learning_time;
+    }, 0);
+  } else {
+    runningTime = 0;
   }
 
-  let runningTime:number;
-    if(click_postview.todos) {
-        runningTime = click_postview.todos.reduce((acc: any, todo: any) => {
-        return acc + todo.learning_time;
-    }, 0);      
-    }
-    else {
-      runningTime = 0;
-    }
-    
   const changeThumbsUpHandler = async function () {
     await axios
       .post(
@@ -383,7 +389,7 @@ function MyPostView() {
     await axios
       .patch(
         `${process.env.REACT_APP_URI}/posts/myfeed`,
-        { postdatas: click_postview},
+        { postdatas: click_postview },
         {
           headers: {
             "Content-Type": "application/json",
@@ -391,13 +397,11 @@ function MyPostView() {
           withCredentials: true,
         }
       )
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   // 만약, 게시물이 없으면 게시물 목록 조건부랜더링처럼 없다고 표시해준다
   return (
@@ -406,102 +410,142 @@ function MyPostView() {
         <div>
           <img className="empty-box-img" src={box} alt="emtpy-box" />
           <div className="empty-list-message">Make your todo list!</div>
-       </div>
+        </div>
       ) : (
         <>
-        <div id="planner-view-container">
-          <div id="left-side-container">
-            <Date id="MyPostView-date">
-              {click_postview.date 
-                ? <span>{click_postview.date.slice(0, 10)}</span>
-                : <span>{moment().format("YY MM DD")}</span>
-              }
-            </Date>
-            <div className="plnnerfrom-memo">
-            {memoEdit
-              ? 
-              <button className="memo-edit-btn" onClick={() => memoHandler()}>
-                <i className="fas fa-check"></i>
-              </button> 
-              :          
-              <button className="memo-edit-btn" onClick={() => memoHandler()}>
-                <i className="fas fa-pencil-alt"></i>
-              </button>
-            }
-              { memoEdit
-                ? <textarea className="memo-edit-input" 
-                  value={memo} 
-                  onChange={(e:any) => setMemo(e.target.value)} />
-                : <span>{click_postview.memo}</span>
-              }
-            </div>
+          <div id="planner-view-container">
+            <div id="left-side-container">
+              <Date id="MyPostView-date">
+                {click_postview.date ? (
+                  <span>{click_postview.date.slice(0, 10)}</span>
+                ) : (
+                  <span>{moment().format("YY MM DD")}</span>
+                )}
+              </Date>
+              <div className="plnnerfrom-memo">
+                {memoEdit ? (
+                  <button
+                    className="memo-edit-btn"
+                    onClick={() => memoHandler()}
+                  >
+                    <i className="fas fa-check"></i>
+                  </button>
+                ) : (
+                  <button
+                    className="memo-edit-btn"
+                    onClick={() => memoHandler()}
+                  >
+                    <i className="fas fa-pencil-alt"></i>
+                  </button>
+                )}
+                {memoEdit ? (
+                  <textarea
+                    className="memo-edit-input"
+                    value={memo}
+                    onChange={(e: any) => setMemo(e.target.value)}
+                  />
+                ) : (
+                  <span>{click_postview.memo}</span>
+                )}
+              </div>
 
-            <div className="plnnerfrom-viewer-hour">
-            <h5>Total study time</h5>
-              <span><i className="fas fa-stopwatch"></i>
-              {runningTime}h
-              </span>
-            </div>
+              <div className="plnnerfrom-viewer-hour">
+                <h5>Total study time</h5>
+                <span>
+                  <i className="fas fa-stopwatch"></i>
+                  {runningTime}h
+                </span>
+              </div>
 
-            <div className="plnnerfrom-sticker">
-            <button id="sticker-add-btn" aria-describedby={id} onClick={handleClick}>
-              <i className="fas fa-palette"></i>
-            </button>
+              <div className="plnnerfrom-sticker">
+                <button
+                  id="sticker-add-btn"
+                  aria-describedby={id}
+                  onClick={handleClick}
+                >
+                  <i className="fas fa-palette"></i>
+                </button>
                 <Popover
                   id={id}
                   open={opened}
                   anchorEl={anchorEl}
                   onClose={handleClose}
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
+                    vertical: "top",
+                    horizontal: "left",
                   }}
                   transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                    vertical: "top",
+                    horizontal: "center",
                   }}
                 >
-                <div className="sticker-selector">
-                {
-                  stickers.map(ele => 
-                  <span id="each-sticker" key={ele} onClick={(e:any) => {setSelectedIcon(e.target.id);stickerHandler(e)}}>
-                      <img id={ele} alt="sticker" src={ele}></img>
-                  </span>
-                  )
-                }
-                </div>
-              </Popover>
-              { click_postview.sticker && 
-                  <img id="view-selected-sticker" alt="selected-sticker" src={click_postview.sticker}></img>
-              }
-            </div>
-          </div>
-            <Container id="todo-veiw-container">
-            <h3 className="todobar-title">Time Table</h3>
-            {!click_postview.todos
-            ?  <div className="empty-list-message">Make your todo list</div>
-            : 
-            click_postview.todos.map((task:any) => {
-                return(
-                  <div key={task.todo_PK} ref={divRef}>
-                    <TimeBar>
-                      <StartTime>{task.start_time}</StartTime>
-                      <Hours>{task.learning_time}hours</Hours>
-                    </TimeBar>
-                    
-                    <TodoBox 
-                    id={task.todo_PK} 
-                    style={{height: `calc(${task.learning_time} * 60px)`}}>
-                      <div id={task.todo_PK} className="color-label" style={{backgroundColor: task.box_color}}></div>
-                      <div onClick={(e:any) => openEditModal(e)} id={task.todo_PK} className="todobox-content">
-                        <Subject id={task.todo_PK} >{task.subject}</Subject>
-                        <Todo id={task.todo_PK}>{task.todo_comment}</Todo>
-                      </div>
-                      <Checkbox id={task.todo_PK} checked={task.checked} className="todo-checkbox" onChange={(e:any) => {checkedHandler(e)}}></Checkbox>
-                    </TodoBox>
+                  <div className="sticker-selector">
+                    {stickers.map((ele) => (
+                      <span
+                        id="each-sticker"
+                        key={ele}
+                        onClick={(e: any) => {
+                          setSelectedIcon(e.target.id);
+                          stickerHandler(e);
+                        }}
+                      >
+                        <img id={ele} alt="sticker" src={ele}></img>
+                      </span>
+                    ))}
                   </div>
-                  )})
-              }
+                </Popover>
+                {click_postview.sticker && (
+                  <img
+                    id="view-selected-sticker"
+                    alt="selected-sticker"
+                    src={click_postview.sticker}
+                  ></img>
+                )}
+              </div>
+            </div>
+            <Container id="todo-veiw-container">
+              <h3 className="todobar-title">Time Table</h3>
+              {!click_postview.todos ? (
+                <div className="empty-list-message">Make your todo list</div>
+              ) : (
+                click_postview.todos.map((task: any) => {
+                  return (
+                    <div key={task.todo_PK} ref={divRef}>
+                      <TimeBar>
+                        <StartTime>{task.start_time}</StartTime>
+                        <Hours>{task.learning_time}hours</Hours>
+                      </TimeBar>
+
+                      <TodoBox
+                        id={task.todo_PK}
+                        style={{ height: `calc(${task.learning_time} * 60px)` }}
+                      >
+                        <div
+                          id={task.todo_PK}
+                          className="color-label"
+                          style={{ backgroundColor: task.box_color }}
+                        ></div>
+                        <div
+                          onClick={(e: any) => openEditModal(e)}
+                          id={task.todo_PK}
+                          className="todobox-content"
+                        >
+                          <Subject id={task.todo_PK}>{task.subject}</Subject>
+                          <Todo id={task.todo_PK}>{task.todo_comment}</Todo>
+                        </div>
+                        <Checkbox
+                          id={task.todo_PK}
+                          checked={task.checked}
+                          className="todo-checkbox"
+                          onChange={(e: any) => {
+                            checkedHandler(e);
+                          }}
+                        ></Checkbox>
+                      </TodoBox>
+                    </div>
+                  );
+                })
+              )}
             </Container>
             <Drawer
               title="Edit Todo"
@@ -511,40 +555,53 @@ function MyPostView() {
               onClose={closeEditModal}
               visible={visible}
             >
-            <MyPostEditModal editData={editData} closeEditModal={closeEditModal} />
+              <MyPostEditModal
+                editData={editData}
+                closeEditModal={closeEditModal}
+              />
             </Drawer>
             <div id="MyPostView-Footer">
-            <div className="MyPostView-Footer-title">
-              <p>Comment</p>
-              {isClickThumbsUp ? (
-                <i
-                  className="fas fa-thumbs-up"
-                  id="MyFeed-full-heart"
-                  onClick={() => {
-                    changeThumbsUpHandler();
-                  }}
-                ></i>
-              ) : (
-                <i
-                  className="far fa-thumbs-up"
-                  id="MyFeed-empty-heart"
-                  onClick={() => {
-                    changeThumbsUpHandler();
-                  }}
-                ></i>
-              )}
-              {commentEidt
-                ? <button id="EditPost-btn" onClick={commentEditHandler}>SAVE</button>
-                : <button id="EditPost-btn" onClick={commentEditHandler}>Edit</button>
-              }
+              <div className="MyPostView-Footer-title">
+                <p>Comment</p>
+                {isClickThumbsUp ? (
+                  <i
+                    className="fas fa-thumbs-up"
+                    id="MyFeed-full-heart"
+                    onClick={() => {
+                      changeThumbsUpHandler();
+                    }}
+                  ></i>
+                ) : (
+                  <i
+                    className="far fa-thumbs-up"
+                    id="MyFeed-empty-heart"
+                    onClick={() => {
+                      changeThumbsUpHandler();
+                    }}
+                  ></i>
+                )}
+                {commentEidt ? (
+                  <button id="EditPost-btn" onClick={commentEditHandler}>
+                    SAVE
+                  </button>
+                ) : (
+                  <button id="EditPost-btn" onClick={commentEditHandler}>
+                    Edit
+                  </button>
+                )}
+              </div>
+              <div id="MyPostView-comment-area">
+                {commentEidt ? (
+                  <textarea
+                    className="MyPostView-comment-edit"
+                    value={comment}
+                    onChange={(e: any) => setComment(e.target.value)}
+                  ></textarea>
+                ) : (
+                  <div>{click_postview.comment}</div>
+                )}
+              </div>
             </div>
-            <div id="MyPostView-comment-area">
-              {commentEidt
-                ? <textarea className="MyPostView-comment-edit" value={comment} onChange={(e:any) => setComment(e.target.value)}></textarea>
-                : <div>{click_postview.comment}</div>
-              }
-            </div>
-          </div>
           </div>
         </>
       )}
