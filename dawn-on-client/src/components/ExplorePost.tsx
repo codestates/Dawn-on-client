@@ -37,7 +37,6 @@ function ExplorePost({ postData, percentage }: ExplorePostProps) {
   const count_checked_handler = () => {
     for (let todo_card of todos) {
       if (todo_card.checked !== false) {
-        console.log("체크값에 true가 있는 카드", todo_card);
         count_checked = count_checked + 1;
       }
     }

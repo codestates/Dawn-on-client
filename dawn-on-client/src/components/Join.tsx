@@ -100,7 +100,7 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     };
 
     const onFinish = (values: any) => {
-      console.log("회원가입한 정보 ", values);
+
       const { user_id, user_password, user_nickname, user_job } = values;
       Local_joinRequestHandler(user_id, user_password, user_nickname, user_job);
     };

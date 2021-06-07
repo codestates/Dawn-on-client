@@ -131,7 +131,6 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   // 로그인 창 form
   const LoginForm = () => {
     const onFinish = (values: any) => {
-      console.log("입력한 회원가입 정보", values);
       const { user_id, user_password } = values;
       Local_loginRequestHandler(user_id, user_password);
     };
