@@ -142,6 +142,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
         className="login-form"
         initialValues={{ remember: true }}
         onFinish={onFinish}
+        style={{ textAlign: "center" }}
       >
         <span className="login-title">Log In</span>
         <Form.Item
@@ -168,7 +169,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
             type="primary"
             htmlType="submit"
             className="login-form-button"
-            style={{ height: "40px" }}
+            style={{ height: "40px", borderRadius: "5px" }}
           >
             Log in
             <i className="fas fa-sign-in-alt"></i>
@@ -187,7 +188,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
           className="social-btn"
           id="kakao"
           onClick={kakakoLogins}
-          style={{ height: "40px" }}
+          style={{ height: "40px", borderRadius: "5px" }}
         >
           <img src={kakaoTalk} alt="카카오톡 이미지" className="social-img" />
           Kakao LogIn
@@ -196,7 +197,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
           className="social-btn"
           id="google"
           onClick={googleLogins}
-          style={{ height: "40px" }}
+          style={{ height: "40px", borderRadius: "5px" }}
         >
           <img src={google} alt="구글 이미지" className="social-img" />
           Google LogIn
