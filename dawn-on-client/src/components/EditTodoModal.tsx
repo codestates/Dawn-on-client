@@ -6,9 +6,12 @@ import swal from "sweetalert";
 import {
   addNewSubject,
   deleteSubject,
-  editTodoData,
 } from "../module/ClickPostViewModule";
+import {
+  editinData,
+} from "../module/addTaskModule";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Popover } from 'antd';
 import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
 
@@ -66,14 +69,11 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
   const subjectLabel = useSelector(
     (state: RootState) => state.addTaskReducer.subject
   );
-  const click_postview = useSelector((status: RootState) => {
-    return status.getClickPostViewReducer.click_postview;
-  });
 
+  const todos = useSelector((state:RootState) => state.addTaskReducer.plannerDatas.todos);
   const [newData, setNewData] = useState(editData);
-  console.log(newData);
+  
   useEffect(() => {
-    // console.log(editData);
     setNewData(editData);
   }, [editData]);
 
@@ -130,16 +130,6 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
     }
   };
 
-  const [colorClick, setColorClick] = useState(false);
-
-  const colorPickHandler = function () {
-    if (colorClick) {
-      setColorClick(false);
-    } else {
-      setColorClick(true);
-    }
-  };
-
   // 선택한 과목 라벨 상태 변경 및 스타일 추가 함수.
   const selectHandler = function (e: any) {
     const selectStatus = document.querySelector(".selected");
@@ -180,19 +170,34 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
     } else if (totalHours <= 0) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
-      // editDataPatch();
-      click_postview.todos.map((todo: any) => {
-        if (todo.todo_PK === editData.todo_PK) {
-          todo = newData;
-        }
-      });
-      click_postview.start_time = startTime;
-      click_postview.learning_time = totalHours;
-      dispatch(editTodoData(newData));
-      // editDataPatch();
+      // dispatch(editTodoData(newData));
+      newData.start_time = startTime;
+      newData.learning_time = totalHours;
+      dispatch(editinData(newData));
       document.querySelector(".selected")?.classList.remove("selected");
       closeEditModal();
-      // window.location.replace("/myfeed");
+    }
+  };
+
+  const content = (
+    <HexColorPicker
+    id="color-picker"
+    color={newData.box_color}
+    onChange={(newValue: any) => {
+      handleChange(newValue);
+    }}
+  />
+  );
+
+
+  const [colorClick, setColorClick] = useState(false);
+
+  const colorPickHandler = function () {
+    console.log(colorClick);
+    if (colorClick) {
+      setColorClick(false);
+    } else {
+      setColorClick(true);
     }
   };
 
@@ -231,15 +236,9 @@ function EditTodoModal({ editData, closeEditModal }: Props) {
       <div className="select-subject">
         <div id="color-pick-container">
           <span>Pick label color</span>
-          <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
-          {colorClick && 
-              <HexColorPicker
-                color={newData.box_color}
-                onChange={(newValue: any) => {
-                  handleChange(newValue);
-                }}
-              />
-          }
+          <Popover content={content} title="Label Color" trigger="click">
+            <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
+          </Popover>
         </div>
         <span>Pick Subject Label: </span>
         <div className="make-new-label">

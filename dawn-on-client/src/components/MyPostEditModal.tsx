@@ -7,6 +7,7 @@ import {
   addNewSubject,
   deleteSubject,
   editTodoData,
+  changeMyFeedTotalHour,
 } from "../module/ClickPostViewModule";
 import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
@@ -176,18 +177,20 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
       click_postview.todos.map((todo:any) => {
-        console.log('originPK: ', todo.todo_PK);
-        
         if(todo.todo_PK === newData.todo_PK) {
           todo = newData;
         }
       })
       click_postview.start_time = startTime;
       click_postview.learning_time = totalHours;
+      newData.start_time = startTime;
+      newData.learning_time = totalHours;
+      dispatch(changeMyFeedTotalHour(`${totalHours}h`));
+      dispatch(editTodoData(newData));
       editDataPatch();
       document.querySelector(".selected")?.classList.remove("selected");
-      closeEditModal();
       window.location.replace("/myfeed");
+      closeEditModal();
     }
   };
 
