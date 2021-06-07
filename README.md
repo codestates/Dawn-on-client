@@ -189,8 +189,9 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
    
  <br/>
  <br/>
-   
-![Screen Shot 2021-06-02 at 6 21 22 PM](https://user-images.githubusercontent.com/75114956/120455148-75fb9280-c3cf-11eb-9e3e-b054e6e9a41d.png)
+
+ ![Stack](https://user-images.githubusercontent.com/75114956/120984960-1c6fdb00-c7b6-11eb-80cf-5be9c0d68e5d.jpg)
+
 
  *************
  ## ⛏ Client Side Flow chart
