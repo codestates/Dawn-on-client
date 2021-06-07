@@ -1,21 +1,20 @@
 import { useState } from "react";
 import Footer from "../components/Footer";
 import styled from "@emotion/styled";
-import circle from "../img/circle.png";
+import { useHistory } from "react-router-dom";
 import landing from "../img/landing-animation.gif";
 import "../App.css";
 import "../css/landing.css";
 import icon1 from "../img/to-do-list.png";
 import icon2 from "../img/color-palette.png";
 import icon3 from "../img/sharing.png";
-import icon4 from "../img/sunrise.png"
+import icon4 from "../img/sunrise.png";
 import award from "../img/award.png";
 import study from "../img/study.png";
 import achievement from "../img/achievement.png";
 import mainGif from "../img/man01.gif";
 import example01 from "../img/example.png";
 import section4 from "../img/section4.png";
-
 
 const LandingSection = styled.div`
   height: 100%;
@@ -41,6 +40,8 @@ const Button = styled.button`
 `;
 
 function Landing() {
+  const history = useHistory();
+
   // Scroll animation
   function isElementUnderBottom(elem: Element, triggerDiff: number) {
     const { top } = elem.getBoundingClientRect();
@@ -140,6 +141,13 @@ function Landing() {
             Preparing for a new challenge.
             <br></br>
             We'll fill your day. Dawn:on
+            <br></br>
+            <button
+              id="experience-btn"
+              onClick={() => history.push("/custom-planner")}
+            >
+              Experience
+            </button>
           </p>
         </div>
         <div className="right-img">
@@ -179,39 +187,45 @@ function Landing() {
       </LandingSection>
       <LandingSection id="section3" className="font-color">
         <div className="section03-title up-on-scroll">
-        A special planner <br></br> for early birds
-        <img className="inside" src={icon4} alt="icon4"></img>
+          A special planner <br></br> for early birds
+          <img className="inside" src={icon4} alt="icon4"></img>
         </div>
-          {clickID === 1 &&
-          (<div id="1" className="slide-container">
+        {clickID === 1 && (
+          <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[0].text}</div>
             <img alt="slide-img" src={content[0].src}></img>
-          </div>)
-          }
-          {clickID === 2 &&
-          (<div id="1" className="slide-container">
-            <div className="slide-txt up-on-scroll">{content[1].text}</div>  
+          </div>
+        )}
+        {clickID === 2 && (
+          <div id="1" className="slide-container">
+            <div className="slide-txt up-on-scroll">{content[1].text}</div>
             <img alt="slide-img" src={content[1].src}></img>
-          </div>)
-          }
-          {clickID === 3 &&
-          (<div id="1" className="slide-container">
+          </div>
+        )}
+        {clickID === 3 && (
+          <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[2].text}</div>
             <img alt="slide-img" src={content[2].src}></img>
-          </div>)
-          }
-          <button id={clickID.toString()} className="slide-next-btn" 
-            onClick={(e:any) => clickHandler(e)}>
+          </div>
+        )}
+        <button
+          id={clickID.toString()}
+          className="slide-next-btn"
+          onClick={(e: any) => clickHandler(e)}
+        >
           <i id={clickID.toString()} className="fas fa-chevron-right"></i>
         </button>
       </LandingSection>
       <LandingSection id="section4">
-        <img alt ="section4" src={section4}></img>
+        <img alt="section4" src={section4}></img>
         <div className="section4-title">Benefits</div>
         <div id="section04-container">
           <div className="advantages left">
             <img alt="icon1" src={award}></img>
-            <div>Looking at the time I have studied so far and the list of planners I have made</div>
+            <div>
+              Looking at the time I have studied so far and the list of planners
+              I have made
+            </div>
           </div>
           <div className="advantages left">
             <img alt="icon2" src={achievement}></img>
@@ -219,7 +233,9 @@ function Landing() {
           </div>
           <div className="advantages left">
             <img alt="icon3" src={study}></img>
-            <div>You can form a study habit by constantly recording a planner</div>
+            <div>
+              You can form a study habit by constantly recording a planner
+            </div>
           </div>
         </div>
       </LandingSection>

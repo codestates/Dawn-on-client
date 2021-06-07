@@ -11,6 +11,7 @@ import {
 } from "../module/ClickPostViewModule";
 import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
+import { Popover } from 'antd';
 import axios from "axios";
 
 const AddTodoBar = styled.div`
@@ -207,6 +208,15 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
         console.log(err);
       });
   };
+
+  const content = (
+    <HexColorPicker
+      color={newData.box_color}
+      onChange={(newValue: any) => {
+        handleChange(newValue);
+      }}
+    />
+  );
   
 
   return (
@@ -244,15 +254,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
       <div className="select-subject">
         <div id="color-pick-container">
           <span>Pick label color</span>
-          <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
-          {colorClick && 
-              <HexColorPicker
-                color={newData.box_color}
-                onChange={(newValue: any) => {
-                  handleChange(newValue);
-                }}
-              />
-          }
+          <Popover content={content} title="Label Color" trigger="click">
+            <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
+          </Popover>
         </div>
         <span>Pick Subject Label: </span>
         <div className="make-new-label">

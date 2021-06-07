@@ -238,7 +238,7 @@ function AddTodo () {
           }
             { memoEdit
               ? <textarea className="memo-edit-input" onChange={(e:any) => setMemo(e.target.value)} />
-              : <span>{plannerDatas.memo}</span>
+              : <span>{memo}</span>
             }
           </div>
 

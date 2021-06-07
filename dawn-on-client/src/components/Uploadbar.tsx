@@ -25,6 +25,7 @@ import {
   resetAfterUpload,
 } from "../module/addTaskModule";
 import { RootState } from "../store/store";
+import { Hidden } from "@material-ui/core";
 
 const CustomContainer = styled.div`
   font-family: "KoHo", sans-serif;
@@ -35,9 +36,7 @@ const CustomContainer = styled.div`
   display: grid;
   padding: 20px 15px;
   background: #fff;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 `;
 
 const UploadButton = styled.button`
@@ -58,7 +57,7 @@ const UploadButton = styled.button`
   margin-left: 40px;
   letter-spacing: 3px;
   &:hover {
-    {
+     {
       color: #335296;
       background-color: #e1e2e2;
       opacity: 1;
@@ -87,7 +86,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function CustomBar() {
+type CustomBarProps = {
+  isLogin: boolean;
+};
+
+function CustomBar({ isLogin }: CustomBarProps) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [tags, setTaglist] = useState(["취준생", "면접", "프론트엔드"]);
@@ -244,6 +247,17 @@ function CustomBar() {
       onChange={(color: string) => handleChange(color)}
     />
   );
+  const isLoginHandler = () => {
+    const nav = document.getElementById("nav-container") as HTMLElement;
+    if (isLogin) {
+      nav.style.visibility = "visible";
+    } else {
+      nav.style.visibility = "hidden";
+    }
+  };
+  useEffect(() => {
+    isLoginHandler();
+  }, []);
 
   return (
     <CustomContainer id="custom-bar">
@@ -374,7 +388,40 @@ function CustomBar() {
             ))}
         </div>
       </div>
-      <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>Upload</UploadButton>
+      {isLogin ? (
+        <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>
+          Upload
+        </UploadButton>
+      ) : (
+        <UploadButton
+          id="upload-btn"
+          onClick={(e: any) => {
+            swal({
+              title: "체험하기를 종료하시겠습니까?",
+              icon: "warning",
+              dangerMode: true,
+              closeOnClickOutside: false,
+              buttons: ["No", true],
+            }).then((willLogout) => {
+              if (willLogout) {
+                dispatch(resetAfterUpload());
+                const nav = document.getElementById(
+                  "nav-container"
+                ) as HTMLElement;
+                nav.style.visibility = "visible";
+                history.push("/");
+              } else {
+                console.log("체험하기 종료 취소");
+              }
+            });
+          }}
+        >
+          EXIT
+        </UploadButton>
+      )}
+      {/* <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>
+        Upload
+      </UploadButton> */}
     </CustomContainer>
   );
 }

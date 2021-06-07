@@ -142,7 +142,7 @@ function ExploreSidebar() {
           <div id="rank-title" className="rank">
             <div className="rank-subtitle"> Rank </div>
             <div className="rank-subname"> USER </div>
-            <i className="far fa-thumbs-up"> STAR </i>
+            <i className="far fa-star"> STAR </i>
           </div>
           <div id="rank-1st" className="rank">
             <div className="rank-number"> 1 </div>
@@ -164,10 +164,10 @@ function ExploreSidebar() {
                   swal("Star 서비스 준비중입니다", "", "warning");
                 }}
               >
-                정현웅
+                Michael
               </div>
             </div>
-            <div className="rank-likes">187</div>
+            <div className="rank-likes">37</div>
           </div>
           <div id="rank-2nd" className="rank">
             <div className="rank-number"> 2 </div>
@@ -189,10 +189,10 @@ function ExploreSidebar() {
                   swal("Star 서비스 준비중입니다", "", "warning");
                 }}
               >
-                전팀장
+                John
               </div>
             </div>
-            <div className="rank-likes">179.99</div>
+            <div className="rank-likes">14</div>
           </div>
           <div id="rank-3rd" className="rank">
             <div className="rank-number"> 3 </div>
@@ -214,10 +214,10 @@ function ExploreSidebar() {
                   swal("Star 서비스 준비중입니다", "", "warning");
                 }}
               >
-                코드스테이츠
+                Kingsman
               </div>
             </div>
-            <div className="rank-likes">27</div>
+            <div className="rank-likes">9</div>
           </div>
         </div>
       </div>

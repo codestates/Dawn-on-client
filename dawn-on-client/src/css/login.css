@@ -5,16 +5,10 @@
 
 .fa-times-circle {
   font-size: 25px;
-  transition: all 0.5s;
-}
-
-.fa-times-circle:hover {
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
-  transform: translateY(-0.1em);
 }
 
 .login-title {
-  font-size: 22px;
+  font-size: 23px;
   font-family: "Nunito Sans", sans-serif;
 }
 
@@ -34,10 +28,6 @@
 .go-to-join {
   cursor: pointer;
   font-weight: bold;
-}
-
-.ant-btn {
-  border-radius: 5px;
 }
 
 .ant-btn-primary {
@@ -83,9 +73,10 @@
 }
 
 #google:hover {
-  border: 1.5px solid #34a854;
+  border: 1.5px solid white;
+  background-color: #727272;
   font-weight: bold;
-  color: #34a854;
+  color: white;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
   transform: translateY(-0.3em);
 }
