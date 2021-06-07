@@ -27,6 +27,7 @@ import sticker06 from "../img/sticker/sticker06.png";
 import sticker07 from "../img/sticker/sticker07.png";
 import sticker08 from "../img/sticker/sticker08.png";
 import sticker09 from "../img/sticker/sticker09.png";
+import box from "../img/box.png";
 import 'antd/dist/antd.css';
 import Popover from '@material-ui/core/Popover';
 import { Checkbox } from 'antd';
@@ -354,7 +355,10 @@ function ExplorePostView() {
   return (
     <div id="ExplorePostView-container">
       {ExploreList && ExploreList.length === 0 ? (
-        <div>게시물 없음</div>
+        <div>
+          <img className="empty-box-img" src={box} alt="emtpy-box" />
+          <div className="empty-list-message">Make your todo list!</div>
+        </div>
       ) : (
         <>
         <div id="planner-view-container">
