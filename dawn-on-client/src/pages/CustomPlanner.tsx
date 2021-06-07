@@ -2,18 +2,21 @@
 // PlannerForm , CustomBar
 import PlannerView from "../components/PlannerView";
 import Uploadbar from "../components/Uploadbar";
-import styled from "@emotion/styled";
-import Custombar from "../components/CustomBar";
-import background from "../img/3139837.jpg"
 import "../css/plannerview.css";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
 function CustomPlanner() {
+  const isLogin = useSelector((status: RootState) => {
+    return status.isLoginReducer.isLogin;
+  });
+
   return (
     <>
       <div id="custom-planner-container">
         <div className="side-txt">Custom Planner</div>
-          <PlannerView />
-          <Uploadbar />
+        <PlannerView />
+        <Uploadbar isLogin={isLogin} />
       </div>
     </>
   );
