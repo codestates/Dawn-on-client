@@ -251,7 +251,7 @@ function ExplorePostView() {
     let backColor:string;
     Object.keys(click_exploreview).length === 0 ? backColor = "#B9B3D1" : backColor = click_exploreview.back_color;
     const backElement = document.querySelector("#planner-view-container") as HTMLElement;
-    if(backElement) {
+    if(backElement && ExploreList.length !== 0) {
       backElement.style.transition = "all 0.6s ease"
 
     if(backColor.indexOf("#") !== -1) {
@@ -364,7 +364,7 @@ function ExplorePostView() {
         <div id="planner-view-container">
           <div id="left-side-container">
             <Date>
-              <span>{today}</span>
+              <span className="explore-date">{today}</span>
             </Date>
             <div className="plnnerfrom-memo">
               <span>{click_exploreview.memo}</span>
