@@ -46,7 +46,7 @@ function MyPostList() {
       ) : (
         <div id="postDatas-empty">
           <img alt="empty_img" src={empty_folder} />
-          <div id="postDatas-empty-comment">목록이 비어있습니다</div>
+          <div id="postDatas-empty-comment">List is empty</div>
         </div>
       )}
     </div>
