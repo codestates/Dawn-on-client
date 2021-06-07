@@ -289,7 +289,7 @@
 
 .slide-txt {
   flex-basis: 40%;
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   /* margin-right: 9rem; */
   width: 60%;
   font-family: "Montserrat", sans-serif;
@@ -343,8 +343,9 @@
 
 .slide-container > img {
   flex-basis: 65%;
+  opacity: 0.9;
   width: 70%;
-  animation: just-opacity 1s ease;
+  animation: all 1s ease;
 }
 
 .section03-box {
