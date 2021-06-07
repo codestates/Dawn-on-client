@@ -24,7 +24,6 @@ const MYPOST_THUMBS_UP = "MYPOST_THUMBS_UP";
 
 const CHANGE_CHECKED_STATE = "CHANGE_CHECKED_STATE";
 
-const DATA_AFTER_PATCH = "CHANGE_CHECKED_STATE";
 
 export const getClickPostView = (post: object) => ({
   type: GET_CLICK_POST_VIEW,
@@ -51,7 +50,7 @@ export const deleteSubject = (subject: String) => ({
 });
 
 // memo 데이터 추가 액션
-export const addMemoData = (memo: string) => ({
+export const addMyfeedMemoData = (memo: string) => ({
   type: ADD_MEMO_DATA,
   payload: {
     memo: memo,
@@ -85,7 +84,7 @@ export const addToTimetable = (
 });
 
 // total hour 저장 액션.
-export const changeTotalHour = (hour: string) => ({
+export const changeMyFeedTotalHour = (hour: string) => ({
   type: CHANGE_TOTAL_HOUR,
   payload: hour,
 });
@@ -249,7 +248,7 @@ export default function getClickPostViewReducer(
         ...state,
         click_postview: {
           ...state.click_postview,
-          hour: action.payload,
+          total_learning_time: action.payload,
         },
       };
     case DELETE_SUBJECT:

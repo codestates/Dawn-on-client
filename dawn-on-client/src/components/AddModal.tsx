@@ -11,6 +11,7 @@ import {
 import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
 import { v4 as uuidv4 } from "uuid";
+import { Popover } from 'antd';
 
 const AddTodoBar = styled.div`
   font-family: 'KoHo', sans-serif;
@@ -22,7 +23,6 @@ const AddTodoBar = styled.div`
   border-radius: 5px;
   flex-direction: column;s
   overflow-y: scroll;
-  // padding: 10px 15px;
 `;
 
 const LabelContainer = styled.div`
@@ -127,7 +127,6 @@ function AddModal({ clickHandler }: Props) {
       (subjectLabel &&
         subjectLabel.filter((sub: string) => sub === newSubject)) ||
       [];
-    console.log(check);
     if (newSubject !== "" && check.length === 0) {
       dispatch(addNewSubject(newSubject));
     }
@@ -203,6 +202,16 @@ function AddModal({ clickHandler }: Props) {
     }
   };
 
+  const content = (
+    <HexColorPicker
+    id="color-picker"
+    color={color}
+    onChange={(newValue: any) => {
+      handleChange(newValue);
+    }}
+  />
+  );
+
   return (
     <AddTodoBar>
       <div id="todo-modal-upper">
@@ -237,15 +246,9 @@ function AddModal({ clickHandler }: Props) {
       <div className="select-subject">
         <div id="color-pick-container">
           <span>Pick label color</span>
-          <div id="color-thumbnail-modal" onClick={() => colorPickHandler()}></div>
-          {colorClick && 
-              <HexColorPicker
-                color={color}
-                onChange={(newValue: any) => {
-                  handleChange(newValue);
-                }}
-              />
-          }
+          <Popover content={content} title="Label Color" trigger="click">
+            <div id="color-thumbnail-modal" style={{background:color}} onClick={() => colorPickHandler()}></div>
+          </Popover>
         </div>
         <span>Pick Subject Label: </span>
         <div className="make-new-label">

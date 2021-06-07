@@ -53,11 +53,6 @@ function MyFeed() {
 
         // 게시물 데이터 저장
         dispatch(getMyFeedList(postDatas.reverse() || []));
-
-        console.log("나의 게시물 목록", postDatas);
-        console.log("사용자 개인정보", userDatas);
-
-        console.log("현재보여지는 데이터", click_postview);
         return res;
       })
       .then((res) => {
@@ -88,8 +83,6 @@ function MyFeed() {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(MyPostThumbsUp(res.data));
         dispatch(getClickPostView(click_postview));
-        console.log("myfeed 가리키는 페이지", click_postview);
-        console.log("현재 보이는 게시물에 대한 좋아요 클릭 여부", res.data);
       })
       .catch((err) => {
         console.log(err);

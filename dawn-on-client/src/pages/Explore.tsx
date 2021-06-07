@@ -36,7 +36,6 @@ function Explore() {
   const isChecked = function (firstPost: object) {
     if (Object.keys(click_exploreview).length === 0) {
       dispatch(getClickExploreView(firstPost));
-      console.log("현재보여지는 데이터", click_exploreview);
     }
   };
 
@@ -83,9 +82,6 @@ function Explore() {
 
         // 모아보기 게시물 데이터 저장 (배열)
         dispatch(getExploreList(res.data.postDatas || []));
-
-        console.log("모아보기 게시물 목록", res.data.postDatas);
-        console.log("Ranking 데이터", res.data.ranking);
         return res;
       })
       .then((res) => {
@@ -115,7 +111,6 @@ function Explore() {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(ExploreThumbsUp(res.data));
         dispatch(getClickExploreView(click_exploreview));
-        console.log("현재 보이는 게시물에 대한 좋아요 클릭 여부", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -136,8 +131,6 @@ function Explore() {
         }
       )
       .then((res: any) => {
-        console.log("아이디 검색 데이터", res);
-        console.log("검색한 아이디값", res.data.postDatas);
         dispatch(getExploreList(res.data.postDatas));
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
@@ -165,8 +158,6 @@ function Explore() {
         }
       )
       .then((res) => {
-        console.log("태그 검색 데이터", res);
-        console.log("검색한 태그값", res.data.postDatas);
         dispatch(getExploreList(res.data.postDatas));
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
@@ -196,7 +187,6 @@ function Explore() {
   }, []);
   useEffect(() => {
     if (SearchValue && SearchValue.length > 0) {
-      console.log("SearchValue: ", SearchValue);
       ExploreList_Handler();
     } else {
       get_MainFeed_Data();

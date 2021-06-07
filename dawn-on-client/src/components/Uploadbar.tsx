@@ -15,6 +15,7 @@ import pattern08 from "../img/pattern08.png";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import { HexColorPicker } from "react-colorful";
+import { Popover } from 'antd';
 import {
   changeBackColor,
   addSelectedTags,
@@ -24,25 +25,23 @@ import {
   resetAfterUpload,
 } from "../module/addTaskModule";
 import { RootState } from "../store/store";
+import { Hidden } from "@material-ui/core";
 
 const CustomContainer = styled.div`
   font-family: "KoHo", sans-serif;
   border-radius: 5px;
   grid-column: 6 / 7;
   grid-row: 2 / 7;
+  height: 100%;
   display: grid;
-  grid-template-rows: 0.2fr 0.3fr 1fr 1fr 0.3fr;
-  row-gap: 15px;
   padding: 20px 15px;
   background: #fff;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 `;
 
 const UploadButton = styled.button`
   flex: 1 1 auto;
-  padding: 10px 15px;
+  padding: 3px 15px;
   text-align: center;
   text-transform: uppercase;
   transition: 0.3s;
@@ -51,14 +50,14 @@ const UploadButton = styled.button`
   background-color: #335296;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
+  margin-top: 6rem;
   border: none;
-  height: 60%;
   flex-basis: 30%;
   justify-self: right;
   margin-left: 40px;
   letter-spacing: 3px;
   &:hover {
-    {
+     {
       color: #335296;
       background-color: #e1e2e2;
       opacity: 1;
@@ -87,7 +86,11 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function CustomBar() {
+type CustomBarProps = {
+  isLogin: boolean;
+};
+
+function CustomBar({ isLogin }: CustomBarProps) {
   const history = useHistory();
   const dispatch = useDispatch();
   const [tags, setTaglist] = useState(["취준생", "면접", "프론트엔드"]);
@@ -109,14 +112,17 @@ function CustomBar() {
     }
     if (!tag) {
       swal("태그를 입력해주세요", "", "error");
+      setSelectedTag([]);
     }
     if (state.tags.indexOf(tag) !== -1) {
       swal("이미 존재하는 태그 입니다.", "", "error");
       setTag("");
+      setSelectedTag([]);
     }
     if (state.tags.length > 7) {
       swal("태그는 8 개 이상 만들 수 없습니다", "", "error");
       setTag("");
+      setSelectedTag([]);
     }
   };
 
@@ -177,7 +183,7 @@ function CustomBar() {
     if (state.plannerDatas.selected_tags.indexOf(e.target.id)) {
       const deleteTag = state.plannerDatas.selected_tags.filter(
         (el: string) => el !== e.target.id
-      );
+    );
       dispatch(addSelectedTags([...deleteTag]));
       dispatch(deleteAtag(e.target.id));
     }
@@ -185,7 +191,6 @@ function CustomBar() {
   };
 
   const uploadHandler = function (e: any) {
-    console.log(data);
     axios
       .post(
         `${process.env.REACT_APP_URI}/posts/posting`,
@@ -205,8 +210,6 @@ function CustomBar() {
         }
       )
       .then((res) => {
-        console.log(res);
-        console.log("보낸 데이터: ", data);
         dispatch(resetAfterUpload());
         swal("게시물 등록완료", "", "success");
         history.push("/myfeed");
@@ -238,6 +241,24 @@ function CustomBar() {
     }
   };
 
+  const content = (
+    <HexColorPicker
+      color={back_color}
+      onChange={(color: string) => handleChange(color)}
+    />
+  );
+  const isLoginHandler = () => {
+    const nav = document.getElementById("nav-container") as HTMLElement;
+    if (isLogin) {
+      nav.style.visibility = "visible";
+    } else {
+      nav.style.visibility = "hidden";
+    }
+  };
+  useEffect(() => {
+    isLoginHandler();
+  }, []);
+
   return (
     <CustomContainer id="custom-bar">
       <div className="custom-title-container">
@@ -247,13 +268,9 @@ function CustomBar() {
       <div className="back-color-picker">
         <h4>Background</h4>
         <div className="back-color-selection">
+          <Popover content={content} title="BackgroundColor" trigger="click">
           <div id="color-thumbnail" onClick={() => colorPickHandler()}></div>
-          {colorClick && (
-            <HexColorPicker
-              color={back_color}
-              onChange={(color: string) => handleChange(color)}
-            />
-          )}
+          </Popover>
           <span onClick={(e: any) => bgPatternHandler(e)}>
             <img
               id="pattern01"
@@ -329,7 +346,7 @@ function CustomBar() {
             dispatch(addCommentData(e.target.value));
           }}
           multiline
-          rows={10}
+          rows={6}
           value={comment}
           variant="outlined"
         />
@@ -371,7 +388,40 @@ function CustomBar() {
             ))}
         </div>
       </div>
-      <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>Upload</UploadButton>
+      {isLogin ? (
+        <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>
+          Upload
+        </UploadButton>
+      ) : (
+        <UploadButton
+          id="upload-btn"
+          onClick={(e: any) => {
+            swal({
+              title: "체험하기를 종료하시겠습니까?",
+              icon: "warning",
+              dangerMode: true,
+              closeOnClickOutside: false,
+              buttons: ["No", true],
+            }).then((willLogout) => {
+              if (willLogout) {
+                dispatch(resetAfterUpload());
+                const nav = document.getElementById(
+                  "nav-container"
+                ) as HTMLElement;
+                nav.style.visibility = "visible";
+                history.push("/");
+              } else {
+                console.log("체험하기 종료 취소");
+              }
+            });
+          }}
+        >
+          EXIT
+        </UploadButton>
+      )}
+      {/* <UploadButton id="upload-btn" onClick={(e: any) => uploadHandler(e)}>
+        Upload
+      </UploadButton> */}
     </CustomContainer>
   );
 }

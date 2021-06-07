@@ -5,9 +5,9 @@ const today = moment().format('YYYY-MM-DD');
 
 const ADD_NEW_SUBJECT = "ADD_NEW_SUBJECT";
 const DELETE_SUBJECT = "DELETE_SUBJECT";
-const ADD_A_TODO = "ADD_TO_TODO";
+const ADD_TO_LIST = "ADD_TO_LIST";
 const ADD_MEMO_DATA = "ADD_MEMO_DATA";
-const ADD_THE_STICKER = "ADD_THE_STICKER";
+const ADD_A_STICKER = "ADD_A_STICKER";
 const CHANGE_TOTAL_HOUR = "CHANGE_TOTAL_HOUR";
 const CHANGE_CHECKED_STATE = "CHANGE_CHECKED_STATE";
 const DELETE_A_TASK = "DELETE_A_TASK";
@@ -16,7 +16,7 @@ const ADD_TO_TAGLIST = "ADD_TO_TAGLIST";
 const ADD_SELECTED_TAGS = "ADD_SELECTED_TAGS";
 const DELETE_A_TAG = "DELETE_A_TAG";
 const ADD_COMMENT_DATA = "ADD_COMMENT_DATA";
-// const EDIT_TODO_DATA = "EDIT_TODO_DATA";
+const EDIT_IN_DATA = "EDIT_IN_DATA";
 const RESET_AFTER_UPLOAD = "RESET_AFTER_UPLOAD";
 
 export const addNewSubject = (subject: String) => ({
@@ -43,8 +43,8 @@ export const addMemoData = (memo: string) => ({
 });
 
 // sticker 데이터 추가 액션
-export const addTheSticker = (sticker: string) => ({
-  type: ADD_THE_STICKER,
+export const addASticker = (sticker: string) => ({
+  type: ADD_A_STICKER,
   payload: sticker,
 });
 
@@ -57,7 +57,7 @@ export const addToTimetable = (
   learning_time: number,
   box_color: any
 ) => ({
-  type: ADD_A_TODO,
+  type: ADD_TO_LIST,
   payload: {
     todo_PK: todo_PK,
     subject: subject,
@@ -119,10 +119,10 @@ export const addCommentData = (comment: string) => ({
 });
 
 // edit data patch
-// export const editTodoData = (editData: any) => ({
-//   type: EDIT_TODO_DATA,
-//   payload: editData,
-// });
+export const editinData = (editData: any) => ({
+  type: EDIT_IN_DATA,
+  payload: editData,
+});
 
 export const resetAfterUpload = () => ({
   type: RESET_AFTER_UPLOAD,
@@ -134,8 +134,7 @@ export default function addTaskReducer(state: any = initialState, action: any) {
       return {
         ...state,
       }
-    case ADD_A_TODO:
-      console.log("새로운 todo: ", action.payload);
+    case ADD_TO_LIST:
       return {
         ...state,
         plannerDatas: {
@@ -154,20 +153,6 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           todos: [...without],
         },
       };
-    // case CHANGE_CHECKED_STATE:
-    //   return {
-    //     ...state,
-    //     plannerDatas: {
-    //       ...state.plannerDatas,
-    //       todos: state.plannerDatas.todos.map((todo: any) => {
-    //         console.log(todo.todo_PK);
-    //         console.log(action.payload.todo_PK);
-    //         return todo.todo_PK === action.payload.todo_PK
-    //           ? { ...todo, checked: action.payload.checked }
-    //           : todo;
-    //       }),
-    //     },
-    //   };
     case ADD_MEMO_DATA:
       return {
         ...state,
@@ -176,8 +161,7 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           memo: action.payload.memo,
         },
       };
-    case ADD_THE_STICKER:
-      console.log("스티커데이터: ", action.payload);
+    case ADD_A_STICKER:
       return {
         ...state,
         plannerDatas: {
@@ -220,7 +204,6 @@ export default function addTaskReducer(state: any = initialState, action: any) {
         tags: [...state.tags, action.payload],
       };
     case ADD_SELECTED_TAGS:
-      console.log("선택한 태그: ", action.payload);
       return {
         ...state,
         plannerDatas: {
@@ -229,7 +212,6 @@ export default function addTaskReducer(state: any = initialState, action: any) {
         },
       };
     case DELETE_A_TAG:
-      console.log(state.tags);
       const delTag = state.tags.filter((el: any) => el !== action.payload);
       return {
         ...state,
@@ -243,20 +225,18 @@ export default function addTaskReducer(state: any = initialState, action: any) {
           comment: action.payload,
         },
       };
-    // case EDIT_TODO_DATA:
-    //   console.log("넘어온 데이터: ", action.payload);
-    //   return {
-    //     ...state,
-    //     plannerDatas: {
-    //       ...state.plannerDatas,
-    //       todos: state.plannerDatas.todos.map((todo: any) => {
-    //         console.log(todo);
-    //         return todo.todo_PK === action.payload.todo_PK
-    //           ? { ...action.payload, checked: false }
-    //           : todo;
-    //       }),
-    //     },
-    //   };
+    case EDIT_IN_DATA:
+      return {
+        ...state,
+        plannerDatas: {
+          ...state.plannerDatas,
+          todos: state.plannerDatas.todos.map((todo: any) => {
+            return todo.todo_PK === action.payload.todo_PK
+              ? { ...action.payload, checked: false }
+              : todo;
+          }),
+        },
+      };
       case RESET_AFTER_UPLOAD:
       return {
         ...state,

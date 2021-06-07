@@ -7,9 +7,11 @@ import {
   addNewSubject,
   deleteSubject,
   editTodoData,
+  changeMyFeedTotalHour,
 } from "../module/ClickPostViewModule";
 import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
+import { Popover } from 'antd';
 import axios from "axios";
 
 const AddTodoBar = styled.div`
@@ -54,7 +56,6 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   });
 
   const [newData, setNewData] = useState(editData);
-  console.log(newData);
   useEffect(() => {
     dispatch(editTodoData(newData));
   }, [dispatch, newData]);
@@ -76,11 +77,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
   const [endTime, setEndTime] = useState(makeInitial(newData.start_time));
 
   useEffect(() => {
-    console.log("시작시간: ", startTime);
   }, [startTime]);
 
   useEffect(() => {
-    console.log("종료시간: ", endTime);
   }, [endTime]);
 
   // 선택한 과목 저장.
@@ -151,11 +150,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
     click_postview.todos.map((todo:any) => {
       if(todo.todo_PK === newData.todo_PK) {
         todo = newData;
-        console.log(todo);
       }
     })
     click_postview.start_time = startTime;
-    console.log(click_postview);
   })
 
   // dispatch로 변경해줘야 할 데이터 : 시작시간, 라벨(과목, 컬러), 할 일 내용
@@ -176,23 +173,24 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
       swal("시간을 다시 선택해주세요.", "", "error");
     } else {
       click_postview.todos.map((todo:any) => {
-        console.log('originPK: ', todo.todo_PK);
-        
         if(todo.todo_PK === newData.todo_PK) {
           todo = newData;
         }
       })
       click_postview.start_time = startTime;
       click_postview.learning_time = totalHours;
+      newData.start_time = startTime;
+      newData.learning_time = totalHours;
+      dispatch(changeMyFeedTotalHour(`${totalHours}h`));
+      dispatch(editTodoData(newData));
       editDataPatch();
       document.querySelector(".selected")?.classList.remove("selected");
-      closeEditModal();
       window.location.replace("/myfeed");
+      closeEditModal();
     }
   };
 
   const editDataPatch = async function () {
-    console.log(click_postview);
     await axios
       .patch(
         `${process.env.REACT_APP_URI}/posts/myfeed`,
@@ -205,12 +203,20 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
         }
       )
       .then((res) => {
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const content = (
+    <HexColorPicker
+      color={newData.box_color}
+      onChange={(newValue: any) => {
+        handleChange(newValue);
+      }}
+    />
+  );
   
 
   return (
@@ -248,15 +254,9 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
       <div className="select-subject">
         <div id="color-pick-container">
           <span>Pick label color</span>
-          <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
-          {colorClick && 
-              <HexColorPicker
-                color={newData.box_color}
-                onChange={(newValue: any) => {
-                  handleChange(newValue);
-                }}
-              />
-          }
+          <Popover content={content} title="Label Color" trigger="click">
+            <div id="color-thumbnail-modal" style={{background:newData.box_color}} onClick={() => colorPickHandler()}></div>
+          </Popover>
         </div>
         <span>Pick Subject Label: </span>
         <div className="make-new-label">

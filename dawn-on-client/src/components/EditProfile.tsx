@@ -60,10 +60,8 @@ function EditProfile() {
       buttons: ["No", true],
     }).then((willDelete) => {
       if (willDelete) {
-        console.log("프로필 수정 취소");
         clearMyInfoData();
       } else {
-        console.log("프로필 수정 유지");
       }
     });
   };
@@ -98,7 +96,6 @@ function EditProfile() {
         withCredentials: true,
       })
       .then((res: any) => {
-        console.log("mypage 데이터:", res.data);
         // setMyfeedInfo를 이용하여 값을 저장한다
         setMyInfo({
           ...MyInfo,
@@ -114,8 +111,6 @@ function EditProfile() {
         return res;
       })
       .then((res) => {
-        console.log(res.data);
-        console.log("mypage 데이터:  edit 페이지에 성공적으로 랜더링");
       })
       .catch((err) => {
         console.log(err);
@@ -180,7 +175,7 @@ function EditProfile() {
             checkCancelAlert();
           }}
         >
-          수정 취소
+          Cancel
         </button>
       </div>
       {provider && provider === "local" ? (
@@ -299,7 +294,7 @@ function EditProfile() {
             checkEditinfo();
           }}
         >
-          수정완료
+          Save Changes
         </button>
       </div>
     </div>

@@ -33,8 +33,6 @@ function MyPost({ postData, percentage }: MyPostProps) {
   const tags = postData.tags;
   const post = postData; // post 전체 데이터
 
-  console.log(percentage);
-
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
@@ -78,7 +76,6 @@ function MyPost({ postData, percentage }: MyPostProps) {
           if (willDelete) {
             window.location.replace("/myfeed");
           } else {
-            console.log("게시물 삭제 취소");
           }
         });
       })

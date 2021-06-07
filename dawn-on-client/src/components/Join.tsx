@@ -6,6 +6,7 @@ import $ from "jquery";
 import styled, { keyframes } from "styled-components";
 import "antd/dist/antd.css";
 import { Form, Input, Button, Select } from "antd";
+import { useEffect } from "react";
 const { Option } = Select;
 
 const fadeIn = keyframes`
@@ -84,40 +85,51 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
       });
   };
 
+  const backgroundBlur = () => {
+    const root = document.getElementById("root") as HTMLElement;
+    const nav = document.getElementById("nav-container") as HTMLElement;
+    root.style.backgroundColor = "f0f0f0";
+    nav.style.backgroundColor = "f0f0f0";
+  };
+
+  useEffect(() => {
+    backgroundBlur();
+  }, []);
+
   // 화원가입 모달창 form
   const RegistrationForm = () => {
     const [form] = Form.useForm();
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 9 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 12 },
-      },
-    };
+    // const formItemLayout = {
+    //   labelCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 9 },
+    //   },
+    //   wrapperCol: {
+    //     xs: { span: 24 },
+    //     sm: { span: 12 },
+    //   },
+    // };
 
     const onFinish = (values: any) => {
-      console.log("회원가입한 정보 ", values);
+
       const { user_id, user_password, user_nickname, user_job } = values;
       Local_joinRequestHandler(user_id, user_password, user_nickname, user_job);
     };
 
     return (
       <Form
-        {...formItemLayout}
+        // {...formItemLayout}
         form={form}
         name="register"
         onFinish={onFinish}
         scrollToFirstError
         className="join-form"
+        style={{ textAlign: "center" }}
       >
         <span className="join-title">Sign Up</span>
         <Form.Item
           name="user_id"
-          label="ID"
           rules={[
             {
               required: true,
@@ -125,12 +137,12 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="ID" />
         </Form.Item>
 
         <Form.Item
           name="user_password"
-          label="Password"
+          // label="Password"
           rules={[
             {
               required: true,
@@ -139,12 +151,12 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password placeholder="Password" />
         </Form.Item>
 
         <Form.Item
           name="check"
-          label="Password Check"
+          // label="Password Check"
           dependencies={["user_password"]}
           hasFeedback
           rules={[
@@ -164,12 +176,12 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             }),
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Password Check" />
         </Form.Item>
 
         <Form.Item
           name="user_nickname"
-          label="Nickname"
+          // label="Nickname"
           rules={[
             {
               required: true,
@@ -178,14 +190,14 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
             },
           ]}
         >
-          <Input />
+          <Input placeholder="Nickname" />
         </Form.Item>
 
         <Form.Item
           name="user_job"
-          label="Job"
+          // label="Job"
           rules={[{ required: true, message: "Please select job!" }]}
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "left" }}
         >
           <Select placeholder="Select your job">
             <Option value="수험생" style={{ textAlign: "center" }}>

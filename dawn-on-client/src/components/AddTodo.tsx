@@ -5,7 +5,7 @@ import {deleteTodo,
         addMemoData, 
         changeTotalHour,
         changeCheckedState, 
-        addTheSticker} from "../module/addTaskModule";
+        addASticker} from "../module/addTaskModule";
 import AddModal from "./AddModal";
 import moment from "moment";
 import EditTodoModal from "./EditTodoModal";
@@ -139,7 +139,7 @@ function AddTodo () {
       closeEditModal();
     }
 
-    const [memo, setMemo] = useState<string>("오늘도 화이팅!");
+    const [memo, setMemo] = useState<string>("You Can Do it");
     const [memoEdit, setMemoEdit] = useState<boolean>(false);
     const memoHandler = function () {
       if(memoEdit) {
@@ -195,6 +195,7 @@ function AddTodo () {
     const id = opened ? 'simple-popover' : undefined;
 
     const [selectedIcon, setSelectedIcon] = useState<string>("");
+    
     // 스티커 선택지
     const stickers = [
       sticker01,
@@ -210,7 +211,7 @@ function AddTodo () {
 
     const stickerHandler = function (e:any) {
       console.log(e.target.id.split('/')[3].split('.')[1]);
-      dispatch(addTheSticker(e.target.id.split('/')[3].split('.')[0]));
+      dispatch(addASticker(e.target.id.split('/')[3].split('.')[0]));
     }
 
 
@@ -236,8 +237,8 @@ function AddTodo () {
             </button>
           }
             { memoEdit
-              ? <textarea className="memo-edit-input" value={memo} onChange={(e:any) => setMemo(e.target.value)} />
-              : <span>{plannerDatas.memo}</span>
+              ? <textarea className="memo-edit-input" onChange={(e:any) => setMemo(e.target.value)} />
+              : <span>{memo}</span>
             }
           </div>
 

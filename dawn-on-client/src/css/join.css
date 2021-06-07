@@ -1,6 +1,6 @@
 .join-form {
   margin-top: 40px;
-  width: 100%;
+  width: 300px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -8,9 +8,8 @@
 }
 
 .join-title {
-  font-size: 22px;
+  font-size: 23px;
   font-family: "Nunito Sans", sans-serif;
-  margin-right: 60px;
 }
 
 .signup-form-button {

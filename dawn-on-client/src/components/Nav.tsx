@@ -28,7 +28,6 @@ const Nav = () => {
 
   // 검색한 값을 임시 저장해두고 검색버튼 클릭 시, 해당 변수를 사용한다
   const [search, setsearch] = useState<string>("");
-  // console.log("검색: ", search);
 
   // 로그인 , 회원가입 모달창을 boolean값을 사용하여 열고 닫는다
   const [JoinModal, setJoinModal] = useState<boolean>(false);
