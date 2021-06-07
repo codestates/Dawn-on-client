@@ -1,12 +1,26 @@
-import styled from "@emotion/styled";
+// import styled from "@emotion/styled";
 import swal from "sweetalert";
 import "../css/login.css";
 import "../App.css";
 import axios from "axios";
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getLoginState } from "../module/isLogin";
+import styled, { keyframes } from "styled-components";
+import { Form, Input, Button } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import kakaoTalk from "../img/KakaoTalk.png";
+import google from "../img/google.png";
+import "antd/dist/antd.css";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+`;
 
 type LoginProps = {
   closeLoginModal: Function;
@@ -14,29 +28,31 @@ type LoginProps = {
 };
 
 const LoginContainer = styled.div`
-  display: grid;
-  grid-template-columns: 0.3fr 1fr 0.3fr;
-  grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 0.2fr;
-  background-color: #faee9d;
-  border-radius: 5px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  opacity: 0.96;
+  border-radius: 20px;
   width: 500px;
-  height: 350px;
-  margin: -175px 0 0 -250px;
+  height: 500px;
+  margin: -225px 0 0 -225px;
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 100;
+  animation-duration: 0.47s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 const CloseButton = styled.button`
   outline: none;
   border: none;
-  background-color: #faee9d;
+  background:none
   justify-self: right;
   font-size: 1.5rem;
   margin-top: 10px;
-  color: #2b3390;
-  grid-column: 3 / 4;
-  grid-row: 1 / 2;
+  color: #2e4c8c;
 `;
 
 // 로그인 성공 시, Redux-persist에 해당 사용자의 정보, 로그인 상태값, accessToken을 저장시켜줘야한다
@@ -44,24 +60,10 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [form, setForm] = useState({
-    user_id: "",
-    user_password: "",
-  });
-  const { user_id, user_password } = form;
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
   // 로그인 성공 시, 서버로부터 token을 받아온다
   async function Local_Login_getToken() {
     await axios
-      .get("http://localhost:4000/auth/signin/check", {
+      .get(`${process.env.REACT_APP_URI}/auth/signin/check`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -88,22 +90,24 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
 
   //구글 로그인
   const googleLogins = () => {
-    window.open(`http://localhost:4000/auth/google`, "_self");
+    window.open(`${process.env.REACT_APP_URI}/auth/google`, "_self");
     closeLoginModal();
   };
 
   //카카오톡 로그인
   const kakakoLogins = () => {
-    window.open(`http://localhost:4000/auth/kakao`, "_self");
+    window.open(`${process.env.REACT_APP_URI}/auth/kakao`, "_self");
     closeLoginModal();
   };
 
   //로컬 로그인 함수
-  const Local_loginRequestHandler = async function () {
-    console.log("로그인한 사용자 정보", form);
+  const Local_loginRequestHandler = async function (
+    user_id: string,
+    user_password: string
+  ) {
     await axios
       .post(
-        `http://localhost:4000/auth/signin`,
+        `${process.env.REACT_APP_URI}/auth/signin`,
         { user_id: user_id, user_password: user_password },
         {
           headers: { "Content-Type": "application/json" },
@@ -124,6 +128,83 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
       });
   };
 
+  // 로그인 창 form
+  const LoginForm = () => {
+    const onFinish = (values: any) => {
+      console.log("입력한 회원가입 정보", values);
+      const { user_id, user_password } = values;
+      Local_loginRequestHandler(user_id, user_password);
+    };
+
+    return (
+      <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+      >
+        <span className="login-title">Log In</span>
+        <Form.Item
+          name="user_id"
+          rules={[{ required: true, message: "Please input your Username!" }]}
+        >
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="User ID"
+          />
+        </Form.Item>
+        <Form.Item
+          name="user_password"
+          rules={[{ required: true, message: "Please input your Password!" }]}
+        >
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
+        </Form.Item>
+        <Form.Item style={{ textAlign: "center", justifyContent: "center" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+            style={{ height: "40px" }}
+          >
+            Log in
+            <i className="fas fa-sign-in-alt"></i>
+          </Button>
+          <span
+            className="go-to-join"
+            onClick={() => {
+              openJoinModal();
+              closeLoginModal();
+            }}
+          >
+            아직 회원이 아니신가요?
+          </span>
+        </Form.Item>
+        <Button
+          className="social-btn"
+          id="kakao"
+          onClick={kakakoLogins}
+          style={{ height: "40px" }}
+        >
+          <img src={kakaoTalk} alt="카카오톡 이미지" className="social-img" />
+          Kakao LogIn
+        </Button>
+        <Button
+          className="social-btn"
+          id="google"
+          onClick={googleLogins}
+          style={{ height: "40px" }}
+        >
+          <img src={google} alt="구글 이미지" className="social-img" />
+          Google LogIn
+        </Button>
+      </Form>
+    );
+  };
+
   return (
     <>
       <div>
@@ -131,57 +212,7 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
           <CloseButton className="close-btn" onClick={() => closeLoginModal()}>
             <i className="far fa-times-circle"></i>
           </CloseButton>
-          <div id="login-title">LOG IN</div>
-          <div id="login-input-container">
-            <input
-              className="login-input-id"
-              name="user_id"
-              value={user_id}
-              placeholder="ID"
-              onChange={onChange}
-            />
-            <input
-              className="login-input-pw"
-              name="user_password"
-              value={user_password}
-              placeholder="비밀번호"
-              type="password"
-              onChange={onChange}
-            />
-            <button
-              id="login-to-join"
-              onClick={() => {
-                openJoinModal();
-                closeLoginModal();
-              }}
-            >
-              아직 계정이 없으신가요?
-            </button>
-            <button
-              id="login-btn"
-              onClick={() => {
-                Local_loginRequestHandler();
-              }}
-            >
-              LOG IN
-            </button>
-          </div>
-          <div id="login-btn-container">
-            <button
-              onClick={() => {
-                googleLogins();
-              }}
-            >
-              구글 로그인
-            </button>
-            <button
-              onClick={() => {
-                kakakoLogins();
-              }}
-            >
-              카카오톡 로그인
-            </button>
-          </div>
+          <LoginForm />
         </LoginContainer>
       </div>
     </>

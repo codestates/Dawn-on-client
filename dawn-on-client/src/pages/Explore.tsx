@@ -31,11 +31,20 @@ function Explore() {
     return status.getClickExploreViewReducer.click_exploreview;
   });
 
+  // 현재 클릭한 게시물이 없다면(로그인하고 첫 main에 들어간 상태라면)
+  // 첫번째 게시물을 보여준다
+  const isChecked = function (firstPost: object) {
+    if (Object.keys(click_exploreview).length === 0) {
+      dispatch(getClickExploreView(firstPost));
+      console.log("현재보여지는 데이터", click_exploreview);
+    }
+  };
+
   // 소셜 로그인 성공 후, explore 페이지로 리디랙션 된다.
   // 이후, 서버로부터 토큰을 받아온다
   const Social_Login_getToken = async function () {
     await axios
-      .get("http://localhost:4000/auth/signin/check", {
+      .get(`${process.env.REACT_APP_URI}/auth/signin/check`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -60,7 +69,7 @@ function Explore() {
   // main feed 데이터 받아오는 함수
   const get_MainFeed_Data = async function () {
     await axios
-      .get("http://localhost:4000/posts/mainfeed", {
+      .get(`${process.env.REACT_APP_URI}/posts/mainfeed`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -75,9 +84,12 @@ function Explore() {
         // 모아보기 게시물 데이터 저장 (배열)
         dispatch(getExploreList(res.data.postDatas || []));
 
-        console.log("모아보기 게시물 목록 데이터", res.data.postDatas);
+        console.log("모아보기 게시물 목록", res.data.postDatas);
         console.log("Ranking 데이터", res.data.ranking);
-        console.log("현재보여지는 데이터", click_exploreview);
+        return res;
+      })
+      .then((res) => {
+        isChecked(res.data.postDatas[0]);
       })
       .catch((err) => {
         console.log(err);
@@ -86,11 +98,11 @@ function Explore() {
   };
 
   let click_PK: number;
-  click_exploreview ? click_PK = click_exploreview.id : click_PK = 0;
+  click_exploreview ? (click_PK = click_exploreview.id) : (click_PK = 0);
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: click_PK },
         {
           headers: {
@@ -102,8 +114,8 @@ function Explore() {
       .then((res) => {
         //해당 게시물 좋아요 유무 넘겨줌
         dispatch(ExploreThumbsUp(res.data));
-        console.log("explore 가리키는 페이지", click_exploreview);
         dispatch(getClickExploreView(click_exploreview));
+        console.log("현재 보이는 게시물에 대한 좋아요 클릭 여부", res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -114,7 +126,7 @@ function Explore() {
   const search_User_Handler = async function (nick_name: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-user",
+        `${process.env.REACT_APP_URI}/posts/search-user`,
         { user_nickname: nick_name },
         {
           headers: {
@@ -125,13 +137,17 @@ function Explore() {
       )
       .then((res: any) => {
         console.log("아이디 검색 데이터", res);
-        console.log("검색한 아이디값", res.data.postings);
-        dispatch(getExploreList(res.data.postings));
-        dispatch(getClickExploreView(res.data.postings[0]));
+        console.log("검색한 아이디값", res.data.postDatas);
+        dispatch(getExploreList(res.data.postDatas));
+        dispatch(getClickExploreView(res.data.postDatas[0]));
+      })
+      .then(() => {
+        dispatch(getSearchValue(""));
       })
       .catch((err) => {
         console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
+        dispatch(getSearchValue(""));
       });
   };
 
@@ -139,7 +155,7 @@ function Explore() {
   const search_Tag_Handler = async function (tag: string) {
     await axios
       .post(
-        "http://localhost:4000/posts/search-tag",
+        `${process.env.REACT_APP_URI}/posts/search-tag`,
         { tag: tag },
         {
           headers: {
@@ -154,10 +170,13 @@ function Explore() {
         dispatch(getExploreList(res.data.postDatas));
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
-
+      .then(() => {
+        dispatch(getSearchValue(""));
+      })
       .catch((err) => {
         console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
+        dispatch(getSearchValue(""));
       });
   };
 
@@ -176,10 +195,9 @@ function Explore() {
     searchThumbsUpHandler();
   }, []);
   useEffect(() => {
-    console.log('SearchValue: ' ,SearchValue);
-    if (SearchValue) {
+    if (SearchValue && SearchValue.length > 0) {
+      console.log("SearchValue: ", SearchValue);
       ExploreList_Handler();
-      dispatch(getSearchValue(""));
     } else {
       get_MainFeed_Data();
     }

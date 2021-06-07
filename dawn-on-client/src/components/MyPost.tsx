@@ -5,6 +5,7 @@ import { getClickPostView } from "../module/ClickPostViewModule";
 import { MyPostThumbsUp } from "../module/ClickPostViewModule";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useEventCallback } from "@material-ui/core";
 import { useEffect } from "react";
 
 // 클릭 이벤트로, 박스 하나 클릭하면 해당 박스의 데이터를 Redux로 저장하여 useSelector로 불러온 후 View에 랜더링 한다
@@ -19,9 +20,10 @@ type MyPostProps = {
     tags: Array<any>;
     todos: Array<any>;
   };
+  percentage: number;
 };
 
-function MyPost({ postData }: MyPostProps) {
+function MyPost({ postData, percentage }: MyPostProps) {
   const dispatch = useDispatch();
 
   const post_PK = postData.id; // 수정할때도 필요하다
@@ -29,24 +31,14 @@ function MyPost({ postData }: MyPostProps) {
   const today_learning_time = postData.today_learning_time;
   const thumbs_up = postData.thumbs_up;
   const tags = postData.tags;
-  const todos = postData.todos;
   const post = postData; // post 전체 데이터
 
-  let count_checked = 0;
-
-  const count_checked_handler = () => {
-    for (let todo_card of todos) {
-      if (todo_card.checked !== false) {
-        console.log("체크값에 true가 있는 카드", todo_card);
-        count_checked = count_checked + 1;
-      }
-    }
-  };
+  console.log(percentage);
 
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: post_PK },
         {
           headers: {
@@ -66,16 +58,9 @@ function MyPost({ postData }: MyPostProps) {
       });
   };
 
-  useEffect(() => {
-    count_checked_handler();
-  }, [todos]);
-
-  let percentage = (count_checked / todos.length) * 100;
-  percentage = Math.floor(percentage);
-
   const deletePost = async function () {
     await axios
-      .delete("http://localhost:4000/posts/myfeed", {
+      .delete(`${process.env.REACT_APP_URI}/posts/myfeed`, {
         data: { post_PK: post_PK }, //post_PK를 넣어서 보내준다
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +127,10 @@ function MyPost({ postData }: MyPostProps) {
             <CircularProgressbar
               value={percentage}
               text={`${percentage}%`}
-              styles={buildStyles({})}
+              styles={buildStyles({
+                textColor: `#2e4c8c`,
+                pathColor: `#2e4c8c`,
+              })}
             />
           </div>
         </div>

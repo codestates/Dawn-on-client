@@ -4,9 +4,9 @@
   grid-row: 2 / 8;
   display: grid;
   width: 100%;
-  grid-template-columns: 80px 1fr 1fr 1fr 1fr 80px;
+  grid-template-columns: 80px 0.8fr 1.2fr 1fr 1fr 80px;
   grid-template-rows: repeat(5, 1fr) 60px;
-  column-gap: 20px;
+  /* column-gap: 20px; */
 }
 
 /* 완쪽: 모아보기 사이드 바 */
@@ -15,9 +15,11 @@
   grid-row: 1 / 6;
   display: grid;
   grid-template-rows: repeat(5, 1fr);
-  border: 1px solid black;
-  border-radius: 10px;
-  background-color: white;
+  border-radius: 10px 0px 0px 10px;
+  background-color: #2e4c8c;
+  color: white;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #ExploreSide-main-title {
@@ -26,21 +28,25 @@
   padding: 10px;
   align-self: center;
   justify-self: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: bold;
 }
 
 #ExploreSide-like-ranking {
   grid-row: 2 / 4;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
   padding: 10px;
   display: grid;
   grid-template-rows: repeat(6, 1fr);
 }
 
 #like-explore-title {
-  font-size: 25px;
-  text-align: center;
+  margin-top: 20px;
+  margin-left: 7px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
   grid-row: 1;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 #like-rank-container {
@@ -72,6 +78,7 @@
   grid-column: 3;
   font-size: 15px;
   justify-self: center;
+  align-self: center;
 }
 
 .rank-likes {
@@ -93,6 +100,7 @@
 
 .rank-name > .fa-user-circle {
   font-size: 40px;
+  color: white;
 }
 
 .rank-name > .profile-img {
@@ -109,31 +117,45 @@
   margin-left: 10px;
   align-self: center;
   cursor: pointer;
+  font-weight: 350;
 }
 
 .rank-number {
   font-size: 20px;
   margin-right: 15px;
-  color: skyblue;
+  color: white;
   font-weight: bold;
   grid-column: 1;
   align-self: center;
   justify-self: center;
 }
-.rank-title {
+
+#rank-title {
   grid-row: 1;
+  font-family: "Nunito Sans", sans-serif;
+  padding: 6px;
+  font-weight: bold;
+  border-bottom: 1px solid white;
 }
 
 #rank-1st {
   grid-row: 2;
+  border-radius: 10px;
+  padding: 6px;
 }
 
 #rank-2nd {
   grid-row: 3;
+
+  border-radius: 10px;
+  padding: 6px;
 }
 
 #rank-3rd {
   grid-row: 4;
+
+  border-radius: 10px;
+  padding: 6px;
 }
 
 /* 별 랭킹 */
@@ -146,6 +168,11 @@
 
 #star-title {
   grid-row: 1;
+  margin-top: 20px;
+  margin-left: 7px;
+  font-size: 20px;
+  text-align: left;
+  font-family: "Nunito Sans", sans-serif;
 }
 
 #star-ranking-container {
@@ -158,9 +185,13 @@
   grid-column: 3;
   grid-row: 1 / 6;
   display: grid;
-  border: 1px solid black;
+  /* background-color: #f6f7f2; */
   grid-template-rows: 60px repeat(5, 1fr);
-  border-radius: 10px;
+  /* border-radius: 10px; */
+  /* z-index: 1;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
+  border-top: 2px solid #e9e9e9;
+  border-bottom: 2px solid #e9e9e9;
 }
 
 #ExploreList-filter {
@@ -168,6 +199,29 @@
   /* border-bottom: 1px solid black; */
   text-align: center;
   align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+#sort-btn {
+  align-self: center;
+  padding: 2px;
+  cursor: pointer;
+  border: 1.5px solid #2e4c8c;
+  border-radius: 40px;
+  background: none;
+  font-weight: bold;
+  width: 80px;
+  font-size: 15px;
+  margin-left: 15px;
+  transition: all 0.5s;
+  color: #2e4c8c;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+#sort-btn:hover {
+  color: white;
+  background-color: #2e4c8c;
 }
 
 #ExploreList-posts {
@@ -176,22 +230,38 @@
 }
 
 .ExplorePost-container {
-  margin: 10px 10px 10px 10px;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-bottom: 25px;
   border-radius: 10px;
-  height: 150px;
   padding: 10px;
   cursor: pointer;
-  box-shadow: 3px 3px 3px 3px gray;
+  background-color: white;
+  transition: all 0.5s;
+  box-shadow: 7px 7px 20px 0px #0002, 4px 4px 5px 0px #0001;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+  animation-name: fadeIn;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .ExplorePost-container:hover {
-  background-color: #f5f5f5;
+  background-color: #f0f0f0;
 }
 
 .user_nickname {
-  margin-bottom: 10px;
+  margin-top: 10px;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
   float: left;
   margin-left: 10px;
@@ -208,20 +278,22 @@
   text-align: center;
   display: grid;
   grid-template-rows: 0.5fr repeat(3, 1fr);
+  justify-self: center;
 }
 
 .Thumbnail-info-1 > .fa-user-circle {
-  font-size: 60px;
+  font-size: 70px;
   grid-row: 2 / 4;
+  color: #2e4c8c;
 }
 
 .Thumbnail-info-1 > .profile-img {
-  width: 59.33px;
-  height: 61px;
+  width: 70px;
   grid-row: 2 / 4;
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
+  justify-self: center;
 }
 
 .Explore-Thumbnail-info > .Thumbnail-info-2 {
@@ -232,7 +304,6 @@
 .Explore-Thumbnail-info > .Thumbnail-info-3 {
   flex-basis: 40%;
   text-align: center;
-  align-self: center;
 }
 
 #ExploreList-container > #postDatas-empty {
@@ -254,11 +325,11 @@
 #ExplorePostView-container {
   grid-column: 4 / 6;
   grid-row: 1 / 6;
-  border: 1px solid black;
-  border-radius: 10px;
+  border-radius: 0px 10px 10px 0px;
   padding: 10px;
   display: grid;
   grid-template-rows: 0.8fr 0.2fr;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 #Explore-full-heart {
@@ -279,5 +350,6 @@
 #ExploreView-Footer {
   grid-row: 2;
   display: grid;
+  margin: 1.8rem;
   grid-template-rows: 0.3fr 0.7fr;
 }

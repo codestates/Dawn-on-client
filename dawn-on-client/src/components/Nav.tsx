@@ -56,7 +56,7 @@ const Nav = () => {
 
     await axios
       .post(
-        `http://localhost:4000/auth/signout`,
+        `${process.env.REACT_APP_URI}/auth/signout`,
         {},
         {
           headers: {
@@ -95,39 +95,42 @@ const Nav = () => {
           dispatch(getEditProfileState(false));
         }}
       >
-        Dawn-on
+        Dawn : on
       </h1>
       {isLogin ? (
         <div id="nav-main-btn-container">
-          <div>
-            <input
-              id="main-nav-search"
-              placeholder="닉네임 혹은 (#)태그를 검색하세요"
-              onChange={(e) => setsearch(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                dispatch(getEditProfileState(false));
-                if (search === "") {
-                  return swal("검색어를 입력해주세요", "", "warning");
-                } else {
-                  dispatch(getSearchValue(search));
-                  // history.push("/explore");
-                  window.location.replace("/explore");
-                }
-              }}
-            >
-              Search
-            </button>
+          <div id="search-bar" className="main-nav">
+            <div className="searchBox">
+              <input
+                className="searchInput"
+                placeholder="닉네임 혹은 (#)태그를 검색하세요"
+                onChange={(e) => setsearch(e.target.value)}
+              />
+              <div
+                className="searchButton"
+                onClick={() => {
+                  dispatch(getEditProfileState(false));
+                  if (search === "") {
+                    return swal("검색어를 입력해주세요", "", "warning");
+                  } else {
+                    dispatch(getSearchValue(search));
+                    // history.push("/explore");
+                    window.location.replace("/explore");
+                  }
+                }}
+              >
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </div>
+            </div>
           </div>
           <button
-            className="main-nav"
+            className="main-nav btn-action"
             onClick={() => history.push("/custom-planner")}
           >
             Make a Planner
           </button>
           <button
-            className="main-nav"
+            className="main-nav btn-action"
             onClick={() => {
               // history.push("/explore");
               window.location.replace("/explore");
@@ -137,7 +140,7 @@ const Nav = () => {
             Explore
           </button>
           <button
-            className="main-nav"
+            className="main-nav btn-action"
             onClick={() => {
               // history.push("/myfeed");
               window.location.replace("/myfeed");
@@ -146,7 +149,7 @@ const Nav = () => {
             My Feed
           </button>
           <button
-            className="main-nav"
+            className="main-nav btn-action"
             onClick={() => {
               dispatch(getEditProfileState(false));
               swal({
@@ -164,13 +167,13 @@ const Nav = () => {
               });
             }}
           >
-            Log OUT
+            Log Out
           </button>
         </div>
       ) : (
         <div id="nav-landing-btn-container">
           <button
-            className="landing-btn"
+            className="landing-btn btn-action"
             onClick={() => {
               openJoinModal();
               closeLoginModal();
@@ -185,7 +188,7 @@ const Nav = () => {
             />
           )}
           <button
-            className="landing-btn"
+            className="landing-btn btn-action"
             onClick={() => {
               openLoginModal();
               closeJoinModal();

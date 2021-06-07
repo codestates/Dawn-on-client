@@ -8,25 +8,21 @@ import {
   addNewSubject,
   deleteSubject,
 } from "../module/addTaskModule";
-import { ColorPicker } from "material-ui-color";
+import { HexColorPicker } from "react-colorful";
 import { RootState } from "../store/store";
 import { v4 as uuidv4 } from "uuid";
 
 const AddTodoBar = styled.div`
   font-family: 'KoHo', sans-serif;
-  display: flex;
-  position: fixed;
-  top: calc(50% - 30vh);
-  left: calc(50% - 15vw);
+  display: grid;
   background-color: #fff;
   z-index: 1;
-  width: 24vw;
-  height: 60vh;
-  border: 1px solid #000;
+  width: 100%;
+  height: 100%;
   border-radius: 5px;
   flex-direction: column;s
   overflow-y: scroll;
-  padding: 10px 15px;
+  // padding: 10px 15px;
 `;
 
 const LabelContainer = styled.div`
@@ -149,8 +145,20 @@ function AddModal({ clickHandler }: Props) {
   };
 
   // 라벨 컬러 설정 함수.
-  const handleChange = (newValue: any) => {
-    setColor(`#${newValue.hex}`);
+  const handleChange = (color: string) => {
+    setColor(color);
+    const modalThumbnail = document.getElementById("color-thumbnail-modal") as HTMLElement;
+    modalThumbnail.style.background = color;
+  };
+
+  const [colorClick, setColorClick] = useState(false);
+
+  const colorPickHandler = function () {
+    if (colorClick) {
+      setColorClick(false);
+    } else {
+      setColorClick(true);
+    }
   };
 
   const deleteLabel = function (e:any) {
@@ -198,10 +206,7 @@ function AddModal({ clickHandler }: Props) {
   return (
     <AddTodoBar>
       <div id="todo-modal-upper">
-        <h3 className="todobar-title">Add your todos</h3>
-        <button className="close-add-btn" onClick={() => clickHandler()}>
-          <i className="fas fa-times"></i>
-        </button>
+        <h3 className="todobar-title-modal">Add your todos</h3>
       </div>
       <form noValidate>
         <TextField
@@ -230,13 +235,19 @@ function AddModal({ clickHandler }: Props) {
         />
       </form>
       <div className="select-subject">
-        <span>Pick label color: </span>
-        <ColorPicker
-          value={color}
-          onChange={(newValue: any) => {
-            handleChange(newValue);
-          }}
-        />
+        <div id="color-pick-container">
+          <span>Pick label color</span>
+          <div id="color-thumbnail-modal" onClick={() => colorPickHandler()}></div>
+          {colorClick && 
+              <HexColorPicker
+                color={color}
+                onChange={(newValue: any) => {
+                  handleChange(newValue);
+                }}
+              />
+          }
+        </div>
+        <span>Pick Subject Label: </span>
         <div className="make-new-label">
           <input
             onChange={(e: any) => setNewSubject(e.target.value)}
@@ -272,12 +283,16 @@ function AddModal({ clickHandler }: Props) {
             ))}
         </LabelContainer>
       </div>
-      <textarea
-        onChange={(e: any) => setTodo(e.target.value)}
-        value={todos}
-        className="todobar-todo"
-        placeholder="할 일을 입력해주세요."
-      ></textarea>
+      <TextField
+          id="outlined-multiline-static"
+          className="writing-comment"
+          onChange={(e: any) => setTodo(e.target.value)}
+          multiline
+          rows={5}
+          value={todos}
+          placeholder="할 일을 입력해주세요."
+          variant="outlined"
+      />
       <div className="modal-btn-container">
         <button onClick={() => saveTodo()} className="todobar-save-btn">
           SAVE

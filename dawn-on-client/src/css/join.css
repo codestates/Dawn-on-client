@@ -1,24 +1,44 @@
-#join-title {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 1.5rem;
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+.join-form {
+  margin-top: 40px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.join-input-container {
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  grid-column: 2 / 3;
-  grid-row: 3/ 7;
+.join-title {
+  font-size: 22px;
+  font-family: "Nunito Sans", sans-serif;
+  margin-right: 60px;
 }
 
-.join-signup-btn {
-  grid-column: 2 / 3;
-  grid-row: 6/ 7;
+.signup-form-button {
+  width: 100%;
+  margin-bottom: 20px;
 }
 
-.join-input {
-  margin-bottom: 10px;
+.go-to-login {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.go-to-login:hover {
+  color: #2090ff;
+}
+
+.ant-form-item-explain.ant-form-item-explain-error {
+  font-size: 12px;
+}
+
+.ant-form-item-explain.ant-form-item-explain-success {
+  font-size: 12px;
+}
+
+.fa-sign-in-alt {
+  margin-left: 5px;
+}
+
+.fa-user-plus {
+  margin-left: 5px;
 }

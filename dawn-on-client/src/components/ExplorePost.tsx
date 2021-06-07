@@ -17,10 +17,11 @@ type ExplorePostProps = {
     tags: Array<any>;
     todos: Array<any>;
   };
+  percentage: number;
 };
 
 // 클릭 이벤트로, 박스 하나 클릭하면 해당 박스의 데이터를 Redux로 저장하여 useSelector로 불러온 후 View에 랜더링 한다
-function ExplorePost({ postData }: ExplorePostProps) {
+function ExplorePost({ postData, percentage }: ExplorePostProps) {
   const dispatch = useDispatch();
 
   const post_PK = postData.id; // 수정할때도 필요하다
@@ -45,7 +46,7 @@ function ExplorePost({ postData }: ExplorePostProps) {
   const searchThumbsUpHandler = async function () {
     await axios
       .post(
-        "http://localhost:4000/posts/search-thumbsup",
+        `${process.env.REACT_APP_URI}/posts/search-thumbsup`,
         { post_PK: post_PK },
         {
           headers: {
@@ -69,9 +70,6 @@ function ExplorePost({ postData }: ExplorePostProps) {
     count_checked_handler();
   }, [todos]);
 
-  let percentage = (count_checked / todos.length) * 100;
-  percentage = Math.floor(percentage);
-
   return (
     <div
       className="ExplorePost-container"
@@ -90,7 +88,7 @@ function ExplorePost({ postData }: ExplorePostProps) {
           <i className="far fa-thumbs-up">{thumbs_up}</i>
         </div>
         <div className="Thumbnail-info-2">
-          <div className="Tags-title">Tags</div>
+          <div className="Tags-title"> Tags </div>
           <div className="tags">
             <div className="tag">
               #{tags[0] === undefined ? "" : tags[0].tag}
@@ -108,7 +106,10 @@ function ExplorePost({ postData }: ExplorePostProps) {
             <CircularProgressbar
               value={percentage}
               text={`${percentage}%`}
-              styles={buildStyles({})}
+              styles={buildStyles({
+                textColor: `#2e4c8c`,
+                pathColor: `#2e4c8c`,
+              })}
             />
           </div>
         </div>

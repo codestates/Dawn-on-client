@@ -1,10 +1,21 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
 import swal from "sweetalert";
 import "../App.css";
 import "../css/join.css";
 import axios from "axios";
 import $ from "jquery";
+import styled, { keyframes } from "styled-components";
+import "antd/dist/antd.css";
+import { Form, Input, Button, Select } from "antd";
+const { Option } = Select;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0
+  }
+  to {
+    opacity: 1
+  }
+`;
 
 type JoinProps = {
   closeJoinModal: Function;
@@ -12,104 +23,48 @@ type JoinProps = {
 };
 
 const JoinContainer = styled.div`
-  display: grid;
-  grid-template-columns: 0.3fr 1fr 0.3fr;
-  grid-template-rows: 0.2fr 1fr 1fr 1fr 1fr 0.2fr;
-  background-color: #faee9d;
-  border-radius: 5px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  opacity: 0.96;
+  border-radius: 20px;
   width: 500px;
-  height: 350px;
-  margin: -175px 0 0 -250px;
+  height: 500px;
+  margin: -225px 0 0 -225px;
   position: fixed;
   top: 50%;
   left: 50%;
   z-index: 100;
+  animation-duration: 0.47s;
+  animation-timing-function: ease-out;
+  animation-name: ${fadeIn};
+  animation-fill-mode: forwards;
 `;
 
 const CloseButton = styled.button`
   outline: none;
   border: none;
-  background-color: #faee9d;
   justify-self: right;
   font-size: 1.5rem;
   margin-top: 10px;
-  color: #2b3390;
-  grid-column: 6 / 7;
-  grid-row: 1 / 2;
+  color: #2e4c8c;
 `;
 
 function Join({ closeJoinModal, openLoginModal }: JoinProps) {
-  const [form, setForm] = useState({
-    user_id: "",
-    user_nickname: "",
-    user_job: "",
-    user_password: "",
-    user_passwordcheck: "",
-  });
-
-  const {
-    user_id,
-    user_nickname,
-    user_job,
-    user_password,
-    user_passwordcheck,
-  } = form;
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
-  };
-
-  // 셀렉트 박스 value값 가져오기
-  const getSelectValue = () => {
-    const value = $("#join-selectbox option:selected").text();
-    setForm({
-      ...form,
-      user_job: value,
-    });
-  };
-
-  //입력하다 말고 닫기 버튼 누르면 그동안 Hooks에 임시저장된 데이터 다시 초기화
-  const clearformData = () => {
-    setForm({
-      user_id: "",
-      user_nickname: "",
-      user_job: "",
-      user_password: "",
-      user_passwordcheck: "",
-    });
-  };
-
-  // 입력한 정보 확인 및 비밀번호 확인검사
-  const checkInputDataHandler = function () {
-    console.log("회원가입 정보: ", form);
-    const formdata = Object.values(form);
-    for (let data of formdata) {
-      if (data === "") {
-        return swal("회원가입 목록을 다시 작성해주세요", "", "warning");
-      }
-    }
-    if (user_password !== user_passwordcheck) {
-      return swal("비밀번호가 일치하지 않습니다", "", "warning");
-    }
-    Local_joinRequestHandler();
-  };
-
-  const Local_joinRequestHandler = async function () {
-    console.log("회원가입 데이터", form);
+  const Local_joinRequestHandler = async function (
+    user_id: string,
+    user_password: string,
+    user_nickname: string,
+    user_job: string
+  ) {
     await axios
       .post(
-        `http://localhost:4000/auth/signup`,
+        `${process.env.REACT_APP_URI}/auth/signup`,
         {
           userdto: {
             user_id: user_id,
             user_password: user_password,
             user_nickname: user_nickname,
             user_job: user_job,
-            // provider: "local",
           },
         },
         {
@@ -119,7 +74,6 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
       )
       .then(() => {
         swal("회원가입 되었습니다", "", "success");
-        clearformData();
         closeJoinModal();
         openLoginModal();
       })
@@ -130,6 +84,152 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
       });
   };
 
+  // 화원가입 모달창 form
+  const RegistrationForm = () => {
+    const [form] = Form.useForm();
+
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 9 },
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 12 },
+      },
+    };
+
+    const onFinish = (values: any) => {
+      console.log("회원가입한 정보 ", values);
+      const { user_id, user_password, user_nickname, user_job } = values;
+      Local_joinRequestHandler(user_id, user_password, user_nickname, user_job);
+    };
+
+    return (
+      <Form
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        scrollToFirstError
+        className="join-form"
+      >
+        <span className="join-title">Sign Up</span>
+        <Form.Item
+          name="user_id"
+          label="ID"
+          rules={[
+            {
+              required: true,
+              message: "Please input your ID!",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="user_password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password!",
+            },
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="check"
+          label="Password Check"
+          dependencies={["user_password"]}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Please check your password!",
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue("user_password") === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(
+                  new Error("The two passwords do not match!")
+                );
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="user_nickname"
+          label="Nickname"
+          rules={[
+            {
+              required: true,
+              message: "Please input your nickname!",
+              whitespace: true,
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="user_job"
+          label="Job"
+          rules={[{ required: true, message: "Please select job!" }]}
+          style={{ textAlign: "center" }}
+        >
+          <Select placeholder="Select your job">
+            <Option value="수험생" style={{ textAlign: "center" }}>
+              수험생
+            </Option>
+            <Option value="공시생" style={{ textAlign: "center" }}>
+              공시생
+            </Option>
+            <Option value="고시생" style={{ textAlign: "center" }}>
+              고시생
+            </Option>
+            <Option value="대학생" style={{ textAlign: "center" }}>
+              대학생
+            </Option>
+            <Option value="기타" style={{ textAlign: "center" }}>
+              기타
+            </Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item style={{ textAlign: "center", justifyContent: "center" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="signup-form-button"
+            style={{ justifySelf: "center", height: "40px" }}
+          >
+            Sign Up
+            <i className="fas fa-user-plus"></i>
+          </Button>
+          <span
+            className="go-to-login"
+            onClick={() => {
+              openLoginModal();
+              closeJoinModal();
+            }}
+          >
+            혹시 계정이 있으신가요?
+          </span>
+        </Form.Item>
+      </Form>
+    );
+  };
+
   return (
     <>
       <JoinContainer>
@@ -137,68 +237,11 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
           className="close-btn"
           onClick={() => {
             closeJoinModal();
-            clearformData();
           }}
         >
           <i className="far fa-times-circle"></i>
         </CloseButton>
-        <div id="join-title">Join</div>
-        <div className="join-input-container">
-          <input
-            className="join-input"
-            id="login-input-nickname"
-            name="user_nickname"
-            value={user_nickname}
-            placeholder="닉네임"
-            onChange={onChange}
-          />
-          <input
-            className="join-input"
-            id="login-input-id"
-            name="user_id"
-            value={user_id}
-            placeholder="아이디"
-            onChange={onChange}
-          />
-          <select
-            className="join-input"
-            id="join-selectbox"
-            onChange={getSelectValue}
-          >
-            <option value="default">- 직업을 선택해주세요 -</option>
-            <option value="수험생">수험생</option>
-            <option value="공시생">공시생</option>
-            <option value="고시생">고시생</option>
-            <option value="대학생">대학생</option>
-            <option value="기타">기타</option>
-          </select>
-          <input
-            className="join-input"
-            id="login-input-password"
-            name="user_password"
-            value={user_password}
-            type="password"
-            placeholder="비밀번호"
-            onChange={onChange}
-          />
-          <input
-            className="join-input-passwordcheck"
-            id="login-input-id"
-            name="user_passwordcheck"
-            value={user_passwordcheck}
-            type="password"
-            placeholder="비밀번호 확인"
-            onChange={onChange}
-          />
-        </div>
-        <button
-          className="join-signup-btn"
-          onClick={() => {
-            checkInputDataHandler();
-          }}
-        >
-          SIGN UP
-        </button>
+        <RegistrationForm />
       </JoinContainer>
     </>
   );

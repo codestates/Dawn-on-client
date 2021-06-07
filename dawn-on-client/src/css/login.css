@@ -1,33 +1,91 @@
-#login-title {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 1.5rem;
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
-}
-#login-input-container {
-  justify-self: center;
-  align-self: center;
-  grid-column: 2 / 3;
-  grid-row: 3 / 5;
-}
-.login-input-id {
-  width: 90%;
-  height: 25px;
-}
-.login-input-pw {
-  width: 90%;
-  height: 25px;
-  margin-top: 15px;
-}
-#login-to-join {
-  background-color: #fff;
-  border: none;
-  text-align: left;
-  height: 30px;
+.close-btn {
+  background-color: white;
+  margin-right: 10px;
 }
 
-#login-btn-container {
-  grid-column: 2 / 3;
-  grid-row: 5 / 6;
+.fa-times-circle {
+  font-size: 25px;
+  transition: all 0.5s;
+}
+
+.fa-times-circle:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  transform: translateY(-0.1em);
+}
+
+.login-title {
+  font-size: 22px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.login-form {
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form-button {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.go-to-join {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.ant-btn {
+  border-radius: 5px;
+}
+
+.ant-btn-primary {
+  transition: all 0.5s;
+  font-weight: bold;
+}
+
+.ant-btn-primary:hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  transform: translateY(-0.3em);
+}
+
+.go-to-join:hover {
+  color: #2090ff;
+}
+
+.social-btn {
+  width: 100%;
+  font-weight: bold;
+  transition: all 0.5s;
+}
+
+#kakao {
+  margin-bottom: 10px;
+  background-color: #fee500;
+  color: #3e2723;
+}
+
+#kakao:hover {
+  border: 1.5px solid #fee500;
+  font-weight: bold;
+  background-color: #3e2723;
+  color: #fee500;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  transform: translateY(-0.3em);
+}
+
+.social-img {
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  margin-right: 8px;
+}
+
+#google:hover {
+  border: 1.5px solid #34a854;
+  font-weight: bold;
+  color: #34a854;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px;
+  transform: translateY(-0.3em);
 }

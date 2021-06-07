@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { getEditProfileState } from "../module/EditProfileModule";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import axios from "axios";
 import swal from "sweetalert";
 import $ from "jquery";
@@ -52,8 +50,6 @@ function EditProfile() {
     });
   };
 
-  $(".userinfo-selectbox").val(user_job).prop("selected", true);
-
   // 수정 취소 버튼 클릭 시, 작동하는 함수
   const checkCancelAlert = function () {
     swal({
@@ -91,10 +87,10 @@ function EditProfile() {
   };
 
   // 해당 유저의 정보를 서버로부터 받아온다
-  const getEditPageInfo = function () {
+  const getEditPageInfo = async function () {
     const accessToken = window.localStorage.getItem("accessToken");
-    axios
-      .get(`http://localhost:4000/auth/mypage`, {
+    await axios
+      .get(`${process.env.REACT_APP_URI}/auth/mypage`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -106,15 +102,19 @@ function EditProfile() {
         // setMyfeedInfo를 이용하여 값을 저장한다
         setMyInfo({
           ...MyInfo,
-          user_nickname: res.data.user.user_nickname || "",
-          user_img: res.data.user.user_img || "",
-          // user_password: res.data.user_password,
-          user_job: res.data.user.user_job || "",
-          profile_comment: res.data.user.profile_comment || "",
-          provider: res.data.user.provider || "",
+          user_nickname: res.data.user.user_nickname,
+          user_img: res.data.user.user_img,
+          user_job: res.data.user.user_job,
+          profile_comment: res.data.user.profile_comment,
+          provider: res.data.user.provider,
         });
+        $(".userinfo-selectbox")
+          .val(res.data.user.user_job)
+          .prop("selected", true);
+        return res;
       })
-      .then(() => {
+      .then((res) => {
+        console.log(res.data);
         console.log("mypage 데이터:  edit 페이지에 성공적으로 랜더링");
       })
       .catch((err) => {
@@ -123,11 +123,11 @@ function EditProfile() {
   };
 
   // 수정완료된 유저의 정보에 대해서 수정요청을 보낸다
-  const patchEditPageInfo = function () {
+  const patchEditPageInfo = async function () {
     // const accessToken = window.localStorage.getItem("accessToken");
-    axios
+    await axios
       .patch(
-        `http://localhost:4000/auth/mypage`,
+        `${process.env.REACT_APP_URI}/auth/mypage`,
         {
           user_nickname: user_nickname,
           user_img: user_img,
@@ -150,7 +150,7 @@ function EditProfile() {
       .then(() => {
         window.setTimeout(() => {
           window.location.replace("/myfeed");
-        }, 1200);
+        }, 1000);
       })
       .catch((err) => {
         // swal("개인정보 수정 불가 오류", "", "error");
@@ -175,7 +175,7 @@ function EditProfile() {
     <div id="EditProfile-container">
       <div id="EditCancel-btn-container">
         <button
-          id="EditCancel-btn"
+          className="EditCancel-btn edit-action"
           onClick={() => {
             checkCancelAlert();
           }}
@@ -183,12 +183,12 @@ function EditProfile() {
           수정 취소
         </button>
       </div>
-      {provider === "local" ? (
+      {provider && provider === "local" ? (
         <div id="localLogin-container">
-          Local Login
+          {/* Local Login */}
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 가능 => 버튼 추가하기 */}
-            {user_img === "" ? (
+            {user_img === "" || user_img === null ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
@@ -209,7 +209,7 @@ function EditProfile() {
             <div className="Editinfo-title">Comment</div>
             <input
               type="text"
-              className="userinfo-input comment"
+              className="userinfo-input-comment"
               name="profile_comment"
               value={profile_comment}
               onChange={onChange}
@@ -249,10 +249,10 @@ function EditProfile() {
         </div>
       ) : (
         <div id="socialLogin-container">
-          Social Login
+          {/* Social Login */}
           <div className="Editinfo-img-container">
             {/* 프로필 사진 수정 [불가능] */}
-            {user_img === "" ? (
+            {user_img === "" || user_img === null ? (
               <i className="fas fa-user-circle"></i>
             ) : (
               <img alt="프로필 사진" className="profile-img" src={user_img} />
@@ -272,7 +272,7 @@ function EditProfile() {
             <div className="Editinfo-title">Comment</div>
             <input
               type="text"
-              className="userinfo-input comment"
+              className="userinfo-input-comment"
               name="profile_comment"
               value={profile_comment}
               onChange={onChange}
@@ -294,7 +294,7 @@ function EditProfile() {
       )}
       <div className="EditSave-btn-container">
         <button
-          className="EditSave-btn"
+          className="EditSave-btn edit-action"
           onClick={() => {
             checkEditinfo();
           }}

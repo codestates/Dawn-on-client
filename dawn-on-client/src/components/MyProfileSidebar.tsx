@@ -22,22 +22,16 @@ function MyProfileSidebar() {
     return status.getMyFeedListReducer.MyFeedinfo;
   });
 
-  let user_nickname = "";
-  user_nickname = MyFeedInfo.user_nickname;
-  let user_img = "";
-  user_img = MyFeedInfo.user_img;
-  let user_job = "";
-  user_job = MyFeedInfo.user_job;
-  let profile_comment = "";
-  profile_comment = MyFeedInfo.profile_comment;
-  let total_learning_time = 0;
-  total_learning_time = MyFeedInfo.total_learning_time;
-  let total_posting = 0;
-  total_posting = MyFeedInfo.total_posting;
+  let user_nickname = MyFeedInfo.user_nickname;
+  let user_img = MyFeedInfo.user_img;
+  let user_job = MyFeedInfo.user_job;
+  let profile_comment = MyFeedInfo.profile_comment;
+  let total_learning_time = MyFeedInfo.total_learning_time;
+  let total_posting = MyFeedInfo.total_posting;
 
   return (
     <div id="MyProfileSidebar-container">
-      <div id="MyProfileSide-main-title">MY feed</div>
+      <div id="MyProfileSide-main-title">MY FEED</div>
       <div id="MyProfileSide-info">
         <div id="info-1">
           {/* 이곳은 프로필사진, 닉네님, 직업군, 코멘트가 보여질 공간입니다 */}
@@ -56,22 +50,22 @@ function MyProfileSidebar() {
               )}
             </div>
             <div id="info-subcontainer-2">
-              <div id="user_nickname">Nickname:{user_nickname}</div>
-              <div id="user_job">Job:{user_job}</div>
+              <div id="user_nickname">Nickname {user_nickname}</div>
+              <div id="user_job">Job {user_job}</div>
             </div>
           </div>
 
           <div id="info-container-2">
-            <div id="user_comment_title">Comment</div>
+            <div id="user_comment_title">Bio</div>
             <div id="user_comment">{profile_comment}</div>
           </div>
         </div>
 
         {/* 경계선 */}
         <div id="info-2">
-          <div id="total_posting">게시물 총 갯수: {total_posting}</div>
+          <div id="total_posting">TOTAL POSTING : {total_posting}</div>
           <div id="total_learning_time">
-            총 공부한 시간: {total_learning_time}
+            TOTAL RUNNING TIME : {total_learning_time}
           </div>
         </div>
       </div>
