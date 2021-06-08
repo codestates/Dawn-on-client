@@ -120,6 +120,8 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
       .then(() => {
         closeLoginModal();
         dispatch(getLoginState(true));
+      })
+      .then(() => {
         history.push("/explore");
       })
       .catch((err) => {

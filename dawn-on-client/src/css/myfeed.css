@@ -27,7 +27,7 @@
   padding: 25px;
   align-self: center;
   justify-self: left;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 #MyProfileSide-info {
@@ -360,9 +360,7 @@
 #MyPostView-Footer {
   grid-column: 1 / 7;
   grid-row: 2 / 4;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
   display: grid;
   background-color: #fff;
   border-radius: 5px;

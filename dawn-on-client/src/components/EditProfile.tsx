@@ -110,8 +110,7 @@ function EditProfile() {
           .prop("selected", true);
         return res;
       })
-      .then((res) => {
-      })
+      .then((res) => {})
       .catch((err) => {
         console.log(err);
       });
@@ -201,7 +200,7 @@ function EditProfile() {
             />
           </div>
           <div className="Editinfo-comment-container">
-            <div className="Editinfo-title">Comment</div>
+            <div className="Editinfo-title">Bio</div>
             <input
               type="text"
               className="userinfo-input-comment"
@@ -264,7 +263,7 @@ function EditProfile() {
             />
           </div>
           <div className="Editinfo-comment-container">
-            <div className="Editinfo-title">Comment</div>
+            <div className="Editinfo-title">Bio</div>
             <input
               type="text"
               className="userinfo-input-comment"
