@@ -94,7 +94,7 @@ type CustomBarProps = {
 function CustomBar({ isLogin }: CustomBarProps) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [tags, setTaglist] = useState(["취준생", "면접", "프론트엔드"]);
+  const [tags, setTaglist] = useState(["Dawn", "On", "Project"]);
   const tagList = useSelector((state: RootState) => state.addTaskReducer.tags);
   const [tag, setTag] = useState("");
   const [comment, setComment] = useState("");
