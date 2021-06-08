@@ -50,8 +50,9 @@ const UploadButton = styled.button`
   background-color: #335296;
   box-shadow: 0 0 20px #eee;
   border-radius: 10px;
-  margin-top: 6rem;
+  // margin-top: 2rem;
   border: none;
+  align-self: center;
   flex-basis: 30%;
   justify-self: right;
   margin-left: 40px;
@@ -93,7 +94,7 @@ type CustomBarProps = {
 function CustomBar({ isLogin }: CustomBarProps) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const [tags, setTaglist] = useState(["취준생", "면접", "프론트엔드"]);
+  const [tags, setTaglist] = useState(["Dawn", "On", "Project"]);
   const tagList = useSelector((state: RootState) => state.addTaskReducer.tags);
   const [tag, setTag] = useState("");
   const [comment, setComment] = useState("");
@@ -276,7 +277,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern01"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern01}
             />
           </span>
@@ -285,7 +286,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern02"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern02}
             />
           </span>
@@ -294,7 +295,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern04"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern04}
             />
           </span>
@@ -303,7 +304,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern05"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern05}
             />
           </span>
@@ -312,7 +313,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern06"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern06}
             />
           </span>
@@ -321,7 +322,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern07"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern07}
             />
           </span>
@@ -330,7 +331,7 @@ function CustomBar({ isLogin }: CustomBarProps) {
               id="pattern08"
               style={{ borderRadius: "10%" }}
               alt="pattern"
-              width="60px"
+              width="50px"
               src={pattern08}
             />
           </span>

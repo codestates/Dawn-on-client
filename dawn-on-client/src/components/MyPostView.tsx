@@ -130,7 +130,7 @@ function MyPostView() {
     const backElement = document.querySelector(
       "#planner-view-container"
     ) as HTMLElement;
-    if (backElement) {
+    if (backElement && MyFeedList.length !== 0) {
       backElement.style.transition = "all 0.6s ease";
 
       if (backColor.indexOf("#") !== -1) {

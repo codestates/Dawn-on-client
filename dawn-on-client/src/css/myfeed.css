@@ -325,7 +325,7 @@
 }
 
 #view-selected-sticker {
-  width: 50%;
+  width: 40%;
 }
 
 .plnnerfrom-viewer-hour {
@@ -346,6 +346,7 @@
 
 .plnnerfrom-viewer-hour > h5 {
   font-size: 2rem;
+  font-weight: 300;
   align-self: flex-end;
 }
 

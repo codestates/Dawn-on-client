@@ -3,8 +3,8 @@ const today = moment().format("YYYY-MM-DD");
 const initialState = {
   isLogin: false,
   isEditProfile: false,
-  subject: ["국어", "수학"],
-  tags: ["취준", "개발", "코딩"],
+  subject: ["Korean", "Frontend"],
+  tags: ["Dawn", "On", "Project"],
   plannerDatas: {
     date: today,
     sticker: "sticker01",
