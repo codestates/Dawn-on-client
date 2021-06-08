@@ -124,17 +124,30 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
 - Position: Team Member, Front-End
 - Stack: `Typescript`, ``, `` ``
 - Contributions
-    - **Basic**
-        - 아이디어 기획
-        - 와이어 프레임 작성
-        - 플로우차트 작성
-        - WIKI
-        - READ.ME
-    - **Front-End**
-        - 와이어프레임 설계
-- 
-- 
-- 
+- **Basic**
+    - 아이디어 기획
+    - 와이어 프레임 작성
+    - 플로우차트 작성
+    - WIKI
+    - READ.ME
+- Landing page
+    - 전체 레이아웃 설계 및 디자인
+    - 스크롤 애니메이션 구현
+- Custom planner
+    - Planner 제작 기능 구현
+        - 전체 레이아웃 및 CSS 적용
+        - 새로운 Todo카드 생성 기능 구현
+        - 스티커 및 배경 컬러, 패턴 선택 기능 구현
+        - 시간 선택에 따라 동적으로 Todo card 크기 변경
+        - 업로드 시 서버 요청 구현
+    - Planner 수정 기능 구현
+    - 반응형 구현
+- Myfeed
+    - ExplorePost Viewer 컴포넌트 디자인
+    - Mypost Viewer
+        - 코멘트 수정 기능 구현
+        - 스티커 및 Todo 카드 수정 기능 구현
+        - 체크박스 서버 요청 구현
 </details>
 
 <br/>
@@ -148,20 +161,35 @@ Dawn:on은 이 두 가지를 모두 제공합니다!💡<br />
 <img src=https://img.shields.io/badge/position-front--end-black?style=for-the-badge />
 
 - Position: Team Member, Front-End
-- Stack: `Typescript`, `React-Redux`, `Axios`, `React` , `React-Hook` 
+- Stack: `Typescript`, ``, `` ``
 - Contributions
-    - **Basic**
-        - 아이디어 기획
-        - 와이어 프레임 작성
-        - 플로우차트 작성
-        - WIKI
-        - READ.ME
-    - **Front-End**
-        - 와이어 프레임 설계
-- 
-- 
-- 
+- **Basic**
+    - 아이디어 기획
+    - 와이어 프레임 작성
+    - 플로우차트 작성
+    - WIKI
+    - READ.ME
+- **Navigation bar**
+    - 로그인 상태에 따른 조건부 랜더링
+    - 로그인, 회원가입 모달창 디자인
+    - 각 버튼에 따른 서버 요청
+        - 회원가입
+        - 로그인, 로그아웃
+- **Landing Page**
+    - 체험하기 기능
+- **Main Feed**
+    - 전체 페이지 레이아웃 및 CSS 적용
+    - 서버로부터 받은 게시물 목록에 대한 데이터 랜더링
+    - 조건에 따른 게시물 검색 및 정렬
+    - 게시물 좋아요 기능
+- **My Feed**
+    - 전체 페이지 레이아웃 및 CSS 적용
+    - 서버로부터 받은 게시물 목록에 대한 데이터 랜더링
+    - 게시물 삭제 기능
+    - 개인정보 수정 아이콘 클릭 시, 개인정보 수정 페이지 랜더링 및 개인정보 수정 기능
+    - Todo card 체크 시, progress bar 실시간 변동
 </details>
+   
    
 
 *************
