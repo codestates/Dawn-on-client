@@ -2,7 +2,6 @@ import swal from "sweetalert";
 import "../App.css";
 import "../css/join.css";
 import axios from "axios";
-import $ from "jquery";
 import styled, { keyframes } from "styled-components";
 import "antd/dist/antd.css";
 import { Form, Input, Button, Select } from "antd";
@@ -39,6 +38,12 @@ const JoinContainer = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    left: 47%;
+  }
+  @media all and (max-width: 767px) {
+    left: 45.5%;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -112,7 +117,6 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
     // };
 
     const onFinish = (values: any) => {
-
       const { user_id, user_password, user_nickname, user_job } = values;
       Local_joinRequestHandler(user_id, user_password, user_nickname, user_job);
     };
