@@ -141,11 +141,11 @@ function Landing() {
 
   return (
     <>
-      <LandingSection id="section1">
-        <div className="left-txt">
-          <h3 className="title">Dawn:on</h3>
-          <p className="upper-description">Plan, Organize, Get Things Done</p>
-          <p className="description">
+      <div className="overview">
+        <div className="introduction">
+          <h3 className="introduction__title">Dawn:on</h3>
+          <p className="introduction__subtitle">Plan, Organize, Get Things Done</p>
+          <p className="introduction__description">
             {/* We fill your day <br></br>preparing for a new start. */}
             <br></br>
             To prepare for a new beginning.
@@ -162,42 +162,42 @@ function Landing() {
             </button>
           </p>
         </div>
-        <div className="right-img">
-          <img className="section01-img" src={landing} alt="프로젝트 소개" />
+        <div className="overview__image">
+          <img className="motion" src={landing} alt="프로젝트 소개" />
         </div>
-      </LandingSection>
-      <LandingSection id="section2">
-        <div className="title left">
+      </div>
+      <div className="feature">
+        <div className="feature__title left">
           Are you struggling with how to start your day?<br></br>
           Create and share your own study planner!
         </div>
-        <div className="section02-left-upper">
+        <div className="todo">
           <img src={icon1} className="inside" alt="todo" />
           <h4 className="txt-01-title up-on-scroll">TODO LIST</h4>
-          <div className="description">
+          <div className="todo__description">
             Manage tasks by time Manage them smartly according to the time you
             write. Label colors for each task for easier viewing.
           </div>
         </div>
-        <div className="section02-left-lower">
+        <div className="custom-planner">
           <img src={icon2} className="inside" alt="custom" />
           <h4 className="txt-01-title up-on-scroll">CUSTOM PLANNER</h4>
-          <div className="description">
+          <div className="custom-planner__description">
             You can create your own planner with colors, patterns, and stickers
             of your own choosing.
           </div>
         </div>
-        <img src={mainGif} alt="타겟 소개" />
-        <div className="section02-right-txt">
+        <img className="feature__motion" src={mainGif} alt="타겟 소개" />
+        <div className="share">
           <img className="inside" src={icon3} alt="icon3"></img>
           <h4 className="txt-01-title up-on-scroll">SHARE YOUR PLAN</h4>
-          <div className="description">
+          <div className="share__description">
             Create your own planner by selecting colors and patterns, and attach
             stickers to complete your own planner.
           </div>
         </div>
-      </LandingSection>
-      <LandingSection id="section3" className="font-color">
+      </div>
+      <div className="section3 font-color">
         <div className="section03-title up-on-scroll">
           A special planner <br></br> for early birds
           <img className="inside" src={icon4} alt="icon4"></img>
@@ -227,8 +227,8 @@ function Landing() {
         >
           <i id={clickID.toString()} className="fas fa-chevron-right"></i>
         </button>
-      </LandingSection>
-      <LandingSection id="section4">
+      </div>
+      <div className="section4">
         <img alt="section4" src={section4}></img>
         <div className="section4-title">Benefits</div>
         <div id="section04-container">
@@ -250,7 +250,7 @@ function Landing() {
             </div>
           </div>
         </div>
-      </LandingSection>
+      </div>
       <Button
         id="landing-btn"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
