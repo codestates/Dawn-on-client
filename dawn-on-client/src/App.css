@@ -1,9 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap%27');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Raleway:wght@100;300;400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap%27");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Raleway:wght@100;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500&display=swap");
 html,
 body {
   margin: 0;
@@ -141,14 +141,6 @@ button {
 
 /******************** 검색 **************************/
 
-.searchBox {
-  /* background: #2f3640; */
-  /* border: 1px solid black; */
-  /* border-radius: 40px; */
-  /* padding: 10px; */
-  /* background: white; */
-}
-
 .searchBox:hover > .searchInput {
   width: 230px;
 
@@ -168,7 +160,6 @@ button {
   float: right;
   width: 30px;
   height: 30px;
-
   display: flex;
   justify-content: center;
   transition: 0.4s;
@@ -181,7 +172,6 @@ button {
   outline: none;
   float: left;
   padding: 0;
-
   border-radius: 50px;
   font-size: 15px;
   transition: 0.4s;
@@ -195,3 +185,47 @@ button {
 }
 
 /***********************************/
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px) */
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  #nav-logo {
+    margin-left: 20px;
+    flex-basis: 20%;
+  }
+  #nav-main-btn-container {
+    margin-right: 20px;
+    flex-basis: 80%;
+  }
+  #nav-landing-btn-container {
+    margin-right: 20px;
+    flex-basis: 80%;
+  }
+  .searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    border-radius: 50px;
+    font-size: 13px;
+    line-height: 40px;
+    width: 190px;
+    padding-left: 13px;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
+@media all and (max-width: 767px) {
+  #nav-logo {
+    margin-left: 20px;
+    /* flex-basis: 20%; */
+  }
+  #nav-main-btn-container {
+    margin-right: 20px;
+    /* flex-basis: 80%; */
+  }
+  #nav-landing-btn-container {
+    margin-right: 20px;
+    /* flex-basis: 80%; */
+  }
+}
