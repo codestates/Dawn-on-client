@@ -126,7 +126,7 @@ const Nav = () => {
             className="main-nav btn-action"
             onClick={() => history.push("/custom-planner")}
           >
-            Make a Planner
+            Planner
           </button>
           <button
             className="main-nav btn-action"
