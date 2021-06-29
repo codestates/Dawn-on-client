@@ -21,7 +21,7 @@ td {
 }
 
 .side-txt {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 700;
   grid-column: 2 / 3;
   grid-row: 2 / 7;
@@ -43,7 +43,7 @@ td {
 }
 
 .custom-planner-title {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 400;
   font-size: 2.5rem;
   flex-basis: 90%;
@@ -124,7 +124,7 @@ td {
   grid-template-rows: 1fr 1fr 1fr;
   width: 100%;
   height: 100%;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 300;
   text-align: center;
   align-self: center;
@@ -221,7 +221,7 @@ td {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   align-self: center;
-  padding: 15px;
+  /* padding: 15px; */
   text-align: center;
   background: #fff;
   border-radius: 5%;
@@ -264,7 +264,7 @@ td {
 
 .plnnerfrom-hour {
   height: 100%;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   font-weight: 300;
   font-size: 1.5rem;
   text-align: center;
@@ -320,18 +320,17 @@ td {
 
 .write-a-comment {
   font-size: 1.8rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .back-color-picker > h4 {
   font-size: 1.5rem;
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
 }
 
 #upload-comment-container {
   grid-row: 3 / 4;
   height: 100%;
-
 }
 
 #upload-comment-container > .writing-comment {
@@ -783,9 +782,7 @@ td {
   outline: none;
   width: 100%;
   margin-top: 3rem;
-  box-shadow:
-  7px 7px 20px 0px #35405825,
-  4px 4px 10px 0px #446ec91c;
+  box-shadow: 7px 7px 20px 0px #35405825, 4px 4px 10px 0px #446ec91c;
 }
 
 .writing-comment > textarea {
@@ -861,14 +858,14 @@ td {
   }
 }
 
-@media all and (max-width:1300px) {
+@media all and (max-width: 1300px) {
   html {
     font-size: 10px;
   }
   #custom-planner-container {
     grid-template-rows: 60px repeat(5, 0.6fr) 60px;
   }
-  .plnnerfrom-date > span{
+  .plnnerfrom-date > span {
     font-size: 1.5rem;
   }
   .side-txt {
@@ -920,7 +917,7 @@ td {
   }
   #custom-bar {
     display: none;
-  } 
+  }
 }
 
 @media all and (max-width: 767px) {
