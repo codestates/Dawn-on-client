@@ -372,30 +372,55 @@
     display: none;
   }
   #Explore-container {
-    /* height: calc(100vh - 60px);
-    grid-column: 1 / 8;
-    grid-row: 2 / 8;
-    display: grid;
-    width: 100%; */
     grid-template-columns: 30px 1fr 1fr 1fr 30px;
-    /* grid-template-rows: repeat(5, 1fr) 60px; */
-    /* column-gap: 20px; */
   }
   #ExploreList-container {
-    grid-column: 2;
-    /* grid-row: 1 / 6;.
-    display: grid;
-    grid-template-rows: 60px repeat(5, 1fr); */
+    grid-column: 2 / 5;
+    grid-row: 1 / 3;
+    margin-bottom: 10px;
   }
-  #ExplorePostView-container {
-    grid-column: 3 / 5;
-    /* grid-row: 1 / 6;
-    border-radius: 10px;
-    padding: 10px;
+
+  #ExploreList-posts {
     display: flex;
-    flex-direction: column;
-    height: 100%;
-    row-gap: 10px; */
+    float: left;
+    overflow-x: scroll;
+  }
+
+  .ExplorePost-container {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+  }
+
+  .Explore-Thumbnail-info {
+    display: flex;
+    width: 300px;
+    height: 90%;
+  }
+
+  .Thumbnail-info-1 > .fa-user-circle {
+    align-self: center;
+  }
+
+  .Thumbnail-info-1 > .profile-img {
+    align-self: center;
+  }
+
+  .Explore-Thumbnail-info > .Thumbnail-info-3 {
+    align-self: center;
+  }
+
+  #ExplorePostView-container {
+    grid-column: 2 / 5;
+    grid-row: 3 / 7;
+  }
+
+  #planner-view-container {
+    overflow-y: scroll;
+  }
+
+  #ExploreView-Footer {
+    display: none;
   }
 }
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
