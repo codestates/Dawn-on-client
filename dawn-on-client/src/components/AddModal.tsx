@@ -274,9 +274,8 @@ function AddModal({ clickHandler }: Props) {
                 id={ele}
                 className="todobar-subject"
               >
-                <span className="subject-name">
                   {ele}
-                </span>
+              
                 <button
                   key={ele.subject}
                   onClick={(e: any) => deleteLabel(e)}
