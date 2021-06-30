@@ -411,8 +411,26 @@ td {
   padding: 3px 4px;
   margin-right: 5px;
   font-size: 1.5rem;
+  align-self: center;
+  vertical-align: middle;
+  justify-content: space-between;
   cursor: pointer;
   transition: border 1s ease-in-out;
+}
+
+.subject-name {
+  align-self: center;
+}
+
+.todobar-subject > button {
+  align-self: center;
+  background: none;
+  text-align: center;
+  border: none;
+  outline: none;
+  margin-left: 5px;
+  margin-bottom: 2px;
+  color: #2b3390;;
 }
 
 .select-subject {
@@ -504,6 +522,12 @@ td {
 .tag-name {
   flex-basis: 70%;
   font-size: 1.2rem;
+  align-self: center;
+}
+
+.hashtags-group > button {
+  align-self: center;
+  margin-bottom: 1.2px;
 }
 
 .todobar-todo {
