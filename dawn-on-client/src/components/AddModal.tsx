@@ -28,7 +28,7 @@ const AddTodoBar = styled.div`
 const LabelContainer = styled.div`
   margin-top: 5px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   row-gap: 2px;
 `;
@@ -38,7 +38,7 @@ const DeleteBtn = styled.button`
   text-align: center;
   border: none;
   outline: none;
-  float: right;
+  margin-left: 5px;
   color: #2b3390;
 `;
 
@@ -258,12 +258,12 @@ function AddModal({ clickHandler }: Props) {
             placeholder="add new subject"
             value={newSubject}
           />
-          <button
+          <DeleteBtn
             onClick={(e: any) => newSubjectHandler(e)}
             className="add-label-btn"
           >
             <i className="fas fa-plus"></i>
-          </button>
+          </DeleteBtn>
         </div>
         <LabelContainer>
           {subjectLabel &&
@@ -274,14 +274,16 @@ function AddModal({ clickHandler }: Props) {
                 id={ele}
                 className="todobar-subject"
               >
-                {ele}
-                <DeleteBtn
+                <span className="subject-name">
+                  {ele}
+                </span>
+                <button
                   key={ele.subject}
                   onClick={(e: any) => deleteLabel(e)}
                   id={ele}
                 >
                   x
-                </DeleteBtn>
+                </button>
               </div>
             ))}
         </LabelContainer>
