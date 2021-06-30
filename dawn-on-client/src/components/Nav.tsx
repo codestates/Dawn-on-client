@@ -140,6 +140,7 @@ const Nav = () => {
           </button>
           <button
             className="main-nav btn-action"
+            id="myfeed-btn"
             onClick={() => {
               // history.push("/myfeed");
               window.location.replace("/myfeed");
