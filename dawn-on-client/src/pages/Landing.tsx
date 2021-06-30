@@ -15,7 +15,6 @@ import achievement from "../img/achievement.png";
 import mainGif from "../img/man01.gif";
 import example01 from "../img/example.png";
 import section4 from "../img/section4.png";
-import Explore from "../img/Explorepage.png";
 import mypage from "../img/mypage.png";
 import explore from "../img/explore.png";
 
@@ -49,6 +48,8 @@ function Landing() {
   function isElementUnderBottom(elem: Element, triggerDiff: number) {
     const { top } = elem.getBoundingClientRect();
     const { innerHeight } = window;
+    console.log('mobile top', top);
+    console.log('mobile inner', innerHeight);
     return top > innerHeight + (triggerDiff || 0);
   }
 
@@ -108,7 +109,7 @@ function Landing() {
       }
     });
   }
-
+  document.body.addEventListener("touchmove", handleScroll);
   window.addEventListener("scroll", handleScroll);
   window.addEventListener("load", handleScroll);
 
@@ -190,7 +191,7 @@ function Landing() {
         <img className="feature__motion" src={mainGif} alt="타겟 소개" />
         <div className="share">
           <img className="inside" src={icon3} alt="icon3"></img>
-          <h4 className="txt-01-title up-on-scroll">SHARE YOUR PLAN</h4>
+          <h4 className="txt-01-title">SHARE YOUR PLAN</h4>
           <div className="share__description">
             Create your own planner by selecting colors and patterns, and attach
             stickers to complete your own planner.
@@ -198,20 +199,20 @@ function Landing() {
         </div>
       </div>
       <div className="section3 font-color">
-        <div className="section03-title up-on-scroll">
+        <div className="section03-title">
           A special planner <br></br> for early birds
-          <img className="inside" src={icon4} alt="icon4"></img>
+          <img className="" src={icon4} alt="icon4"></img>
         </div>
         {clickID === 1 && (
           <div id="1" className="slide-container">
-            <div className="slide-txt up-on-scroll">{content[0].text}</div>
-            <img alt="slide-img" className="image" src={content[0].src}></img>
+            <div className="slide-txt">{content[0].text}</div>
+            <img alt="slide-img" style={{width: '60%'}} className="image" src={content[0].src}></img>
           </div>
         )}
         {clickID === 2 && (
           <div id="1" className="slide-container">
             <div className="slide-txt up-on-scroll">{content[1].text}</div>
-            <img alt="slide-img image" className="image" src={content[1].src}></img>
+            <img alt="slide-img" className="image" src={content[1].src}></img>
           </div>
         )}
         {clickID === 3 && (
@@ -228,22 +229,22 @@ function Landing() {
           <i id={clickID.toString()} className="fas fa-chevron-right"></i>
         </button>
       </div>
-      <div className="section4">
+      <div className="benefits">
         <img alt="section4" src={section4}></img>
         <div className="section4-title">Benefits</div>
-        <div id="section04-container">
-          <div className="advantages left">
+        <div className="section04-container">
+          <div className="advantages">
             <img alt="icon1" src={award}></img>
             <div>
               Looking at the time I have studied so far and the list of planners
               I have made
             </div>
           </div>
-          <div className="advantages left">
+          <div className="advantages">
             <img alt="icon2" src={achievement}></img>
             <div>Get Motivated by Watching Early Birds Day</div>
           </div>
-          <div className="advantages left">
+          <div className="advantages">
             <img alt="icon3" src={study}></img>
             <div>
               You can form a study habit by constantly recording a planner

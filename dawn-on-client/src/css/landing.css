@@ -19,7 +19,7 @@
   border-radius: 20px;
   align-self: center;
   position: absolute;
-  top: 22%;
+  top: 25rem;
   left: 30%;
   z-index: -1;
 }
@@ -95,9 +95,10 @@
 }
 
 .feature__title {
-  font-size: 4rem;
+  font-size: 5rem;
   grid-column: 1 / 3;
   grid-row: 1 / 2;
+  text-align: center;
   color: #2e4c8c;
   font-family: "Raleway", sans-serif;
   font-weight: 400;
@@ -138,12 +139,11 @@
 }
 
 .todo {
-  align-self: center;
+  align-self: flex-start;
   justify-self: center;
   text-align: left;
-  margin-bottom: 20rem;
   grid-column: 1 / 3;
-  grid-row: 2 / 3;
+  grid-row: 2 / 4;
   transition: transform 1s, opacity 1.4s;
 }
 
@@ -166,7 +166,8 @@
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
   text-align: left;
-  width: 80%;
+  grid-column: 1 / 2;
+  width: 45%;
   color: #2c3e50;
   margin-bottom: 0;
 }
@@ -174,11 +175,13 @@
 .custom-planner {
   text-align: left;
   flex-basis: 50%;
-  align-self: flex-end;
+  align-self: center;
+  justify-self: center;
   transition: transform 1s, opacity 1s;
   margin-top: 2.5rem;
   grid-column: 1 / 2;
-  grid-row: 2 / 3;
+  grid-row: 2 / 4;
+
 }
 
 .custom-planner > img {
@@ -207,6 +210,8 @@
 .share {
   text-align: left;
   grid-column: 2 / 3;
+  grid-row: 3 / 4;
+  align-self: center;
 }
 
 .share > .txt-01-title {
@@ -227,7 +232,9 @@
 
 .feature__motion {
   float: right;
-  width: 100%;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  width: 80%;
   z-index: 1;
 }
 
@@ -360,18 +367,18 @@
   height: 100%;
 }
 
-.section4 {
-  height: 110%;
+.benefits {
+  height: 100%;
   grid-column: 1 / 8;
   grid-row: 5 / 6;
   display: flex;
+  text-align: center;
   position: relative;
   flex-direction: column;
-  padding: 20rem 0rem;
-  margin-bottom: 20rem;
+  padding: 15rem 0rem;
 }
 
-.section4 > img {
+.benefits > img {
   flex-basis: 50%;
   width: 60%;
   position: absolute;
@@ -383,7 +390,7 @@
   opacity: 0.7;
 }
 
-#section04-container {
+.section04-container {
   justify-self: center;
   align-self: center;
   text-align: center;
@@ -394,11 +401,12 @@
   color: #335296;
   font-family: "Montserrat", sans-serif;
   margin-bottom: 10rem;
+  font-size: 5rem;
   font-weight: 300;
+  text-align: center;
 }
 
 .advantages {
-  width: 100%;
   padding: 2rem 3rem;
   margin: 5rem 3rem;
   border: 1px solid #a1b3d1;
@@ -574,9 +582,6 @@
    html {
      font-size: 8px;
    }
-   #root {
-     width: 100%;
-   }
    .overview {
      width: 100%;
      margin-bottom: 10rem;
@@ -617,7 +622,7 @@
    }
    .feature__title {
      text-align: center;
-     font-size: 2.5rem;
+     font-size: 3rem;
    }
    .todo, .custom-planner, .share {
      grid-column: 1 / 3;
@@ -657,25 +662,152 @@
   .share > img {
     margin-left: 0;
   }
-   .section3 {
-   }
-   .section4 {
-   }
-   #footer {
-   }
+  .benefits > img {
+    width: 90%;
+  }
+  .section04-container {
+    flex-direction: column;
+    gap: 5rem;
+  }
+  .advantages {
+    width: 70%;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .advantages > div {
+    text-align: center;
+  }
+  .advantages > img {
+    left: 0;
+    
+  }
 } 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
 @media all and (max-width:767px) {
   html {
-    font-size: 6px;
+    font-size: 8px;
   }
   #root {
-    width: 100vw;
+    /* overflow-x: hidden; */
   }
   .overview {
-    width: 100vw;
-    grid-column: 1 / 2;
+    width: 100%;
+    margin-bottom: 10rem;
+    grid-column: 1 / 8;
+    display: grid;
+  }
+  .introduction {
     text-align: center;
     justify-self: center;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
   }
+  .introduction__title {
+    text-align: center;
+  }
+  .introduction__subtitle {
+    text-align: center;
+    font-size: 3rem;
+  }
+  .introduction__description {
+    text-align: center;
+    font-size: 1.8rem;
+  }
+  .overview__image {
+    position: relative;
+    opacity: 0.5;
+    margin-left: -50%;
+    margin-top: -50%;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+  .motion {
+    width: 100%;
+  }
+  #experience-btn {
+    justify-self: center;
+    margin: 5rem 0;
+  }
+  .section03-title {
+    font-size: 3rem;
+    grid-column: 1 / 4;
+    line-height:normal;
+    display: flex;
+  }
+  .feature {
+   justify-self: center;
+   margin: 0 50px;
+   row-gap: 4rem;
+  }
+  .feature__title {
+    text-align: center;
+    font-size: 3rem;
+  }
+  .todo, .custom-planner, .share {
+    grid-column: 1 / 3;
+    text-align: center;
+    margin: 0;
+    background-color: #fff;
+    padding: 1rem 1rem;
+  }
+  .share {
+    grid-row: 4 / 5;
+  }
+  .slide-container {
+    display: inline;
+  }
+  .slide-txt {
+    font-size: 1.8rem;
+    margin-bottom: 5rem;
+  }
+  .slide-container > .image {
+    width: 100%;
+  }
+  .todo__description, .custom-planner__description, .share__description {
+    font-size: 1.5rem;
+    text-align: center;
+    justify-self: center;
+    width: 65%;
+    margin: 0 auto;
+  }
+  .custom-planner {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+  }
+  .feature__motion {
+    margin-left: -5rem;
+    width: 110%;
+    grid-column: 1 / 3;
+    grid-row: 5 / 6;
+    z-index: -1;
+    opacity: 0.8;
+    margin-top: -10rem;
+  }
+ .share > .txt-01-title {
+   text-align: center;
+   width: 100%;
+   margin-left: 0;
+ }
+ .share > img {
+   margin-left: 0;
+ }
+ .benefits > img {
+   width: 90%;
+ }
+ .section04-container {
+   flex-direction: column;
+   gap: 5rem;
+ }
+ .advantages {
+   width: 70%;
+   margin: 0 auto;
+   text-align: center;
+ }
+ .advantages > div {
+   text-align: center;
+   font-size: 1.4rem;
+ }
+ .advantages > img {
+   left: 0; 
+ }
 }
