@@ -423,6 +423,57 @@
     display: none;
   }
 }
+
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
 @media all and (max-width: 767px) {
+  #ExploreSidebar-container {
+    display: none;
+  }
+  #Explore-container {
+    grid-template-columns: 30px 1fr 1fr 1fr 30px;
+  }
+  #ExploreList-container {
+    grid-column: 1 / 6;
+    grid-row: 1 / 3;
+    margin-bottom: 10px;
+  }
+
+  #ExploreList-posts {
+    display: flex;
+    float: left;
+    overflow-x: scroll;
+  }
+
+  .ExplorePost-container {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
+  }
+
+  .Explore-Thumbnail-info {
+    display: flex;
+    width: 300px;
+    height: 90%;
+  }
+
+  .Thumbnail-info-1 > .fa-user-circle {
+    align-self: center;
+  }
+
+  .Thumbnail-info-1 > .profile-img {
+    align-self: center;
+  }
+
+  .Explore-Thumbnail-info > .Thumbnail-info-3 {
+    align-self: center;
+  }
+
+  #ExplorePostView-container {
+    grid-column: 1 / 6;
+    grid-row: 3 / 7;
+  }
+
+  #ExploreView-Footer {
+    display: none;
+  }
 }
