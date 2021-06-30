@@ -1,6 +1,6 @@
 ---
 name: Dev-log
-about: dev log
+about: "[Dev-log]"
 title: ''
 labels: ''
 assignees: ''

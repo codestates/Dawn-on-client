@@ -1,0 +1,249 @@
+@import url("https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500&display=swap%27");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;700&family=Raleway:wght@100;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;500&display=swap");
+html,
+body {
+  margin: 0;
+  font-family: "Nanum Gothic", sans-serif;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  box-sizing: content-box;
+  cursor: url(img/cursor/pointer.cur), auto;
+}
+
+#root {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 100px;
+  grid-template-rows: 60px repeat(5, 1fr) 60px;
+  column-gap: 15px;
+  cursor: url(img/cursor/pointer.cur), auto;
+}
+
+.swal-title {
+  font-size: 20px;
+}
+
+button {
+  cursor: pointer;
+}
+
+#search-bar {
+  display: flex;
+}
+
+#nav-container {
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  width: 100%;
+  background: none;
+  align-self: flex-end;
+  transition: opacity 1s;
+  background-color: white;
+  box-shadow: rgb(0 0 0 / 10%) 0px 2px 10px;
+}
+
+#nav-logo {
+  font-family: "KoHo", sans-serif;
+  justify-self: left;
+  margin-left: 100px;
+  flex-basis: 40%;
+  cursor: pointer;
+}
+
+#nav-main-btn-container {
+  display: flex;
+  flex-basis: 60%;
+  text-align: right;
+  align-self: center;
+  margin-right: 100px;
+  justify-content: flex-end;
+}
+
+#nav-landing-btn-container {
+  flex-basis: 60%;
+  justify-self: end;
+  text-align: right;
+  align-self: center;
+  float: right;
+  margin-right: 100px;
+}
+
+#footer {
+  grid-column: 1 / 8;
+  grid-row: 7/8;
+  border: 1px solid #b1b2ce;
+  margin-top: 30px;
+  background-color: #335296;
+  display: flex;
+  justify-content: space-between;
+}
+
+.main-nav {
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: #424242;
+  font-family: "KoHo", sans-serif;
+  font-size: 1.5rem;
+  background-color: none;
+  background: none;
+  outline: none;
+  border: none;
+  margin-left: 1rem;
+}
+
+.landing-btn {
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: #424242;
+  font-family: "KoHo", sans-serif;
+  font-size: 1.5rem;
+  background-color: none;
+  background: none;
+  outline: none;
+  border: none;
+  margin-left: 1rem;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+@keyframes open-modal-login {
+  from {
+    opacity: 0;
+    margin: -190px 0px 0 -250px;
+  }
+  to {
+    opacity: 1;
+    margin: -175px 0 0 -250px;
+  }
+}
+
+.btn-action {
+  transition: 0.25s;
+  background: none;
+}
+
+.btn-action:hover,
+.btn-action:focus {
+  transform: translateY(-0.4em);
+}
+
+/******************** 검색 **************************/
+
+.searchBox:hover > .searchInput {
+  width: 230px;
+  padding-left: 15px;
+  box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+}
+
+.searchBox:hover > .searchButton {
+  color: #2f3640;
+}
+
+.searchButton {
+  margin-top: 5px;
+  margin-left: 10px;
+  color: black;
+  float: right;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  transition: 0.4s;
+  cursor: pointer;
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  border-radius: 50px;
+  font-size: 15px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+}
+
+.fa-search {
+  align-self: center;
+  font-size: 20px;
+}
+
+/***********************************/
+
+/* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px) */
+@media all and (min-width: 768px) and (max-width: 1023px) {
+  #myfeed-btn {
+    display: none;
+  }
+
+  #nav-logo {
+    margin-left: 20px;
+    flex-basis: 20%;
+  }
+  #nav-main-btn-container {
+    margin-right: 20px;
+    flex-basis: 80%;
+  }
+  #nav-landing-btn-container {
+    margin-right: 20px;
+    flex-basis: 80%;
+  }
+  .searchInput {
+    border: none;
+    background: none;
+    outline: none;
+    float: left;
+    border-radius: 50px;
+    font-size: 13px;
+    line-height: 40px;
+    width: 190px;
+    padding-left: 13px;
+    box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .searchBox:hover > .searchInput {
+    width: 190px;
+  }
+}
+
+/* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
+@media all and (max-width: 767px) {
+  #myfeed-btn {
+    display: none;
+  }
+
+  #nav-logo {
+    margin-left: 20px;
+    flex-basis: 40%;
+    font-size: 24px;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 0;
+  }
+  #nav-main-btn-container {
+    flex-basis: 60%;
+    margin-right: 20px;
+  }
+  #nav-landing-btn-container {
+    margin-right: 20px;
+    flex-basis: 60%;
+  }
+
+  #search-bar {
+    display: none;
+  }
+}

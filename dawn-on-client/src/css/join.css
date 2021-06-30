@@ -1,0 +1,43 @@
+.join-form {
+  margin-top: 40px;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.join-title {
+  font-size: 23px;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.signup-form-button {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.go-to-login {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.go-to-login:hover {
+  color: #2090ff;
+}
+
+.ant-form-item-explain.ant-form-item-explain-error {
+  font-size: 12px;
+}
+
+.ant-form-item-explain.ant-form-item-explain-success {
+  font-size: 12px;
+}
+
+.fa-sign-in-alt {
+  margin-left: 5px;
+}
+
+.fa-user-plus {
+  margin-left: 5px;
+}

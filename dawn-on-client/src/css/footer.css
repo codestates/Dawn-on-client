@@ -1,0 +1,77 @@
+#footer {
+  height: 200px;
+}
+.github-link {
+  background: -webkit-linear-gradient(#8ec5fc, #e0c3fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: url(../img/cursor/account.cur), auto;
+  color: #fff;
+}
+
+#Dawn-on {
+  background: -webkit-linear-gradient(#8ec5fc, #e0c3fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 5rem;
+  font-family: "Noto Sans KR", sans-serif;
+  flex-basis: 50%;
+  font-weight: 400;
+  font-size: 1.8rem;
+  align-self: center;
+}
+
+#Done-up {
+  background: -webkit-linear-gradient(#8ec5fc, #e0c3fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* margin-right: 75rem; */
+  flex-basis: 30%;
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 500;
+  font-size: 1.7rem;
+  align-self: center;
+}
+
+#github-list {
+  background-color: black;
+  display: flex;
+  flex-basis: 50%;
+  justify-self: center;
+  margin-right: 5rem;
+  background-color: #335296;
+  /* justify-content: space-between; */
+}
+
+#github-list > span {
+  /* margin-right: 5rem; */
+  font-family: "Noto Sans KR", sans-serif;
+  font-weight: 500;
+  font-size: 1.7rem;
+  align-self: center;
+  flex-basis: 85%;
+}
+
+#github-list > img {
+  align-self: center;
+  flex-basis: 5%;
+  margin-right: 1rem;
+}
+
+
+@media all and (max-width: 767px) {
+  #footer {
+    flex-direction: column;
+  }
+  #Dawn-on {
+    text-align: left;
+    margin: 0;
+    width: 100%;
+    flex-basis: 50%;
+    padding-top: 3rem;
+    margin-left: 10rem;
+  }
+  #github-list {
+    margin-left: 5rem;
+  }
+}
