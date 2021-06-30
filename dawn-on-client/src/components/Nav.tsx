@@ -126,7 +126,7 @@ const Nav = () => {
             className="main-nav btn-action"
             onClick={() => history.push("/custom-planner")}
           >
-            Make a Planner
+            Planner
           </button>
           <button
             className="main-nav btn-action"
@@ -140,6 +140,7 @@ const Nav = () => {
           </button>
           <button
             className="main-nav btn-action"
+            id="myfeed-btn"
             onClick={() => {
               // history.push("/myfeed");
               window.location.replace("/myfeed");

@@ -44,6 +44,12 @@ const LoginContainer = styled.div`
   animation-timing-function: ease-out;
   animation-name: ${fadeIn};
   animation-fill-mode: forwards;
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    left: 47%;
+  }
+  @media all and (max-width:767px) { 
+    left: 45.5%;
+  }
 `;
 const CloseButton = styled.button`
   outline: none;
