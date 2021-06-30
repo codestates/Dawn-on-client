@@ -12,7 +12,7 @@ const CHANGE_TOTAL_HOUR = "CHANGE_TOTAL_HOUR";
 const CHANGE_CHECKED_STATE = "CHANGE_CHECKED_STATE";
 const DELETE_A_TASK = "DELETE_A_TASK";
 const CHANGE_BACK_COLOR = "CHANGE_BACK_COLOR";
-const ADD_TO_TAGLIST = "ADD_TO_TAGLIST";
+const ADD_TO_TAGLIST_LOCAL = "ADD_TO_TAGLIST_LOCAL";
 const ADD_SELECTED_TAGS = "ADD_SELECTED_TAGS";
 const DELETE_A_TAG = "DELETE_A_TAG";
 const ADD_COMMENT_DATA = "ADD_COMMENT_DATA";
@@ -96,7 +96,7 @@ export const changeBackColor = (back_color: String) => ({
 
 // 유저 태그 리스트 추가 액션
 export const addToTaglist = (tagId: string) => ({
-  type: ADD_TO_TAGLIST,
+  type: ADD_TO_TAGLIST_LOCAL,
   payload: tagId,
 });
 
@@ -198,12 +198,13 @@ export default function addTaskReducer(state: any = initialState, action: any) {
         ...state,
         subject: [...delSubject],
       };
-    case ADD_TO_TAGLIST:
+    case ADD_TO_TAGLIST_LOCAL:
       return {
         ...state,
         tags: [...state.tags, action.payload],
       };
     case ADD_SELECTED_TAGS:
+      console.log('선택된 태그: ', action.payload);
       return {
         ...state,
         plannerDatas: {

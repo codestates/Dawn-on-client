@@ -107,11 +107,6 @@ export const addToTaglist = (tagId: string) => ({
   payload: tagId,
 });
 
-// 선택 태그 저장 액션
-export const addSelectedTags = (tags: string[]) => ({
-  type: ADD_SELECTED_TAGS,
-  payload: tags,
-});
 
 // tag 삭제 액션
 export const deleteAtag = (tagId: string) => ({
@@ -186,41 +181,7 @@ export default function getClickPostViewReducer(
       return {
         ...state,
       }
-    // case ADD_A_TODO:
-    //   console.log("state: ", state);
-    //   console.log("새로운 todo: ", action.payload);
-    //   return {
-    //     ...state,
-    //     click_postview: {
-    //       ...state.click_postview,
-    //       todos: [...state.click_postview.todos, action.payload],
-    //     },
-    //   };
-    // case DELETE_A_TASK:
-    //   const without = state.click_postview.todos.filter((el: any) => {
-    //     return el.todo_PK !== action.payload;
-    //   });
-    //   return {
-    //     ...state,
-    //     click_postview: {
-    //       ...state.click_postview,
-    //       todos: [...without],
-    //     },
-    //   };
-    // case CHANGE_CHECKED_STATE:
-    //   return {
-    //     ...state,
-    //     plannerDatas: {
-    //       ...state.plannerDatas,
-    //       todos: state.plannerDatas.todos.map((todo: any) => {
-    //         console.log(todo.todo_PK);
-    //         console.log(action.payload.todo_PK);
-    //         return todo.todo_PK === action.payload.todo_PK
-    //           ? { ...todo, checked: action.payload.checked }
-    //           : todo;
-    //       }),
-    //     },
-    //   };
+
     case ADD_THE_STICKER:
       console.log("스티커데이터: ", action.payload);
       return {
@@ -264,17 +225,8 @@ export default function getClickPostViewReducer(
         ...state,
         tags: [...state.tags, action.payload],
       };
-    case ADD_SELECTED_TAGS:
-      console.log("선택한 태그: ", action.payload);
-      return {
-        ...state,
-        click_postview: {
-          ...state.click_postview,
-          selected_tags: action.payload,
-        },
-      };
+
     case DELETE_A_TAG:
-      console.log(state.tags);
       const delTag = state.tags.filter((el: any) => el !== action.payload);
       return {
         ...state,
