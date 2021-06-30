@@ -186,6 +186,10 @@ button {
 
 /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px) */
 @media all and (min-width: 768px) and (max-width: 1023px) {
+  #myfeed-btn {
+    display: none;
+  }
+
   #nav-logo {
     margin-left: 20px;
     flex-basis: 20%;
@@ -218,16 +222,28 @@ button {
 
 /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px) */
 @media all and (max-width: 767px) {
+  #myfeed-btn {
+    display: none;
+  }
+
   #nav-logo {
     margin-left: 20px;
-    /* flex-basis: 20%; */
+    flex-basis: 40%;
+    font-size: 24px;
+    align-self: center;
+    justify-self: center;
+    margin-bottom: 0;
   }
   #nav-main-btn-container {
+    flex-basis: 60%;
     margin-right: 20px;
-    /* flex-basis: 80%; */
   }
   #nav-landing-btn-container {
     margin-right: 20px;
-    /* flex-basis: 80%; */
+    flex-basis: 60%;
+  }
+
+  #search-bar {
+    display: none;
   }
 }
