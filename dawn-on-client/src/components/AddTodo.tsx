@@ -44,7 +44,7 @@ const TodoBox = styled.div`
   display: flex;
   border-radius: 3px;
   margin: 10px 20px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.212);
   border-right: 1px solid rgba(0, 0, 0, 0.212);
   transition: 0.5s;
@@ -91,7 +91,7 @@ const Hours =styled.span`
 
 const Todo = styled.div`
   margin-top: 5px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 `;
 
 function AddTodo () {
@@ -287,7 +287,7 @@ function AddTodo () {
             <Drawer
             placement="right"
             closable={false}
-            width={480}
+            width={300}
             onClose={clickHandler}
             visible={isClick}
           >
@@ -323,7 +323,7 @@ function AddTodo () {
         <Drawer
           placement="right"
           closable={false}
-          width={480}
+          width={300}
           onClose={closeEditModal}
           visible={visible}
         >

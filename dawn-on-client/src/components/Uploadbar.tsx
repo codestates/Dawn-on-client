@@ -72,20 +72,9 @@ const DeleteBtn = styled.button`
   border: none;
   outline: none;
   float: right;
+  flex-basis: 30%;
   color: #2b3390;
 `;
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    popButton: {
-      background: "none",
-      border: "none",
-      height: "30px",
-      alignSelf: "end",
-      justifySelf: "left",
-    },
-  })
-);
 
 type CustomBarProps = {
   isLogin: boolean;
@@ -181,13 +170,18 @@ function CustomBar({ isLogin }: CustomBarProps) {
 
   const deleteTag = function (e: any) {
     // 태그 목록에서 삭제 될 때, 선택된 태그 목록에서도 지워준다.
-    if (state.plannerDatas.selected_tags.indexOf(e.target.id)) {
-      const deleteTag = state.plannerDatas.selected_tags.filter(
-        (el: string) => el !== e.target.id
+    // bug - 선택되지 않았을 때 삭제하면 선택리스트에도 들어감.
+    const deleteTag = state.plannerDatas.selected_tags.filter(
+      (el: string) => el !== e.target.id
     );
-      dispatch(addSelectedTags([...deleteTag]));
+    if (state.plannerDatas.selected_tags.indexOf(e.target.id)) {
+      console.log('삭제된 태그: ', deleteTag);
+      console.log('선택됐는데 삭제:', e.target.id);
+      setSelectedTag(deleteTag);
+      dispatch(addSelectedTags([...selectedTag]));
       dispatch(deleteAtag(e.target.id));
     }
+    setSelectedTag(deleteTag);
     dispatch(deleteAtag(e.target.id));
   };
 
@@ -371,13 +365,17 @@ function CustomBar({ isLogin }: CustomBarProps) {
           {state.tags &&
             state.tags.map((tag: string) => (
               <div
-                onClick={(e: any) => addToSelected(e)}
                 key={tag}
                 id={tag.toString()}
                 className="hashtags-group"
               >
-                #{tag}
-                {}
+                <span 
+                  id={tag.toString()} 
+                  className="tag-name"
+                  onClick={(e: any) => addToSelected(e)}
+                  >
+                  #{tag}
+                </span>
                 <DeleteBtn
                   key={tag}
                   onClick={(e: any) => deleteTag(e)}
