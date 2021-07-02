@@ -18,27 +18,26 @@ import section4 from "../img/section4.png";
 import mypage from "../img/mypage.png";
 import explore from "../img/explore.png";
 
-const LandingSection = styled.div`
-  height: 100%;
-  text-align: center;
-  font-size: 50px;
-  transition: transform 1s, opacity 2s;
-  // overflow-y: scroll;
-`;
 const Button = styled.button`
   position: fixed;
-  top: 90%;
-  left: 90%;
+  bottom: 10%;
+  right: 5%;
   border-radius: 76px;
   outline: none;
   border: none;
   text-align: center;
-  width: 60px;
-  height: 40px;
+  width: 50px;
+  height: 35px;
   background-color: #b9b3d1;
   color: #fff;
   font-size: 1.5rem;
   padding: 5px 10px;
+  &:hover {
+    background-color: #fff;
+    color: #b9b3d1;
+    border: 1px solid #b9b3d1;
+    transition: all 1s;
+  }
 `;
 
 function Landing() {
@@ -48,8 +47,6 @@ function Landing() {
   function isElementUnderBottom(elem: Element, triggerDiff: number) {
     const { top } = elem.getBoundingClientRect();
     const { innerHeight } = window;
-    console.log('mobile top', top);
-    console.log('mobile inner', innerHeight);
     return top > innerHeight + (triggerDiff || 0);
   }
 
@@ -168,7 +165,7 @@ function Landing() {
         </div>
       </div>
       <div className="feature">
-        <div className="feature__title left">
+        <div className="feature__title">
           Are you struggling with how to start your day?<br></br>
           Create and share your own study planner!
         </div>
@@ -206,7 +203,7 @@ function Landing() {
         {clickID === 1 && (
           <div id="1" className="slide-container">
             <div className="slide-txt">{content[0].text}</div>
-            <img alt="slide-img" style={{width: '60%'}} className="image" src={content[0].src}></img>
+            <img alt="slide-img" style={{width: '55%'}} className="image" src={content[0].src}></img>
           </div>
         )}
         {clickID === 2 && (
