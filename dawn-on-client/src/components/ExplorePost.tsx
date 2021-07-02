@@ -61,7 +61,6 @@ function ExplorePost({ postData, percentage }: ExplorePostProps) {
         dispatch(ExploreThumbsUp(res.data));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

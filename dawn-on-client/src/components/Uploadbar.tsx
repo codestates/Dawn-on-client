@@ -175,8 +175,6 @@ function CustomBar({ isLogin }: CustomBarProps) {
       (el: string) => el !== e.target.id
     );
     if (state.plannerDatas.selected_tags.indexOf(e.target.id)) {
-      console.log('삭제된 태그: ', deleteTag);
-      console.log('선택됐는데 삭제:', e.target.id);
       setSelectedTag(deleteTag);
       dispatch(addSelectedTags([...selectedTag]));
       dispatch(deleteAtag(e.target.id));
@@ -210,7 +208,6 @@ function CustomBar({ isLogin }: CustomBarProps) {
         history.push("/myfeed");
       })
       .catch((err) => {
-        console.log(err);
         swal("게시물 등록실패", "", "error");
       });
   };
@@ -410,7 +407,6 @@ function CustomBar({ isLogin }: CustomBarProps) {
                 nav.style.visibility = "visible";
                 history.push("/");
               } else {
-                console.log("체험하기 종료 취소");
               }
             });
           }}

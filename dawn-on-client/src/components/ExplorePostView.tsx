@@ -348,7 +348,6 @@ function ExplorePostView() {
         window.location.replace("/explore");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

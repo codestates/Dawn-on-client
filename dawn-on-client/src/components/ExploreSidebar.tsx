@@ -50,7 +50,6 @@ function ExploreSidebar() {
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

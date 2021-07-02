@@ -134,7 +134,6 @@ function AddTodo () {
 
     // todo 삭제 버튼
     const deleteHandler = function (e:any) {
-      console.log('삭제아이디: ', e.target.id);
       dispatch(deleteTodo(e.target.id));
       closeEditModal();
     }
@@ -210,7 +209,6 @@ function AddTodo () {
     ]
 
     const stickerHandler = function (e:any) {
-      console.log(e.target.id.split('/')[3].split('.')[1]);
       dispatch(addASticker(e.target.id.split('/')[3].split('.')[0]));
     }
 

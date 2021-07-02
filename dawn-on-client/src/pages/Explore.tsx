@@ -58,7 +58,6 @@ function Explore() {
         dispatch(getLoginState(true));
       })
       .catch((err) => {
-        console.log(err);
         swal("token 가져오기 실패", "", "error");
         history.push("/");
         dispatch(getLoginState(false));
@@ -88,7 +87,6 @@ function Explore() {
         isChecked(res.data.postDatas[0]);
       })
       .catch((err) => {
-        console.log(err);
         swal("main feed 데이터 가져오기 실패", "", "error");
       });
   };
@@ -113,7 +111,6 @@ function Explore() {
         dispatch(getClickExploreView(click_exploreview));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -138,7 +135,6 @@ function Explore() {
         dispatch(getSearchValue(""));
       })
       .catch((err) => {
-        console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
         dispatch(getSearchValue(""));
       });
@@ -165,7 +161,6 @@ function Explore() {
         dispatch(getSearchValue(""));
       })
       .catch((err) => {
-        console.log(err);
         swal("검색하신 결과가 없습니다", "", "warning");
         dispatch(getSearchValue(""));
       });

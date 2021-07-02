@@ -381,7 +381,6 @@ function MyPostView() {
         window.location.replace("/myfeed");
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -399,7 +398,6 @@ function MyPostView() {
       )
       .then((res) => {})
       .catch((err) => {
-        console.log(err);
       });
   };
 

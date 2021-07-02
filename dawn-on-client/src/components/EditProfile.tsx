@@ -112,7 +112,6 @@ function EditProfile() {
       })
       .then((res) => {})
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -148,7 +147,6 @@ function EditProfile() {
       })
       .catch((err) => {
         // swal("개인정보 수정 불가 오류", "", "error");
-        console.log(err);
       });
   };
 

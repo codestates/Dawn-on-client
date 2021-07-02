@@ -38,7 +38,6 @@ function Todobar() {
   };
 
   const bgColorHandler = function (bgColor: string | number) {
-    console.log(palette[bgColor]);
     dispatch(changeBackColor(palette[bgColor]));
     const plannerview = document.getElementById("planner-view") as HTMLElement;
     plannerview.style.backgroundColor = palette[bgColor];

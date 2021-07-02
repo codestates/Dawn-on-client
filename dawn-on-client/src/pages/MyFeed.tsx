@@ -59,7 +59,6 @@ function MyFeed() {
         isChecked(res.data.postDatas[0]);
       })
       .catch((err) => {
-        console.log(err);
         swal("my feed 데이터 가져오기 실패", "", "error");
       });
   };
@@ -85,7 +84,6 @@ function MyFeed() {
         dispatch(getClickPostView(click_postview));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

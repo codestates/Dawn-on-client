@@ -80,7 +80,6 @@ const Nav = () => {
         window.localStorage.clear();
       })
       .catch((err) => {
-        console.log(err);
         swal("로그아웃 실패", "", "error");
       });
   };
@@ -162,7 +161,6 @@ const Nav = () => {
                 if (willLogout) {
                   logoutRequestHandler();
                 } else {
-                  console.log("로그아웃 취소");
                 }
               });
             }}
