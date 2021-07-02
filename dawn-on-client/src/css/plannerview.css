@@ -15,6 +15,7 @@ td {
   grid-column: 1 / 8;
   grid-row: 1 / 8;
   display: grid;
+  height: 100vh;
   grid-template-columns: 80px 100px 1fr 1fr 1fr 1fr 80px;
   grid-template-rows: 60px repeat(5, 0.6fr) 60px;
   column-gap: 20px;
@@ -946,7 +947,7 @@ td {
   }
   #planner-view {
     grid-column: 1/8;
-    grid-row: 3 / 6;
+    grid-row: 2 / 8;
     overflow-y: scroll;
     border: none;
     overflow: hidden;
@@ -965,6 +966,7 @@ td {
 @media all and (max-width: 767px) {
   html {
     font-size: 8px;
+    overflow-y: hidden;
   }
   #custom-planner-container {
     border: none;
@@ -992,7 +994,8 @@ td {
   #upload-btn {
     visibility: visible;
     position: absolute;
-    bottom: 5%;
+    bottom: 3%;
+    font-size: 1.2rem;
     right: 3rem;
   }
 }
