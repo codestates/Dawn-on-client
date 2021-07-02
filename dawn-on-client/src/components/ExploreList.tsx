@@ -57,7 +57,6 @@ function ExploreList() {
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -78,7 +77,6 @@ function ExploreList() {
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -103,7 +101,6 @@ function ExploreList() {
           dispatch(getClickExploreView(res.data.postDatas[0]));
         })
         .catch((err) => {
-          console.log(err);
         });
     }
   };
@@ -139,7 +136,6 @@ function ExploreList() {
         dispatch(getClickExploreView(res.data.postDatas[0]));
       })
       .catch((err) => {
-        console.log(err);
         swal("데이터 가져오기 실패", "", "error");
       });
   };

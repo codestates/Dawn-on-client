@@ -84,7 +84,6 @@ function Join({ closeJoinModal, openLoginModal }: JoinProps) {
         openLoginModal();
       })
       .catch((err) => {
-        console.log(err);
         swal("아이디가 중복됩니다", "", "error");
         // 낙네임도 중복되면 회원가입 불가
       });

@@ -205,7 +205,6 @@ function MyPostEditModal({ editData, closeEditModal }: Props) {
       .then((res) => {
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 

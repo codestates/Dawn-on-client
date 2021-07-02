@@ -87,7 +87,6 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
         dispatch(getLoginState(true));
       })
       .catch((err) => {
-        console.log(err);
         swal("token 가져오기 실패", "", "error");
         history.push("/");
         dispatch(getLoginState(false));
@@ -131,7 +130,6 @@ function Login({ closeLoginModal, openJoinModal }: LoginProps) {
         history.push("/explore");
       })
       .catch((err) => {
-        console.log(err);
         swal("ID와 Password가 일치하지 않습니다", "", "error");
       });
   };

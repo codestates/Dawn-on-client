@@ -52,7 +52,6 @@ function MyPost({ postData, percentage }: MyPostProps) {
         dispatch(MyPostThumbsUp(res.data));
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
@@ -80,7 +79,6 @@ function MyPost({ postData, percentage }: MyPostProps) {
         });
       })
       .catch((err) => {
-        console.log(err);
         swal("삭제 실패", "", "error");
       });
   };
